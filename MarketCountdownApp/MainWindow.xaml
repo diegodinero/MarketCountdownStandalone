@@ -469,18 +469,19 @@
             <!-- =================================== -->
             <!--  “UP NEXT” Section (Row 1)          -->
             <!-- =================================== -->
-            <Border Grid.Row="1"
-              Background="White"
-              CornerRadius="12"
-              Margin="8"
-              Padding="0">
+            <Border
+    Grid.Row="1"
+    Background="White"
+    CornerRadius="12"
+    Margin="8"
+    Padding="0">
                 <Grid Margin="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- header -->
+                    <!-- Header -->
                     <Grid Grid.Row="0" Margin="160,0,160,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -489,50 +490,86 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <TextBlock Grid.Column="1"
-                       Text="UP NEXT"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Foreground="#222222"
-                       VerticalAlignment="Center"/>
+                 Text="UP NEXT"
+                 FontSize="16"
+                 FontWeight="Bold"
+                 Foreground="#222222"
+                 VerticalAlignment="Center"/>
                         <Rectangle Grid.Column="2" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </Grid>
 
-                    <!-- scrollable list -->
-                    <ListView Grid.Row="1"
-                    ItemsSource="{Binding UpcomingEvents}"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <!-- Aligned, scrollable list -->
+                    <ListView
+        Grid.Row="1"
+        ItemsSource="{Binding UpcomingEvents}"
+        ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        <!-- Remove the default padding so our grid fills edge‑to‑edge -->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,4">
-                                    <TextBlock Text="{Binding Time}"
-                             FontSize="13"
-                             Foreground="#222222"
-                             Width="70"/>
-                                    <Border Style="{StaticResource CurrencyTagStyle}"
-                          VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Currency}"
-                               FontSize="12"
-                               FontWeight="Bold"
-                               Foreground="White"/>
-                                    </Border>
-                                    <TextBlock FontFamily="Segoe MDL2 Assets"
-                                               Text=""                   
-                                               FontSize="14"
-                                               Margin="6,0,6,0"
-                                               VerticalAlignment="Center"
-                                               Foreground="{Binding Impact, Converter={StaticResource ImpactToBrushConverter}}"/>
+                                <Grid Margin="0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- 1) Time stamp -->
+                                        <ColumnDefinition Width="70"/>
 
-                                    <TextBlock Text="{Binding Title}"
-                             FontSize="13"
-                             Foreground="#222222"
-                             Margin="8,0,0,0"
-                             VerticalAlignment="Center"/>
-                                </StackPanel>
+                                        <!-- 2) Currency tag -->
+                                        <ColumnDefinition Width="60"/>
+
+                                        <!-- 3) Impact icon -->
+                                        <ColumnDefinition Width="30"/>
+
+                                        <!-- 4) Title (fills remaining) -->
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 1) Time -->
+                                    <TextBlock Grid.Column="0"
+                       Text="{Binding Time}"
+                       FontSize="13"
+                       Foreground="#222222"
+                       VerticalAlignment="Center"/>
+
+                                    <!-- 2) Currency tag (no extra Margin) -->
+                                    <Border Grid.Column="1"
+                    Style="{StaticResource CurrencyTagStyle}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Currency}"
+                         FontSize="12"
+                         FontWeight="Bold"
+                         Foreground="White"/>
+                                    </Border>
+
+                                    <!-- 3) Folder icon, colored by Impact -->
+                                    <TextBlock Grid.Column="2"
+                       FontFamily="Segoe MDL2 Assets"
+                       Text=""
+                       FontSize="14"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="{Binding Impact, Converter={StaticResource ImpactToBrushConverter}}"/>
+
+                                    <!-- 4) Event title -->
+                                    <TextBlock Grid.Column="3"
+                       Text="{Binding Title}"
+                       FontSize="13"
+                       Foreground="#222222"
+                       VerticalAlignment="Center"
+                       Margin="8,0,0,0"
+                       TextTrimming="CharacterEllipsis"/>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
             </Border>
+
 
             <!-- settings gear in bottom-right of tile area -->
             <Image Grid.Row="0"
