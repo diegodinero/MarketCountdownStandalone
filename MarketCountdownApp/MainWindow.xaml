@@ -80,8 +80,9 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0"
                    Source="pack://siteoforigin:,,,/Icons/London.png"
-                   Width="48" Height="48"
+                   Width="75" Height="75"
                    HorizontalAlignment="Center"
+                   Margin="10,0,0,0"
                    VerticalAlignment="Center"/>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center"
@@ -177,8 +178,9 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0"
                    Source="pack://siteoforigin:,,,/Icons/New_York.png"
-                   Width="48" Height="48"
+                   Width="70" Height="70"
                    HorizontalAlignment="Center"
+                   Margin="10,0,0,0"
                    VerticalAlignment="Center"/>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center"
@@ -273,8 +275,9 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0"
                    Source="pack://siteoforigin:,,,/Icons/Sydney.png"
-                   Width="48" Height="48"
+                   Width="70" Height="70"
                    HorizontalAlignment="Center"
+                   Margin="10,0,0,0"
                    VerticalAlignment="Center"/>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center"
@@ -369,8 +372,9 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0"
                    Source="pack://siteoforigin:,,,/Icons/Tokyo.png"
-                   Width="48" Height="48"
+                   Width="60" Height="60"
                    HorizontalAlignment="Center"
+                   Margin="10,0,0,0"
                    VerticalAlignment="Center"/>
                         <StackPanel Grid.Column="1"
                                     VerticalAlignment="Center"
