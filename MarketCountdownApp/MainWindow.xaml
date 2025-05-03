@@ -502,7 +502,7 @@
                     <ListView
         Grid.Row="1"
         ItemsSource="{Binding UpcomingEvents}"
-        ScrollViewer.VerticalScrollBarVisibility="Auto">
+        ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
                         <!-- Remove the default padding so our grid fills edge‑to‑edge -->
                         <ListView.ItemContainerStyle>
