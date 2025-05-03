@@ -83,18 +83,31 @@
                    Width="48" Height="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="London"      FontSize="14" Foreground="#222222"/>
-                            <TextBlock Text="{Binding LondonDisplay}" FontSize="24" Foreground="#222222"/>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Stretch">
+                            <!-- City name, centered -->
+                            <TextBlock Text="London"
+                                       FontSize="14"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
+                            <!-- Big offset display, bold, larger, centered -->
+                            <TextBlock Text="{Binding LondonDisplay}"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
                         </StackPanel>
                         <TextBlock Grid.Column="2"
                        Text="{Binding LondonLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
                        HorizontalAlignment="Center"
+                       Margin="12,10,8,0"
                        VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
                   Width="60" Height="60"
-                  HorizontalAlignment="Center"
+                  HorizontalAlignment="Left"
+                  Margin="-10,0,0,0"
                   VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
                             <Path   Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
@@ -167,18 +180,32 @@
                    Width="48" Height="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="New York" FontSize="14" Foreground="#222222"/>
-                            <TextBlock Text="{Binding NewYorkDisplay}" FontSize="24" Foreground="#222222"/>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Stretch">
+                            <!-- City name, centered -->
+                            <TextBlock Text="New York"
+                                       FontSize="14"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
+                            <!-- Big offset display, bold, larger, centered -->
+                            <TextBlock Text="{Binding NewYorkDisplay}"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
                         </StackPanel>
+
                         <TextBlock Grid.Column="2"
                        Text="{Binding NewYorkLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
                        HorizontalAlignment="Center"
+                       Margin="12,10,8,0"
                        VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
                   Width="60" Height="60"
                   HorizontalAlignment="Center"
+                  Margin="-20,0,0,0"
                   VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
                             <Path   Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
@@ -249,18 +276,32 @@
                    Width="48" Height="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Sydney" FontSize="14" Foreground="#222222"/>
-                            <TextBlock Text="{Binding SydneyDisplay}" FontSize="24" Foreground="#222222"/>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Stretch">
+                            <!-- City name, centered -->
+                            <TextBlock Text="Sydney"
+                                       FontSize="14"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
+                            <!-- Big offset display, bold, larger, centered -->
+                            <TextBlock Text="{Binding SydneyDisplay}"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
                         </StackPanel>
+
                         <TextBlock Grid.Column="2"
                        Text="{Binding SydneyLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
                        HorizontalAlignment="Center"
+                       Margin="12,10,8,0"
                        VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
                   Width="60" Height="60"
                   HorizontalAlignment="Center"
+                  Margin="-20,0,0,0"
                   VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
                             <Path   Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
@@ -331,18 +372,32 @@
                    Width="48" Height="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Tokyo" FontSize="14" Foreground="#222222"/>
-                            <TextBlock Text="{Binding TokyoDisplay}" FontSize="24" Foreground="#222222"/>
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Stretch">
+                            <!-- City name, centered -->
+                            <TextBlock Text="Tokyo"
+                                       FontSize="14"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
+                            <!-- Big offset display, bold, larger, centered -->
+                            <TextBlock Text="{Binding TokyoDisplay}"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="#222222"
+                                       HorizontalAlignment="Center"/>
                         </StackPanel>
+
                         <TextBlock Grid.Column="2"
                        Text="{Binding TokyoLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
                        HorizontalAlignment="Center"
+                       Margin="12,10,8,0"
                        VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
                   Width="60" Height="60"
                   HorizontalAlignment="Center"
+                  Margin="-20,0,0,0"
                   VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
                             <Path   Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
@@ -468,7 +523,7 @@
              Height="18"
              HorizontalAlignment="Right"
              VerticalAlignment="Bottom"
-             Margin="0,0,12,12"/>
+             Margin="0,0,12,-7"/>
 
             <!-- date pill on grey background (Row 2) -->
             <Border Grid.Row="2"
