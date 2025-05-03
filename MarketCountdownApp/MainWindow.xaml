@@ -21,6 +21,13 @@
             <Setter Property="Background" Value="#AAAAAA"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Currency}" Value="USD">
+                    <Setter Property="Background" Value="Crimson"/>
+                </DataTrigger>
+                <!-- When Currency == "JPY", make it gray -->
+                <DataTrigger Binding="{Binding Currency}" Value="JPY">
+                    <Setter Property="Background" Value="DarkGray"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Currency}" Value="CHF">
                     <Setter Property="Background" Value="#F39C12"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Currency}" Value="CAD">
@@ -57,6 +64,13 @@
                         </StackPanel>
                         <Ellipse Stroke="#409EFF" StrokeThickness="6" Width="60" Height="60"
                      VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+                        <!-- ← NEW: local time in grey, top-right -->
+                        <TextBlock Text="{Binding LondonLocalTime}"
+                                   Foreground="#888888"
+                                   FontSize="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Margin="0,6,75,0"/>
                     </Grid>
                 </Border>
 
@@ -71,6 +85,12 @@
                         </StackPanel>
                         <Ellipse Stroke="#EB5757" StrokeThickness="6" Width="60" Height="60"
                      VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+                        <TextBlock Text="{Binding NewYorkLocalTime}"
+                                   Foreground="#888888"
+                                   FontSize="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Margin="0,6,75,0"/>
                     </Grid>
                 </Border>
 
@@ -85,6 +105,12 @@
                         </StackPanel>
                         <Ellipse Stroke="#F08C00" StrokeThickness="6" Width="60" Height="60"
                      VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+                        <TextBlock Text="{Binding SydneyLocalTime}"
+                                   Foreground="#888888"
+                                   FontSize="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Margin="0,6,75,0"/>
                     </Grid>
                 </Border>
 
@@ -99,6 +125,12 @@
                         </StackPanel>
                         <Ellipse Stroke="#EB5757" StrokeThickness="6" Width="60" Height="60"
                      VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
+                        <TextBlock Text="{Binding TokyoLocalTime}"
+                                   Foreground="#888888"
+                                   FontSize="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Margin="0,6,75,0"/>
                     </Grid>
                 </Border>
             </UniformGrid>
@@ -140,10 +172,10 @@
             <Image
         Grid.Row="0"
         Source="pack://siteoforigin:,,,/Icons/Settings.png"
-        Width="20" Height="20"
+        Width="17" Height="17"
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
-        Margin="0,0,12,12"/>
+        Margin="0,0,12,-7"/>
         </Grid>
     </Border>
 </Window>
