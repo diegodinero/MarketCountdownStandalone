@@ -115,6 +115,53 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Grid>
+                        <!-- Glowing status indicator for London -->
+                        <Grid Width="20" Height="20"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Margin="8,8,0,0">
+
+                            <!-- Glow layer -->
+                            <Ellipse Width="20" Height="20" Opacity="0.3">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <!-- default fill if you want -->
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <!-- OPEN = green glow -->
+                                            <DataTrigger Binding="{Binding LondonStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <!-- CLOSED = red glow -->
+                                            <DataTrigger Binding="{Binding LondonStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                                <Ellipse.Effect>
+                                    <BlurEffect Radius="6"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+
+                            <!-- Center dot -->
+                            <Ellipse Width="12" Height="12">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LondonStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding LondonStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+
+                        </Grid>
 
                     </Grid>
                 </Border>
@@ -155,7 +202,53 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Grid>
+                        <!-- Glowing indicator -->
+                        <Grid Width="20" Height="20"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Margin="8,8,0,0">
 
+                            <!-- Glow layer -->
+                            <Ellipse Width="20" Height="20" Opacity="0.3">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <!-- default fill if you want -->
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <!-- OPEN = green glow -->
+                                            <DataTrigger Binding="{Binding NewYorkStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <!-- CLOSED = red glow -->
+                                            <DataTrigger Binding="{Binding NewYorkStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                                <Ellipse.Effect>
+                                    <BlurEffect Radius="6"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+
+                            <!-- Center dot -->
+                            <Ellipse Width="12" Height="12">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NewYorStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding NewYorkStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+
+                        </Grid>
                     </Grid>
                 </Border>
 
@@ -195,7 +288,53 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Grid>
+                        <!-- Glowing indicator -->
+                        <Grid Width="20" Height="20"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Margin="8,8,0,0">
 
+                            <!-- Glow layer -->
+                            <Ellipse Width="20" Height="20" Opacity="0.3">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <!-- default fill if you want -->
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <!-- OPEN = green glow -->
+                                            <DataTrigger Binding="{Binding SydneyStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <!-- CLOSED = red glow -->
+                                            <DataTrigger Binding="{Binding SydneyStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                                <Ellipse.Effect>
+                                    <BlurEffect Radius="6"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+
+                            <!-- Center dot -->
+                            <Ellipse Width="12" Height="12">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SydneyStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding SydneyStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+
+                        </Grid>
                     </Grid>
                 </Border>
 
@@ -235,7 +374,53 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Grid>
+                        <!-- Glowing indicator -->
+                        <Grid Width="20" Height="20"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Margin="8,8,0,0">
 
+                            <!-- Glow layer -->
+                            <Ellipse Width="20" Height="20" Opacity="0.3">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <!-- default fill if you want -->
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <!-- OPEN = green glow -->
+                                            <DataTrigger Binding="{Binding TokyoStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <!-- CLOSED = red glow -->
+                                            <DataTrigger Binding="{Binding TokyoStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                                <Ellipse.Effect>
+                                    <BlurEffect Radius="6"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+
+                            <!-- Center dot -->
+                            <Ellipse Width="12" Height="12">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="Gray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TokyoStatus}" Value="OPEN">
+                                                <Setter Property="Fill" Value="#40C832"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TokyoStatus}" Value="CLOSED">
+                                                <Setter Property="Fill" Value="#EB5757"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+
+                        </Grid>
                     </Grid>
                 </Border>
 
