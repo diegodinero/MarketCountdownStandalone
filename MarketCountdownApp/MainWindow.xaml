@@ -7,26 +7,23 @@
   Title="Market Countdown"
   WindowStyle="None"
   ResizeMode="NoResize"
-  Width="800"
-  Height="430"
+  Width="600"
+  Height="530"
   Background="Transparent"
   AllowsTransparency="True">
 
     <!-- ================= -->
-    <!--   Window.Resources -->
+    <!--  Window.Resources  -->
     <!-- ================= -->
     <Window.Resources>
-
-        <!-- Converter for OPEN/CLOSED ring color -->
         <local:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
-        <local:ProgressToArcConverter x:Key="ProgressToArcConverter"/>
+        <local:ProgressToArcConverter  x:Key="ProgressToArcConverter"/>
 
-        <!-- Style for currency tags -->
         <Style x:Key="CurrencyTagStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="Padding" Value="4,2"/>
-            <Setter Property="Margin" Value="5,0"/>
-            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Padding"     Value="4,2"/>
+            <Setter Property="Margin"      Value="6,0"/>
+            <Setter Property="Background"  Value="LightGray"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Currency}" Value="USD">
                     <Setter Property="Background" Value="Crimson"/>
@@ -49,12 +46,10 @@
             </Style.Triggers>
         </Style>
 
-        <!-- (Optional) style stub for local-time text -->
         <Style x:Key="LocalTimeStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Gray"/>
-            <!-- You can add DataTriggers here if you want open/closed coloring -->
+            <Setter Property="FontSize"   Value="11"/>
         </Style>
-
     </Window.Resources>
 
     <!-- ================= -->
@@ -62,77 +57,70 @@
     <!-- ================= -->
     <Border Background="#B0B0B0" CornerRadius="15" SnapsToDevicePixels="True">
         <Grid>
-            <!-- Two rows: 240px for the market tiles, rest for UP NEXT -->
+            <!-- three rows: 0=tiles, 1=list, 2=footer/date -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="240"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- ==================================== -->
-            <!--  2×2 Grid of Market Tiles (Row 0)   -->
+            <!--  2×2 Grid of Market Tiles (Row 0)    -->
             <!-- ==================================== -->
-            <UniformGrid Grid.Row="0" Rows="2" Columns="2" Margin="10">
+            <UniformGrid Grid.Row="0" Rows="2" Columns="2" Margin="8">
 
                 <!-- London Tile -->
-                <Border Background="White" CornerRadius="12" Margin="5">
+                <Border Background="White" CornerRadius="12" Margin="4">
                     <Grid>
-                        <!-- Icon -->
-                        <Image Source="pack://siteoforigin:,,,/Icons/London.png"
-                   Width="32" Height="32"
-                   Margin="10"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Left"/>
-                        <!-- Name & Offset -->
-                        <StackPanel Margin="60,5,10,5">
-                            <TextBlock Text="London" Foreground="#222222" FontSize="14"/>
-                            <TextBlock Text="{Binding LondonDisplay}"
-                                       FontSize="24"
-                                       Foreground="#222222"
-                                       HorizontalAlignment="Left"
-                                       Margin="60,5,10,5"/>
-
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                   Source="pack://siteoforigin:,,,/Icons/London.png"
+                   Width="48" Height="48"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="London"      FontSize="14" Foreground="#222222"/>
+                            <TextBlock Text="{Binding LondonDisplay}" FontSize="24" Foreground="#222222"/>
                         </StackPanel>
-                        <!-- Local Time -->
-                        <TextBlock Text="{Binding LondonLocalTime}"
+                        <TextBlock Grid.Column="2"
+                       Text="{Binding LondonLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
-                       FontSize="12"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,6,70,0"/>
-                        <!-- OPEN/CLOSED Ring + Text -->
-                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
-                            <!-- gray background ring -->
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                        <Grid Grid.Column="3"
+                  Width="60" Height="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
-                            <!-- colored progress arc -->
-                            <Path Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                                  StrokeThickness="6"
-                                  Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
-                            <!-- status text -->
+                            <Path   Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                      StrokeThickness="6"
+                      Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
                             <TextBlock Text="{Binding LondonStatus}"
-                                       Foreground="#222222"
-                                       FontSize="10"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                         FontSize="10"
+                         FontWeight="Bold"
+                         Foreground="#222222"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
                         </Grid>
-                        <!-- Glowing status indicator for London -->
-                        <Grid Width="20" Height="20"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Margin="8,8,0,0">
-
-                            <!-- Glow layer -->
+                        <!-- glowing dot -->
+                        <Grid Grid.Column="0"
+                  Width="20" Height="20"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="6">
                             <Ellipse Width="20" Height="20" Opacity="0.3">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <!-- default fill if you want -->
                                         <Setter Property="Fill" Value="Gray"/>
                                         <Style.Triggers>
-                                            <!-- OPEN = green glow -->
                                             <DataTrigger Binding="{Binding LondonStatus}" Value="OPEN">
                                                 <Setter Property="Fill" Value="#40C832"/>
                                             </DataTrigger>
-                                            <!-- CLOSED = red glow -->
                                             <DataTrigger Binding="{Binding LondonStatus}" Value="CLOSED">
                                                 <Setter Property="Fill" Value="#EB5757"/>
                                             </DataTrigger>
@@ -143,9 +131,9 @@
                                     <BlurEffect Radius="6"/>
                                 </Ellipse.Effect>
                             </Ellipse>
-
-                            <!-- Center dot -->
-                            <Ellipse Width="12" Height="12">
+                            <Ellipse Width="12" Height="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Setter Property="Fill" Value="Gray"/>
@@ -160,66 +148,62 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-
                         </Grid>
-
                     </Grid>
                 </Border>
 
-                <!-- New York Tile -->
-                <Border Background="White" CornerRadius="12" Margin="5">
+                <!-- Repeat the same structure for New York, Sydney, Tokyo -->
+                <!-- … New York … -->
+                <Border Background="White" CornerRadius="12" Margin="4">
                     <Grid>
-                        <Image Source="pack://siteoforigin:,,,/Icons/New_York.png"
-                   Width="32" Height="32" Margin="10"
-                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                        <StackPanel Margin="60,5,10,5">
-                            <TextBlock Text="New York" Foreground="#222222" FontSize="14"/>
-                            <TextBlock Text="{Binding NewYorkDisplay}"
-                                       FontSize="24"
-                                       Foreground="#222222"
-                                       HorizontalAlignment="Left"
-                                       Margin="60,5,10,5"/>
-
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                   Source="pack://siteoforigin:,,,/Icons/New_York.png"
+                   Width="48" Height="48"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="New York" FontSize="14" Foreground="#222222"/>
+                            <TextBlock Text="{Binding NewYorkDisplay}" FontSize="24" Foreground="#222222"/>
                         </StackPanel>
-                        <TextBlock Text="{Binding NewYorkLocalTime}"
+                        <TextBlock Grid.Column="2"
+                       Text="{Binding NewYorkLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
-                       FontSize="12"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
-                            <!-- gray background ring -->
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                        <Grid Grid.Column="3"
+                  Width="60" Height="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
-                            <!-- colored progress arc -->
-                            <Path Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-                                  StrokeThickness="6"
-                                  Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
-                            <!-- status text -->
+                            <Path   Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                      StrokeThickness="6"
+                      Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
                             <TextBlock Text="{Binding NewYorkStatus}"
-                                       Foreground="#222222"
-                                       FontSize="10"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                         FontSize="10"
+                         FontWeight="Bold"
+                         Foreground="#222222"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
                         </Grid>
-                        <!-- Glowing indicator -->
-                        <Grid Width="20" Height="20"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Margin="8,8,0,0">
-
-                            <!-- Glow layer -->
+                        <Grid Grid.Column="0"
+                  Width="20" Height="20"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="6">
                             <Ellipse Width="20" Height="20" Opacity="0.3">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <!-- default fill if you want -->
                                         <Setter Property="Fill" Value="Gray"/>
                                         <Style.Triggers>
-                                            <!-- OPEN = green glow -->
                                             <DataTrigger Binding="{Binding NewYorkStatus}" Value="OPEN">
                                                 <Setter Property="Fill" Value="#40C832"/>
                                             </DataTrigger>
-                                            <!-- CLOSED = red glow -->
                                             <DataTrigger Binding="{Binding NewYorkStatus}" Value="CLOSED">
                                                 <Setter Property="Fill" Value="#EB5757"/>
                                             </DataTrigger>
@@ -230,14 +214,14 @@
                                     <BlurEffect Radius="6"/>
                                 </Ellipse.Effect>
                             </Ellipse>
-
-                            <!-- Center dot -->
-                            <Ellipse Width="12" Height="12">
+                            <Ellipse Width="12" Height="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Setter Property="Fill" Value="Gray"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding NewYorStatus}" Value="OPEN">
+                                            <DataTrigger Binding="{Binding NewYorkStatus}" Value="OPEN">
                                                 <Setter Property="Fill" Value="#40C832"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding NewYorkStatus}" Value="CLOSED">
@@ -247,65 +231,61 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-
                         </Grid>
                     </Grid>
                 </Border>
 
-                <!-- Sydney Tile -->
-                <Border Background="White" CornerRadius="12" Margin="5">
+                <!-- Sydney -->
+                <Border Background="White" CornerRadius="12" Margin="4">
                     <Grid>
-                        <Image Source="pack://siteoforigin:,,,/Icons/Sydney.png"
-                   Width="32" Height="32" Margin="10"
-                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                        <StackPanel Margin="60,5,10,5">
-                            <TextBlock Text="Sydney" Foreground="#222222" FontSize="14"/>
-                            <TextBlock Text="{Binding SydneyDisplay}"
-                                       FontSize="24"
-                                       Foreground="#222222"
-                                       HorizontalAlignment="Left"
-                                       Margin="60,5,10,5"/>
-
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                   Source="pack://siteoforigin:,,,/Icons/Sydney.png"
+                   Width="48" Height="48"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Sydney" FontSize="14" Foreground="#222222"/>
+                            <TextBlock Text="{Binding SydneyDisplay}" FontSize="24" Foreground="#222222"/>
                         </StackPanel>
-                        <TextBlock Text="{Binding SydneyLocalTime}"
+                        <TextBlock Grid.Column="2"
+                       Text="{Binding SydneyLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
-                       FontSize="12"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
-                            <!-- gray background ring -->
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                        <Grid Grid.Column="3"
+                  Width="60" Height="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
-                            <!-- colored progress arc -->
-                            <Path Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-                                  StrokeThickness="6"
-                                  Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
-                            <!-- status text -->
+                            <Path   Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                      StrokeThickness="6"
+                      Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
                             <TextBlock Text="{Binding SydneyStatus}"
-                                       Foreground="#222222"
-                                       FontSize="10"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                         FontSize="10"
+                         FontWeight="Bold"
+                         Foreground="#222222"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
                         </Grid>
-                        <!-- Glowing indicator -->
-                        <Grid Width="20" Height="20"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Margin="8,8,0,0">
-
-                            <!-- Glow layer -->
+                        <Grid Grid.Column="0"
+                  Width="20" Height="20"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="6">
                             <Ellipse Width="20" Height="20" Opacity="0.3">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <!-- default fill if you want -->
                                         <Setter Property="Fill" Value="Gray"/>
                                         <Style.Triggers>
-                                            <!-- OPEN = green glow -->
                                             <DataTrigger Binding="{Binding SydneyStatus}" Value="OPEN">
                                                 <Setter Property="Fill" Value="#40C832"/>
                                             </DataTrigger>
-                                            <!-- CLOSED = red glow -->
                                             <DataTrigger Binding="{Binding SydneyStatus}" Value="CLOSED">
                                                 <Setter Property="Fill" Value="#EB5757"/>
                                             </DataTrigger>
@@ -316,9 +296,9 @@
                                     <BlurEffect Radius="6"/>
                                 </Ellipse.Effect>
                             </Ellipse>
-
-                            <!-- Center dot -->
-                            <Ellipse Width="12" Height="12">
+                            <Ellipse Width="12" Height="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Setter Property="Fill" Value="Gray"/>
@@ -333,65 +313,61 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-
                         </Grid>
                     </Grid>
                 </Border>
 
-                <!-- Tokyo Tile -->
-                <Border Background="White" CornerRadius="12" Margin="5">
+                <!-- Tokyo -->
+                <Border Background="White" CornerRadius="12" Margin="4">
                     <Grid>
-                        <Image Source="pack://siteoforigin:,,,/Icons/Tokyo.png"
-                   Width="32" Height="32" Margin="10"
-                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                        <StackPanel Margin="60,5,10,5">
-                            <TextBlock Text="Tokyo" Foreground="#222222" FontSize="14"/>
-                            <TextBlock Text="{Binding TokyoDisplay}"
-                                       FontSize="24"
-                                       Foreground="#222222"
-                                       HorizontalAlignment="Left"
-                                       Margin="60,5,10,5"/>
-
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0"
+                   Source="pack://siteoforigin:,,,/Icons/Tokyo.png"
+                   Width="48" Height="48"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="Tokyo" FontSize="14" Foreground="#222222"/>
+                            <TextBlock Text="{Binding TokyoDisplay}" FontSize="24" Foreground="#222222"/>
                         </StackPanel>
-                        <TextBlock Text="{Binding TokyoLocalTime}"
+                        <TextBlock Grid.Column="2"
+                       Text="{Binding TokyoLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
-                       FontSize="12"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
-                            <!-- gray background ring -->
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                        <Grid Grid.Column="3"
+                  Width="60" Height="60"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
                             <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
-                            <!-- colored progress arc -->
-                            <Path Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-                                  StrokeThickness="6"
-                                  Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
-                            <!-- status text -->
+                            <Path   Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                      StrokeThickness="6"
+                      Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
                             <TextBlock Text="{Binding TokyoStatus}"
-                                       Foreground="#222222"
-                                       FontSize="10"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                         FontSize="10"
+                         FontWeight="Bold"
+                         Foreground="#222222"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"/>
                         </Grid>
-                        <!-- Glowing indicator -->
-                        <Grid Width="20" Height="20"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Margin="8,8,0,0">
-
-                            <!-- Glow layer -->
+                        <Grid Grid.Column="0"
+                  Width="20" Height="20"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Margin="6">
                             <Ellipse Width="20" Height="20" Opacity="0.3">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <!-- default fill if you want -->
                                         <Setter Property="Fill" Value="Gray"/>
                                         <Style.Triggers>
-                                            <!-- OPEN = green glow -->
                                             <DataTrigger Binding="{Binding TokyoStatus}" Value="OPEN">
                                                 <Setter Property="Fill" Value="#40C832"/>
                                             </DataTrigger>
-                                            <!-- CLOSED = red glow -->
                                             <DataTrigger Binding="{Binding TokyoStatus}" Value="CLOSED">
                                                 <Setter Property="Fill" Value="#EB5757"/>
                                             </DataTrigger>
@@ -402,9 +378,9 @@
                                     <BlurEffect Radius="6"/>
                                 </Ellipse.Effect>
                             </Ellipse>
-
-                            <!-- Center dot -->
-                            <Ellipse Width="12" Height="12">
+                            <Ellipse Width="12" Height="12"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Setter Property="Fill" Value="Gray"/>
@@ -419,59 +395,100 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-
                         </Grid>
                     </Grid>
                 </Border>
-
             </UniformGrid>
 
             <!-- =================================== -->
             <!--  “UP NEXT” Section (Row 1)          -->
             <!-- =================================== -->
-            <Border Grid.Row="1" Background="White" CornerRadius="12" Margin="10">
-                <StackPanel>
+            <Border Grid.Row="1"
+              Background="White"
+              CornerRadius="12"
+              Margin="8"
+              Padding="0">
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <!-- Centered “UP NEXT” Header -->
-                    <Grid Margin="10,5">
+                    <!-- header -->
+                    <Grid Grid.Row="0" Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Grid.Column="1" Text="UP NEXT" Foreground="#222222"
-                       FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1"
+                       Text="UP NEXT"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="#222222"
+                       VerticalAlignment="Center"/>
                         <Rectangle Grid.Column="2" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </Grid>
 
-                    <!-- Event List with Currency Tags -->
-                    <ListView ItemsSource="{Binding UpcomingEvents}" Margin="10">
+                    <!-- scrollable list -->
+                    <ListView Grid.Row="1"
+                    ItemsSource="{Binding UpcomingEvents}"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,2">
-                                    <TextBlock Text="{Binding Time}" Foreground="#222222" Width="80"/>
-                                    <Border Style="{StaticResource CurrencyTagStyle}">
-                                        <TextBlock Text="{Binding Currency}" Foreground="White" FontSize="12"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="{Binding Time}"
+                             FontSize="13"
+                             Foreground="#222222"
+                             Width="70"/>
+                                    <Border Style="{StaticResource CurrencyTagStyle}"
+                          VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Currency}"
+                               FontSize="12"
+                               FontWeight="Bold"
+                               Foreground="White"/>
                                     </Border>
-                                    <TextBlock Text="{Binding Description}" Foreground="#222222" Margin="5,0,0,0"/>
+                                    <TextBlock Text="{Binding Description}"
+                             FontSize="13"
+                             Foreground="#222222"
+                             Margin="8,0,0,0"
+                             VerticalAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-
-                </StackPanel>
+                </Grid>
             </Border>
 
-            <!-- Settings Gear in Top Panel -->
-            <Image
-        Grid.Row="0"
-        Source="pack://siteoforigin:,,,/Icons/Settings.png"
-        Width="18"
-        Height="18"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Bottom"
-        Margin="0,0,12,-7"/>
+            <!-- settings gear in bottom-right of tile area -->
+            <Image Grid.Row="0"
+             Source="pack://siteoforigin:,,,/Icons/Settings.png"
+             Width="18"
+             Height="18"
+             HorizontalAlignment="Right"
+             VerticalAlignment="Bottom"
+             Margin="0,0,12,12"/>
+
+            <!-- date pill on grey background (Row 2) -->
+            <Border Grid.Row="2"
+              Background="White"
+              CornerRadius="8"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Center"
+              Margin="12"
+              Padding="6,2">
+                <TextBlock Text="{Binding TodayDate}"
+                   FontSize="12"
+                   Foreground="#222222"/>
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000"
+                            BlurRadius="4"
+                            Opacity="0.2"
+                            Direction="270"
+                            ShadowDepth="1"/>
+                </Border.Effect>
+            </Border>
         </Grid>
     </Border>
 </Window>

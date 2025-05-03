@@ -50,6 +50,7 @@ namespace MarketCountdownApp
         public double NewYorkProgress => ComputeProgress("New York");
         public double SydneyProgress => ComputeProgress("Sydney");
         public double TokyoProgress => ComputeProgress("Tokyo");
+        public string TodayDate => DateTime.Now.ToString("d MMM");
 
         public ObservableCollection<EventItem> UpcomingEvents { get; }
             = new ObservableCollection<EventItem>();
