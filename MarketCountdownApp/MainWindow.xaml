@@ -17,6 +17,8 @@
     <Window.Resources>
         <local:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
         <local:ProgressToArcConverter  x:Key="ProgressToArcConverter"/>
+        <local:ImpactToBrushConverter x:Key="ImpactToBrushConverter" />
+
 
         <Style x:Key="CurrencyTagStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="4"/>
@@ -513,6 +515,13 @@
                                FontWeight="Bold"
                                Foreground="White"/>
                                     </Border>
+                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                               Text=""                   
+                                               FontSize="14"
+                                               Margin="6,0,6,0"
+                                               VerticalAlignment="Center"
+                                               Foreground="{Binding Impact, Converter={StaticResource ImpactToBrushConverter}}"/>
+
                                     <TextBlock Text="{Binding Title}"
                              FontSize="13"
                              Foreground="#222222"
