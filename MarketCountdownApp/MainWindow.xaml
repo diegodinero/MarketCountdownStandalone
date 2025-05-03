@@ -11,6 +11,31 @@
   Background="Transparent"
   AllowsTransparency="True">
 
+    <!-- Styles -->
+    <Window.Resources>
+        <!-- Currency tag style -->
+        <Style x:Key="CurrencyTagStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Background" Value="#AAAAAA"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Currency}" Value="USD">
+                    <Setter Property="Background" Value="#F39C12"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Currency}" Value="CAD">
+                    <Setter Property="Background" Value="#9B59B6"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Currency}" Value="EUR">
+                    <Setter Property="Background" Value="#2ECC71"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Currency}" Value="AUD">
+                    <Setter Property="Background" Value="#3498DB"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <!-- Panel grey background -->
     <Border Background="#B0B0B0" CornerRadius="15" SnapsToDevicePixels="True">
         <Grid>
@@ -19,159 +44,106 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- 2x2 Grid of Market Timers -->
+            <!-- 2×2 Grid of Market Timers -->
             <UniformGrid Rows="2" Columns="2" Margin="10" Grid.Row="0">
-
-                <!-- London (open / blue ring) -->
+                <!-- London -->
                 <Border Background="#FFFFFF" CornerRadius="12" Margin="5">
                     <Grid>
-                        <Image
-                            Source="pack://siteoforigin:,,,/Icons/London.png"
-                            Width="32" Height="32"
-                            Margin="10"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"/>
+                        <Image Source="pack://siteoforigin:,,,/Icons/London.png" Width="32" Height="32"
+                   Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         <StackPanel Margin="60,5,10,5">
                             <TextBlock Text="London" Foreground="#222222" FontSize="14"/>
                             <TextBlock Text="{Binding LondonOffset}" Foreground="#222222" FontSize="24"/>
                         </StackPanel>
-                        <Ellipse Stroke="#409EFF"
-                     StrokeThickness="6"
-                     Width="60" Height="60"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right"
-                     Margin="0,5,10,0"/>
+                        <Ellipse Stroke="#409EFF" StrokeThickness="6" Width="60" Height="60"
+                     VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
                     </Grid>
                 </Border>
 
-                <!-- New York (closed / red ring) -->
+                <!-- New York -->
                 <Border Background="#FFFFFF" CornerRadius="12" Margin="5">
                     <Grid>
-                        <Image
-                            Source="pack://siteoforigin:,,,/Icons/New_York.png"
-                            Width="32" Height="32"
-                            Margin="10"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"/>
+                        <Image Source="pack://siteoforigin:,,,/Icons/New_York.png" Width="32" Height="32"
+                   Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         <StackPanel Margin="60,5,10,5">
                             <TextBlock Text="New York" Foreground="#222222" FontSize="14"/>
                             <TextBlock Text="{Binding NewYorkOffset}" Foreground="#222222" FontSize="24"/>
                         </StackPanel>
-                        <Ellipse Stroke="#EB5757"
-                     StrokeThickness="6"
-                     Width="60" Height="60"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right"
-                     Margin="0,5,10,0"/>
+                        <Ellipse Stroke="#EB5757" StrokeThickness="6" Width="60" Height="60"
+                     VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
                     </Grid>
                 </Border>
 
-                <!-- Sydney (closed / orange ring) -->
+                <!-- Sydney -->
                 <Border Background="#FFFFFF" CornerRadius="12" Margin="5">
                     <Grid>
-                        <Image
-                            Source="pack://siteoforigin:,,,/Icons/Sydney.png"
-                            Width="32" Height="32"
-                            Margin="10"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"/>
+                        <Image Source="pack://siteoforigin:,,,/Icons/Sydney.png" Width="32" Height="32"
+                   Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         <StackPanel Margin="60,5,10,5">
                             <TextBlock Text="Sydney" Foreground="#222222" FontSize="14"/>
                             <TextBlock Text="{Binding SydneyOffset}" Foreground="#222222" FontSize="24"/>
                         </StackPanel>
-                        <Ellipse Stroke="#F08C00"
-                     StrokeThickness="6"
-                     Width="60" Height="60"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right"
-                     Margin="0,5,10,0"/>
+                        <Ellipse Stroke="#F08C00" StrokeThickness="6" Width="60" Height="60"
+                     VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
                     </Grid>
                 </Border>
 
-                <!-- Tokyo (closed / red ring) -->
+                <!-- Tokyo -->
                 <Border Background="#FFFFFF" CornerRadius="12" Margin="5">
                     <Grid>
-                        <Image
-                            Source="pack://siteoforigin:,,,/Icons/Tokyo.png"
-                            Width="32" Height="32"
-                            Margin="10"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"/>
+                        <Image Source="pack://siteoforigin:,,,/Icons/Tokyo.png" Width="32" Height="32"
+                   Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         <StackPanel Margin="60,5,10,5">
                             <TextBlock Text="Tokyo" Foreground="#222222" FontSize="14"/>
                             <TextBlock Text="{Binding TokyoOffset}" Foreground="#222222" FontSize="24"/>
                         </StackPanel>
-                        <Ellipse Stroke="#EB5757"
-                     StrokeThickness="6"
-                     Width="60" Height="60"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Right"
-                     Margin="0,5,10,0"/>
+                        <Ellipse Stroke="#EB5757" StrokeThickness="6" Width="60" Height="60"
+                     VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,10,0"/>
                     </Grid>
                 </Border>
-
             </UniformGrid>
 
-            <!-- “UP NEXT” List (white background) -->
-            <Border Grid.Row="1"
-                    Background="#FFFFFF"
-                    CornerRadius="12"
-                    Margin="10">
+            <!-- UP NEXT List -->
+            <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="12" Margin="10">
                 <StackPanel>
-                    <!-- Centered header with lines -->
+                    <!-- Header with centered lines -->
                     <Grid Margin="10,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <!-- Left line -->
-                        <Rectangle Grid.Column="0"
-                                   Height="1"
-                                   Fill="#222222"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,5,0"/>
-
-                        <!-- Center text -->
-                        <TextBlock Grid.Column="1"
-                                   Text="UP NEXT"
-                                   Foreground="#222222"
-                                   FontSize="16"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Center"/>
-
-                        <!-- Right line -->
-                        <Rectangle Grid.Column="2"
-                                   Height="1"
-                                   Fill="#222222"
-                                   VerticalAlignment="Center"
-                                   Margin="5,0,0,0"/>
+                        <Rectangle Grid.Column="0" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Grid.Column="1" Text="UP NEXT" Foreground="#222222"
+                       FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <Rectangle Grid.Column="2" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </Grid>
 
-                    <!-- The actual list -->
-                    <ListView ItemsSource="{Binding UpcomingEvents}"
-                              Margin="10">
+                    <!-- Event list with currency tags -->
+                    <ListView ItemsSource="{Binding UpcomingEvents}" Margin="10">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,2">
-                                    <TextBlock Text="{Binding Time}"     Foreground="#222222" Width="80"/>
-                                    <TextBlock Text="{Binding Currency}" Foreground="#222222" Width="80"/>
-                                    <TextBlock Text="{Binding Description}" Foreground="#222222"/>
+                                    <TextBlock Text="{Binding Time}" Foreground="#222222" Width="80"/>
+                                    <Border Style="{StaticResource CurrencyTagStyle}">
+                                        <TextBlock Text="{Binding Currency}" Foreground="White" FontSize="12"/>
+                                    </Border>
+                                    <TextBlock Text="{Binding Description}" Foreground="#222222" Margin="5,0,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackPanel>
             </Border>
-            <!-- SETTINGS GEAR, bottom-right of the top panel -->
+
+            <!-- Settings gear in bottom-right of top panel -->
             <Image
-                Grid.Row="0"
-                Source="pack://siteoforigin:,,,/Icons/Settings.png"
-                Width="20"
-                Height="20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="24,24,12,-7"/>
+        Grid.Row="0"
+        Source="pack://siteoforigin:,,,/Icons/Settings.png"
+        Width="20" Height="20"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Margin="0,0,12,12"/>
         </Grid>
     </Border>
 </Window>
