@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
+    <LangVersion>9.0</LangVersion>
     <AssemblyName>MarketCountdownApp</AssemblyName>
     <RootNamespace>MarketCountdownApp</RootNamespace>
   </PropertyGroup>
@@ -27,5 +28,9 @@
     <None Update="Icons\Tokyo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ensure HttpClient is available -->
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 </Project>

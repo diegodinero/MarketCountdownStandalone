@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Window
   x:Class="MarketCountdownApp.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -67,8 +66,14 @@
             <!-- ==================================== -->
             <!--  2×2 Grid of Market Tiles (Row 0)    -->
             <!-- ==================================== -->
-            <UniformGrid Grid.Row="0" Rows="2" Columns="2" Margin="8">
-
+            <UniformGrid
+                Grid.Row="0"
+                Rows="2"
+                Columns="2"
+                Margin="8"
+                DataContext="{Binding MarketVM}">
+                <!-- moved into the start‑tag -->
+            
                 <!-- London Tile -->
                 <Border Background="White" CornerRadius="12" Margin="4">
                     <Grid>
@@ -508,7 +513,7 @@
                                FontWeight="Bold"
                                Foreground="White"/>
                                     </Border>
-                                    <TextBlock Text="{Binding Description}"
+                                    <TextBlock Text="{Binding Title}"
                              FontSize="13"
                              Foreground="#222222"
                              Margin="8,0,0,0"

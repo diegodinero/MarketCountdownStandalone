@@ -7,7 +7,7 @@ namespace MarketCountdownApp
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MarketCountdownViewModel();
+            DataContext = new MainWindowViewModel();
         }
     }
 }
