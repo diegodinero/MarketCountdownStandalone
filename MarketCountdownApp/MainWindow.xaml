@@ -112,19 +112,49 @@
 
             </UniformGrid>
 
-            <!-- "UP NEXT" List (white background) -->
-            <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="12" Margin="10">
+            <!-- “UP NEXT” List (white background) -->
+            <Border Grid.Row="1"
+                    Background="#FFFFFF"
+                    CornerRadius="12"
+                    Margin="10">
                 <StackPanel>
-                    <TextBlock Text="UP NEXT"
-                     Foreground="#222222"
-                     FontSize="16"
-                     FontWeight="Bold"
-                     Margin="10,5"/>
-                    <ListView ItemsSource="{Binding UpcomingEvents}" Margin="10">
+                    <!-- Centered header with lines -->
+                    <Grid Margin="10,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!-- Left line -->
+                        <Rectangle Grid.Column="0"
+                                   Height="1"
+                                   Fill="#222222"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,5,0"/>
+
+                        <!-- Center text -->
+                        <TextBlock Grid.Column="1"
+                                   Text="UP NEXT"
+                                   Foreground="#222222"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"/>
+
+                        <!-- Right line -->
+                        <Rectangle Grid.Column="2"
+                                   Height="1"
+                                   Fill="#222222"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <!-- The actual list -->
+                    <ListView ItemsSource="{Binding UpcomingEvents}"
+                              Margin="10">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,2">
-                                    <TextBlock Text="{Binding Time}" Foreground="#222222" Width="80"/>
+                                    <TextBlock Text="{Binding Time}"     Foreground="#222222" Width="80"/>
                                     <TextBlock Text="{Binding Currency}" Foreground="#222222" Width="80"/>
                                     <TextBlock Text="{Binding Description}" Foreground="#222222"/>
                                 </StackPanel>
@@ -133,7 +163,15 @@
                     </ListView>
                 </StackPanel>
             </Border>
-
+            <!-- SETTINGS GEAR, bottom-right of the top panel -->
+            <Image
+                Grid.Row="0"
+                Source="pack://siteoforigin:,,,/Icons/Settings.png"
+                Width="20"
+                Height="20"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="24,24,12,-7"/>
         </Grid>
     </Border>
 </Window>
