@@ -19,6 +19,12 @@ namespace MarketCountdownApp
         public string SydneyLocalTime { get; private set; }
         public string TokyoLocalTime { get; private set; }
 
+        // New “OPEN” / “CLOSED” status properties
+        public string LondonStatus => IsOpen("London") ? "OPEN" : "CLOSED";
+        public string NewYorkStatus => IsOpen("New York") ? "OPEN" : "CLOSED";
+        public string SydneyStatus => IsOpen("Sydney") ? "OPEN" : "CLOSED";
+        public string TokyoStatus => IsOpen("Tokyo") ? "OPEN" : "CLOSED";
+
         public ObservableCollection<EventItem> UpcomingEvents { get; }
             = new ObservableCollection<EventItem>();
 
@@ -52,6 +58,11 @@ namespace MarketCountdownApp
             OnPropertyChanged(nameof(SydneyLocalTime));
             OnPropertyChanged(nameof(TokyoLocalTime));
 
+            OnPropertyChanged(nameof(LondonStatus));
+            OnPropertyChanged(nameof(NewYorkStatus));
+            OnPropertyChanged(nameof(SydneyStatus));
+            OnPropertyChanged(nameof(TokyoStatus));
+
             // Refresh “up next” list
             UpcomingEvents.Clear();
             foreach (var ev in Scraper.ForexFactoryScraper.GetUpcoming(5))
@@ -80,6 +91,34 @@ namespace MarketCountdownApp
             if (nowUtc >= next) next = next.AddDays(1);
             var span = next - nowUtc;
             return $"{(int)span.TotalHours:00}:{span.Minutes:00}";
+        }
+
+        private bool IsOpen(string market)
+        {
+            // TODO: your real market-hours logic
+            // Example: open daily 08:00–22:00 local
+            var nowUtc = DateTime.UtcNow;
+            TimeZoneInfo tz;
+            switch (market)
+            {
+                case "London":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+                    break;
+                case "New York":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    break;
+                case "Sydney":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+                    break;
+                case "Tokyo":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+                    break;
+                default:
+                    tz = TimeZoneInfo.Utc;
+                    break;
+            }
+            var local = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
+            return local >= TimeSpan.FromHours(8) && local < TimeSpan.FromHours(22);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
