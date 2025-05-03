@@ -7,6 +7,26 @@ namespace MarketCountdownApp
 {
     public class MarketCountdownViewModel : INotifyPropertyChanged
     {
+        public string LondonDisplay => GetDisplay("London",
+            "GMT Standard Time",      // Windows TZ ID
+            new TimeSpan(8, 0, 0),     // opens 08:00 local
+            new TimeSpan(16, 0, 0));   // closes 16:00 local
+
+        public string NewYorkDisplay => GetDisplay("New York",
+            "Eastern Standard Time",
+            new TimeSpan(8, 0, 0),
+            new TimeSpan(16, 0, 0));
+
+        public string SydneyDisplay => GetDisplay("Sydney",
+            "AUS Eastern Standard Time",
+            new TimeSpan(8, 0, 0),
+            new TimeSpan(16, 0, 0));
+
+        public string TokyoDisplay => GetDisplay("Tokyo",
+            "Tokyo Standard Time",
+            new TimeSpan(8, 0, 0),
+            new TimeSpan(16, 0, 0));
+
         // Offsets
         public string LondonOffset => GetOffset("London");
         public string NewYorkOffset => GetOffset("New York");
@@ -48,6 +68,11 @@ namespace MarketCountdownApp
 
         private void Refresh()
         {
+            OnPropertyChanged(nameof(LondonDisplay));
+            OnPropertyChanged(nameof(NewYorkDisplay));
+            OnPropertyChanged(nameof(SydneyDisplay));
+            OnPropertyChanged(nameof(TokyoDisplay));
+
             // Update offsets
             OnPropertyChanged(nameof(LondonOffset));
             OnPropertyChanged(nameof(NewYorkOffset));
@@ -168,6 +193,33 @@ namespace MarketCountdownApp
             if (localTime >= closeTime) return 1.0;  // already closed
             return (localTime - openTime).TotalMinutes
                    / (closeTime - openTime).TotalMinutes;
+        }
+
+        private string GetDisplay(string market, string tzId, TimeSpan open, TimeSpan close)
+        {
+            var nowUtc = DateTime.UtcNow;
+            var tz = TimeZoneInfo.FindSystemTimeZoneById(tzId);
+            var local = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
+
+            bool isOpenToday = local >= open && local < close;
+            TimeSpan span;
+            string sign;
+            if (isOpenToday)
+            {
+                // time since open
+                span = local - open;
+                sign = "+";
+            }
+            else
+            {
+                // time until next open
+                TimeSpan nextOpen = local < open
+                    ? open
+                    : open.Add(TimeSpan.FromDays(1));
+                span = nextOpen - local;
+                sign = "-";
+            }
+            return $"{sign}{(int)span.TotalHours:00}:{span.Minutes:00}";
         }
 
 
