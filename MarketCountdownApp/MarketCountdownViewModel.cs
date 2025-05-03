@@ -25,6 +25,12 @@ namespace MarketCountdownApp
         public string SydneyStatus => IsOpen("Sydney") ? "OPEN" : "CLOSED";
         public string TokyoStatus => IsOpen("Tokyo") ? "OPEN" : "CLOSED";
 
+        // Percent of the open window that’s elapsed (0.0 = just opened, 1.0 = about to close)
+        public double LondonProgress => ComputeProgress("London");
+        public double NewYorkProgress => ComputeProgress("New York");
+        public double SydneyProgress => ComputeProgress("Sydney");
+        public double TokyoProgress => ComputeProgress("Tokyo");
+
         public ObservableCollection<EventItem> UpcomingEvents { get; }
             = new ObservableCollection<EventItem>();
 
@@ -62,6 +68,11 @@ namespace MarketCountdownApp
             OnPropertyChanged(nameof(NewYorkStatus));
             OnPropertyChanged(nameof(SydneyStatus));
             OnPropertyChanged(nameof(TokyoStatus));
+
+            OnPropertyChanged(nameof(LondonProgress));
+            OnPropertyChanged(nameof(NewYorkProgress));
+            OnPropertyChanged(nameof(SydneyProgress));
+            OnPropertyChanged(nameof(TokyoProgress));
 
             // Refresh “up next” list
             UpcomingEvents.Clear();
@@ -120,6 +131,45 @@ namespace MarketCountdownApp
             var local = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
             return local >= TimeSpan.FromHours(8) && local < TimeSpan.FromHours(22);
         }
+
+        private double ComputeProgress(string market)
+        {
+            // 1) Pick the right time zone for this market
+            TimeZoneInfo tz;
+            switch (market)
+            {
+                case "London":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+                    break;
+                case "New York":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    break;
+                case "Sydney":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+                    break;
+                case "Tokyo":
+                    tz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
+                    break;
+                default:
+                    tz = TimeZoneInfo.Utc;
+                    break;
+            }
+
+            // 2) Convert now to that local time
+            DateTime nowUtc = DateTime.UtcNow;
+            TimeSpan localTime = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
+
+            // 3) Define your market open/close window
+            TimeSpan openTime = TimeSpan.FromHours(8);   // e.g. 08:00
+            TimeSpan closeTime = TimeSpan.FromHours(16);  // e.g. 16:00
+
+            // 4) Compute a 0.0–1.0 ratio
+            if (localTime < openTime) return 0.0;  // not opened yet
+            if (localTime >= closeTime) return 1.0;  // already closed
+            return (localTime - openTime).TotalMinutes
+                   / (closeTime - openTime).TotalMinutes;
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string n) =>

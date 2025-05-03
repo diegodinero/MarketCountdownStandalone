@@ -19,6 +19,7 @@
 
         <!-- Converter for OPEN/CLOSED ring color -->
         <local:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
+        <local:ProgressToArcConverter x:Key="ProgressToArcConverter"/>
 
         <!-- Style for currency tags -->
         <Style x:Key="CurrencyTagStyle" TargetType="Border">
@@ -94,19 +95,22 @@
                        VerticalAlignment="Top"
                        Margin="0,6,70,0"/>
                         <!-- OPEN/CLOSED Ring + Text -->
-                        <Grid Width="60" Height="60"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"
-                  Margin="0,5,10,0">
-                            <Ellipse Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
+                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
+                            <!-- gray background ring -->
+                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <!-- colored progress arc -->
+                            <Path Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                  StrokeThickness="6"
+                                  Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <!-- status text -->
                             <TextBlock Text="{Binding LondonStatus}"
-                         Foreground="#222222"
-                         FontSize="10"
-                         FontWeight="Bold"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
+                                       Foreground="#222222"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
+
                     </Grid>
                 </Border>
 
@@ -126,19 +130,22 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"
-                  Margin="0,5,10,0">
-                            <Ellipse Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
+                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
+                            <!-- gray background ring -->
+                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <!-- colored progress arc -->
+                            <Path Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                  StrokeThickness="6"
+                                  Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <!-- status text -->
                             <TextBlock Text="{Binding NewYorkStatus}"
-                         Foreground="#222222"
-                         FontSize="10"
-                         FontWeight="Bold"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
+                                       Foreground="#222222"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
+
                     </Grid>
                 </Border>
 
@@ -158,19 +165,22 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"
-                  Margin="0,5,10,0">
-                            <Ellipse Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
+                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
+                            <!-- gray background ring -->
+                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <!-- colored progress arc -->
+                            <Path Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                  StrokeThickness="6"
+                                  Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <!-- status text -->
                             <TextBlock Text="{Binding SydneyStatus}"
-                         Foreground="#222222"
-                         FontSize="10"
-                         FontWeight="Bold"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
+                                       Foreground="#222222"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
+
                     </Grid>
                 </Border>
 
@@ -190,19 +200,22 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        Margin="0,6,70,0"/>
-                        <Grid Width="60" Height="60"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"
-                  Margin="0,5,10,0">
-                            <Ellipse Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
+                        <Grid Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
+                            <!-- gray background ring -->
+                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <!-- colored progress arc -->
+                            <Path Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                  StrokeThickness="6"
+                                  Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <!-- status text -->
                             <TextBlock Text="{Binding TokyoStatus}"
-                         Foreground="#222222"
-                         FontSize="10"
-                         FontWeight="Bold"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
+                                       Foreground="#222222"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
+
                     </Grid>
                 </Border>
 
