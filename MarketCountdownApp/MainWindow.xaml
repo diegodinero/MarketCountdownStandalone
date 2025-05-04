@@ -509,6 +509,7 @@
 
           <!-- Aligned, scrollable list -->
           <ListView
+              x:Name="EventsListView"
               Grid.Row="1"
               ItemsSource="{Binding UpcomingEvents}"
               ScrollViewer.VerticalScrollBarVisibility="Hidden">

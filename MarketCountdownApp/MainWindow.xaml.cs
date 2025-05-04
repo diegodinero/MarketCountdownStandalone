@@ -14,37 +14,55 @@ namespace MarketCountdownApp
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+            ApplyFilter();
         }
 
         private void OpenSettings_Click(object sender, MouseButtonEventArgs e)
         {
             SettingsOverlay.Visibility = Visibility.Visible;
+            
         }
 
         private void CloseSettings_Click(object sender, RoutedEventArgs e)
         {
-            // rebuild allowed currencies
-            var allowed = new List<string>();
-            if (AUDCheck.IsChecked == true) allowed.Add("AUD");
-            if (CADCheck.IsChecked == true) allowed.Add("CAD");
-            if (CHFCheck.IsChecked == true) allowed.Add("CHF");
-            if (CNYCheck.IsChecked == true) allowed.Add("CNY");
-            if (EURCheck.IsChecked == true) allowed.Add("EUR");
-            if (GBPCheck.IsChecked == true) allowed.Add("GBP");
-            if (JPYCheck.IsChecked == true) allowed.Add("JPY");
-            if (NZDCheck.IsChecked == true) allowed.Add("NZD");
-            if (USDCheck.IsChecked == true) allowed.Add("USD");
+            SettingsOverlay.Visibility = Visibility.Collapsed;
+            ApplyFilter();
+        }
 
-            // rebuild allowed impacts
+        private void ApplyFilter()
+        {
+            // build allowed currencies from checkboxes
+            var allowedCurrencies = new List<string>();
+            if (AUDCheck.IsChecked == true) allowedCurrencies.Add("AUD");
+            if (CADCheck.IsChecked == true) allowedCurrencies.Add("CAD");
+            if (CHFCheck.IsChecked == true) allowedCurrencies.Add("CHF");
+            if (CNYCheck.IsChecked == true) allowedCurrencies.Add("CNY");
+            if (EURCheck.IsChecked == true) allowedCurrencies.Add("EUR");
+            if (GBPCheck.IsChecked == true) allowedCurrencies.Add("GBP");
+            if (JPYCheck.IsChecked == true) allowedCurrencies.Add("JPY");
+            if (NZDCheck.IsChecked == true) allowedCurrencies.Add("NZD");
+            if (USDCheck.IsChecked == true) allowedCurrencies.Add("USD");
+
+            // build allowed impacts from checkboxes
             var allowedImpacts = new List<string>();
             if (HighImpactCheck.IsChecked == true) allowedImpacts.Add("High");
             if (MediumImpactCheck.IsChecked == true) allowedImpacts.Add("Medium");
             if (LowImpactCheck.IsChecked == true) allowedImpacts.Add("Low");
             if (HolidayImpactCheck.IsChecked == true) allowedImpacts.Add("Holiday");
 
-            // TODO: apply these lists to filter your UpcomingEvents
-            SettingsOverlay.Visibility = Visibility.Collapsed;
-            
+            // get view and apply filter
+            var view = CollectionViewSource.GetDefaultView(EventsListView.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = obj =>
+                {
+                    if (obj is ForexEvent ev)
+                        return allowedCurrencies.Contains(ev.Currency)
+                               && allowedImpacts.Contains(ev.Impact);
+                    return false;
+                };
+                view.Refresh();
+            }
         }
     }
 
