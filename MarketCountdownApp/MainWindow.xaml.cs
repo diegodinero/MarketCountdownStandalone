@@ -54,8 +54,7 @@ namespace MarketCountdownApp
 
         private void OnExpandClick(object sender, MouseButtonEventArgs e)
         {
-            // make the grey background appear
-            MainBorder.Background = new SolidColorBrush(Color.FromRgb(176, 176, 176));  // #B0B0B0
+            
 
             MainContent.Visibility = Visibility.Visible;
             UpNextContent.Visibility = Visibility.Visible;

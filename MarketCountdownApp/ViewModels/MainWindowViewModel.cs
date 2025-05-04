@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;        // ← add
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Linq;
 
 namespace MarketCountdownApp
 {
-    public class MainWindowViewModel
+    // ← implement INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
-        // expose your existing VM for the top tiles:
         public MarketCountdownViewModel MarketVM { get; } = new MarketCountdownViewModel();
 
-        // collection bound to the "Up Next" ListView:
         public ObservableCollection<ForexEvent> UpcomingEvents { get; }
             = new ObservableCollection<ForexEvent>();
 
-        // bound to the bottom date pill:
+        private bool isDarkMode;
+        public bool IsDarkMode
+        {
+            get => isDarkMode;
+            set
+            {
+                if (isDarkMode == value) return;
+                isDarkMode = value;
+                OnPropertyChanged(nameof(IsDarkMode));    // ← raise notification
+
+                if (Application.Current is App app)
+                    app.ApplyTheme(isDarkMode);
+
+            }
+        }
+
         public string TodayDate => DateTime.Now.ToString("d MMM");
 
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";
@@ -26,12 +42,10 @@ namespace MarketCountdownApp
 
         public MainWindowViewModel()
         {
-            // re‑fetch every 5 minutes:
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(5) };
             _timer.Tick += async (_, __) => await FetchEventsAsync();
             _timer.Start();
 
-            // initial load:
             _ = FetchEventsAsync();
         }
 
@@ -90,9 +104,13 @@ namespace MarketCountdownApp
                 // swallow or surface errors as you like
             }
         }
+
+        // ← INotifyPropertyChanged boilerplate ↓↓↓
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    // reuse or move your ForexEvent class here:
     public class ForexEvent
     {
         public DateTime Date { get; set; }

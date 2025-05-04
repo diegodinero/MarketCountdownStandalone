@@ -90,7 +90,7 @@
     </Window.Resources>
 
     <Border x:Name="MainBorder"
-            Background="Transparent"
+            Background="{DynamicResource PanelBackgroundBrush}"
             CornerRadius="15"
             SnapsToDevicePixels="True">
         <Grid x:Name="RootGrid">
@@ -111,7 +111,7 @@
                 x:Name="DragBar"
                 Grid.Row="0"
                 HorizontalAlignment="Center"
-                Background="White"
+                Background="{DynamicResource CardBackgroundBrush}"
                 CornerRadius="16"
                 Padding="4"
                 Margin="4">
@@ -169,7 +169,7 @@
                 <!-- moved into the start‑tag -->
             
                 <!-- London Tile -->
-                <Border Background="White" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -189,13 +189,13 @@
                             <!-- City name, centered -->
                             <TextBlock Text="London"
                                        FontSize="14"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding LondonDisplay}"
                                        FontSize="32"
                                        FontWeight="Bold"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
                         <TextBlock Grid.Column="2"
@@ -218,7 +218,7 @@
                             <TextBlock Text="{Binding LondonStatus}"
                          FontSize="10"
                          FontWeight="Bold"
-                         Foreground="#222222"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"/>
                         </Grid>
@@ -269,7 +269,7 @@
 
                 <!-- Repeat the same structure for New York, Sydney, Tokyo -->
                 <!-- … New York … -->
-                <Border Background="White" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -289,13 +289,13 @@
                             <!-- City name, centered -->
                             <TextBlock Text="New York"
                                        FontSize="14"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding NewYorkDisplay}"
                                        FontSize="32"
                                        FontWeight="Bold"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
 
@@ -319,7 +319,7 @@
                             <TextBlock Text="{Binding NewYorkStatus}"
                          FontSize="10"
                          FontWeight="Bold"
-                         Foreground="#222222"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"/>
                         </Grid>
@@ -368,7 +368,7 @@
                 </Border>
 
                 <!-- Sydney -->
-                <Border Background="White" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -388,13 +388,13 @@
                             <!-- City name, centered -->
                             <TextBlock Text="Sydney"
                                        FontSize="14"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding SydneyDisplay}"
                                        FontSize="32"
                                        FontWeight="Bold"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
 
@@ -418,7 +418,7 @@
                             <TextBlock Text="{Binding SydneyStatus}"
                          FontSize="10"
                          FontWeight="Bold"
-                         Foreground="#222222"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"/>
                         </Grid>
@@ -467,7 +467,7 @@
                 </Border>
 
                 <!-- Tokyo -->
-                <Border Background="White" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -487,13 +487,13 @@
                             <!-- City name, centered -->
                             <TextBlock Text="Tokyo"
                                        FontSize="14"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding TokyoDisplay}"
                                        FontSize="32"
                                        FontWeight="Bold"
-                                       Foreground="#222222"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
 
@@ -517,7 +517,7 @@
                             <TextBlock Text="{Binding TokyoStatus}"
                          FontSize="10"
                          FontWeight="Bold"
-                         Foreground="#222222"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Center"/>
                         </Grid>
@@ -573,7 +573,7 @@
         Grid.Row="2"
         x:Name="UpNextContent"
         Visibility="Collapsed"
-        Background="White"
+        Background="{DynamicResource CardBackgroundBrush}"
         CornerRadius="12"
         Margin="8"
         Padding="0">
@@ -590,14 +590,14 @@
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Rectangle Grid.Column="0" Height="1" Fill="{DynamicResource CardBackgroundBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
             <TextBlock Grid.Column="1"
                        Text="UP NEXT"
                        FontSize="16"
                        FontWeight="Bold"
-                       Foreground="#222222"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
                        VerticalAlignment="Center"/>
-            <Rectangle Grid.Column="2" Height="1" Fill="#222222" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <Rectangle Grid.Column="2" Height="1" Fill="{DynamicResource CardBackgroundBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
           </Grid>
 
           <!-- Aligned, scrollable list -->
@@ -636,7 +636,7 @@
                   <TextBlock Grid.Column="0"
                              Text="{Binding Time}"
                              FontSize="13"
-                             Foreground="#222222"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Right"
                              Margin="0,0,8,0"/>
@@ -649,7 +649,7 @@
                     <TextBlock Text="{Binding Currency}"
                                FontSize="12"
                                FontWeight="Bold"
-                               Foreground="White"/>
+                               Foreground="{DynamicResource CardBackgroundBrush}"/>
                   </Border>
 
                   <!-- 3) Folder icon, colored by Impact -->
@@ -665,7 +665,7 @@
                   <TextBlock Grid.Column="3"
                              Text="{Binding Title}"
                              FontSize="13"
-                             Foreground="#222222"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
                              VerticalAlignment="Center"
                              Margin="8,0,0,0"
                              TextTrimming="CharacterEllipsis"/>
@@ -699,7 +699,7 @@
                 <!-- span all rows -->
                 <Border Width="300"
                         Height="350"
-                        Background="White"
+                        Background="{DynamicResource CardBackgroundBrush}"
                         CornerRadius="8"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
@@ -710,6 +710,9 @@
                                    FontWeight="Bold"
                                    Margin="0,0,0,12"/>
                         <StackPanel Margin="0,0,0,12">
+                            <CheckBox Content="Dark Mode"
+                                      IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
+                            <TextBlock Text="{Binding IsDarkMode}" Margin="8,0,0,0"/>
                             <!-- example setting -->
                             <CheckBox Content="Show seconds in clock"
                                       IsChecked="{Binding ShowSeconds, Mode=TwoWay}"/>
@@ -749,7 +752,7 @@
             <!-- date pill on grey background (Row 2) -->
             <Border Grid.Row="3"
                     x:Name="DatePill"
-              Background="White"
+              Background="{DynamicResource CardBackgroundBrush}"
               CornerRadius="8"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
@@ -758,7 +761,7 @@
               Padding="6,2">
                 <TextBlock Text="{Binding TodayDate}"
                    FontSize="12"
-                   Foreground="#222222"/>
+                   Foreground="{DynamicResource PrimaryTextBrush}"/>
                 <Border.Effect>
                     <DropShadowEffect Color="#000000"
                             BlurRadius="4"
