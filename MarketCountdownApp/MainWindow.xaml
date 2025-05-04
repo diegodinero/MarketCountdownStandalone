@@ -9,7 +9,8 @@
   Width="600"
   Height="530"
   Background="{DynamicResource WindowBackgroundBrush}"
-  AllowsTransparency="True">
+  AllowsTransparency="True"
+  MouseLeftButtonDown="DragBar_MouseLeftButtonDown">
 
     <!-- ================= -->
     <!--  Window.Resources  -->
@@ -88,23 +89,79 @@
         </Style>
     </Window.Resources>
 
-    <!-- ================= -->
-    <!--   Main Container  -->
-    <!-- ================= -->
-    <Border Background="#B0B0B0" CornerRadius="15" SnapsToDevicePixels="True">
-        <Grid>
-            <!-- three rows: 0=tiles, 1=list, 2=footer/date -->
+    <Border x:Name="MainBorder"
+            Background="Transparent"
+            CornerRadius="15"
+            SnapsToDevicePixels="True">
+        <Grid x:Name="RootGrid">
+            <!-- 4 rows: 0=icon‑bar, 1=tiles, 2=Up Next, 3=date -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="240"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <!-- ICON BAR -->
+                <RowDefinition Height="240"/>
+                <!-- Market tiles -->
+                <RowDefinition Height="*"/>
+                <!-- Up Next list -->
+                <RowDefinition Height="Auto"/>
+                <!-- Date pill -->
+            
             </Grid.RowDefinitions>
+            <!-- ========== ICON BAR (Row 0) ========== -->
+            <Border
+                x:Name="DragBar"
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Background="White"
+                CornerRadius="16"
+                Padding="4"
+                Margin="4">
+                <StackPanel Orientation="Horizontal">
 
+
+                    <!-- Each Image acts as a toggle-button to expand -->
+                <Image Source="pack://siteoforigin:,,,/Icons/London.png"
+                       Width="32" Height="32"
+                       Margin="4"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="OnIconBarClick"/>
+                <Image Source="pack://siteoforigin:,,,/Icons/New_York.png"
+                       Width="32" Height="32"
+                       Margin="4"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="OnIconBarClick"/>
+                <Image Source="pack://siteoforigin:,,,/Icons/Sydney.png"
+                       Width="32" Height="32"
+                       Margin="4"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="OnIconBarClick"/>
+                <Image Source="pack://siteoforigin:,,,/Icons/Tokyo.png"
+                       Width="32" Height="32"
+                       Margin="4"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="OnIconBarClick"/>
+                <!-- Optional “collapse” icon when expanded -->
+                <Image x:Name="CollapseIcon"
+                       Source="pack://siteoforigin:,,,/Icons/Collapse.png"
+                       Width="24" Height="24"
+                       Margin="8,0,0,0"
+                       Cursor="Hand"
+                       Visibility="Collapsed"
+                       MouseLeftButtonUp="OnCollapseClick"/>
+                <Image x:Name="ExpandIcon"
+                       Source="pack://siteoforigin:,,,/Icons/Expand.png"
+                       Width="24" Height="24"
+                       Margin="4"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="OnExpandClick"/>
+            </StackPanel>
+            </Border>
             <!-- ==================================== -->
             <!--  2×2 Grid of Market Tiles (Row 0)    -->
             <!-- ==================================== -->
             <UniformGrid
-                Grid.Row="0"
+                x:Name="MainContent"
+                Visibility="Collapsed"
+                Grid.Row="1"
                 Rows="2"
                 Columns="2"
                 Margin="8"
@@ -513,7 +570,9 @@
       <!--  “UP NEXT” Section (Row 1)          -->
       <!-- =================================== -->
       <Border
-        Grid.Row="1"
+        Grid.Row="2"
+        x:Name="UpNextContent"
+        Visibility="Collapsed"
         Background="White"
         CornerRadius="12"
         Margin="8"
@@ -620,12 +679,14 @@
 
             <!-- settings gear in bottom-right of tile area -->
             <Image Grid.Row="0"
+                   x:Name="SettingsGear"
              Source="pack://siteoforigin:,,,/Icons/Settings.png"
              Width="18"
              Height="18"
              HorizontalAlignment="Right"
              VerticalAlignment="Bottom"
              Margin="0,0,12,-7"
+             Visibility="Collapsed"
              MouseLeftButtonUp="OpenSettings_Click"/>
 
             <!-- =========================== -->
@@ -634,7 +695,7 @@
             <Grid x:Name="SettingsOverlay"
                   Visibility="Collapsed"
                   Background="#88000000"    
-                  Grid.RowSpan="3">
+                  Grid.RowSpan="4">
                 <!-- span all rows -->
                 <Border Width="300"
                         Height="350"
@@ -686,11 +747,13 @@
             </Grid>
 
             <!-- date pill on grey background (Row 2) -->
-            <Border Grid.Row="2"
+            <Border Grid.Row="3"
+                    x:Name="DatePill"
               Background="White"
               CornerRadius="8"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
+              Visibility="Collapsed"
               Margin="12"
               Padding="6,2">
                 <TextBlock Text="{Binding TodayDate}"

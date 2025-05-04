@@ -4,16 +4,20 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Controls;
 using System.Collections.Generic;
 
 namespace MarketCountdownApp
 {
     public partial class MainWindow : Window
     {
+
+        private bool isExpanded = false;
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+            SetExpanded(false);
             ApplyFilter();
         }
 
@@ -27,6 +31,53 @@ namespace MarketCountdownApp
         {
             SettingsOverlay.Visibility = Visibility.Collapsed;
             ApplyFilter();
+        }
+
+        private void OnIconBarClick(object sender, MouseButtonEventArgs e)
+            => SetExpanded(true);
+
+
+        private void DragBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // if they clicked on anything _but_ an Image (your icons),
+            // allow window?drag; otherwise let the icon clicks fire.
+            if (!(e.OriginalSource is Image))
+                this.DragMove();
+        }
+
+        private void SetExpanded(bool expand)
+        {
+            isExpanded = expand;
+            MainContent.Visibility = expand ? Visibility.Visible : Visibility.Collapsed;
+            CollapseIcon.Visibility = expand ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void OnExpandClick(object sender, MouseButtonEventArgs e)
+        {
+            // make the grey background appear
+            MainBorder.Background = new SolidColorBrush(Color.FromRgb(176, 176, 176));  // #B0B0B0
+
+            MainContent.Visibility = Visibility.Visible;
+            UpNextContent.Visibility = Visibility.Visible;
+            ExpandIcon.Visibility = Visibility.Collapsed;
+            CollapseIcon.Visibility = Visibility.Visible;
+
+            SettingsGear.Visibility = Visibility.Visible;
+            DatePill.Visibility = Visibility.Visible;
+        }
+
+        private void OnCollapseClick(object sender, MouseButtonEventArgs e)
+        {
+            // make the background transparent again
+            MainBorder.Background = Brushes.Transparent;
+
+            MainContent.Visibility = Visibility.Collapsed;
+            UpNextContent.Visibility = Visibility.Collapsed;
+            ExpandIcon.Visibility = Visibility.Visible;
+            CollapseIcon.Visibility = Visibility.Collapsed;
+
+            SettingsGear.Visibility = Visibility.Collapsed;
+            DatePill.Visibility = Visibility.Collapsed;
         }
 
         private void ApplyFilter()
