@@ -152,7 +152,9 @@
                   HorizontalAlignment="Left"
                   Margin="-10,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <Ellipse 
+                                Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
                             <Path   Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
                       StrokeThickness="6"
                       Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
@@ -251,7 +253,9 @@
                   HorizontalAlignment="Center"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <Ellipse 
+                                Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
                             <Path   Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
                       StrokeThickness="6"
                       Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
@@ -348,7 +352,9 @@
                   HorizontalAlignment="Center"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <Ellipse 
+                                Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
                             <Path   Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
                       StrokeThickness="6"
                       Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
@@ -445,7 +451,9 @@
                   HorizontalAlignment="Center"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="#DDDDDD" StrokeThickness="6"/>
+                            <Ellipse 
+                                Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
                             <Path   Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
                       StrokeThickness="6"
                       Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
