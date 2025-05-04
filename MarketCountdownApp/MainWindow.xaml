@@ -8,7 +8,7 @@
   ResizeMode="NoResize"
   Width="600"
   Height="530"
-  Background="Transparent"
+  Background="{DynamicResource WindowBackgroundBrush}"
   AllowsTransparency="True">
 
     <!-- ================= -->
@@ -19,6 +19,32 @@
         <local:ProgressToArcConverter  x:Key="ProgressToArcConverter"/>
         <local:ImpactToBrushConverter x:Key="ImpactToBrushConverter" />
 
+        <!-- Group upcoming events by the DayOfWeek of their Date property -->
+        <CollectionViewSource x:Key="EventsByDay"
+                              Source="{Binding UpcomingEvents}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Date.DayOfWeek"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <!-- Style for the group header -->
+        <Style x:Key="DayGroupHeader" TargetType="GroupItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupItem">
+                        <StackPanel>
+                            <!-- Weekday name -->
+                            <TextBlock Text="{Binding Name}"
+                                       FontWeight="Bold"
+                                       FontSize="14"
+                                       Margin="0,8,0,4"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            <ItemsPresenter/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="CurrencyTagStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="4"/>
@@ -511,10 +537,14 @@
           <ListView
               x:Name="EventsListView"
               Grid.Row="1"
-              ItemsSource="{Binding UpcomingEvents}"
+              ItemsSource="{Binding Source={StaticResource EventsByDay}}"
               ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
-            <!-- Remove the default padding so our grid fills edge‑to‑edge -->
+              <!-- Show group headers -->
+              <ListView.GroupStyle>
+                  <GroupStyle ContainerStyle="{StaticResource DayGroupHeader}"/>
+              </ListView.GroupStyle>
+                        <!-- Remove the default padding so our grid fills edge‑to‑edge -->
             <ListView.ItemContainerStyle>
               <Style TargetType="ListViewItem">
                 <Setter Property="Padding" Value="0"/>
