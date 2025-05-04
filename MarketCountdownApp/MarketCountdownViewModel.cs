@@ -7,56 +7,80 @@ namespace MarketCountdownApp
 {
     public class MarketCountdownViewModel : INotifyPropertyChanged
     {
-        public string LondonDisplay => GetDisplay("London",
-            "GMT Standard Time",      // Windows TZ ID
-            new TimeSpan(8, 0, 0),     // opens 08:00 local
-            new TimeSpan(16, 0, 0));   // closes 16:00 local
+        private class MarketInfo
+        {
+            public string Name { get; }
+            public string TimeZoneId { get; }
+            public TimeSpan Open1 { get; }    // first open
+            public TimeSpan Close1 { get; }    // first close
+            public TimeSpan? Open2 { get; }    // second open (Tokyo lunch)
+            public TimeSpan? Close2 { get; }    // second close
 
-        public string NewYorkDisplay => GetDisplay("New York",
-            "Eastern Standard Time",
-            new TimeSpan(8, 0, 0),
-            new TimeSpan(16, 0, 0));
+            public MarketInfo(
+                string name,
+                string tz,
+                TimeSpan open1, TimeSpan close1,
+                TimeSpan? open2 = null, TimeSpan? close2 = null)
+            {
+                Name = name;
+                TimeZoneId = tz;
+                Open1 = open1;
+                Close1 = close1;
+                Open2 = open2;
+                Close2 = close2;
+            }
+        }
 
-        public string SydneyDisplay => GetDisplay("Sydney",
-            "AUS Eastern Standard Time",
-            new TimeSpan(8, 0, 0),
-            new TimeSpan(16, 0, 0));
-
-        public string TokyoDisplay => GetDisplay("Tokyo",
-            "Tokyo Standard Time",
-            new TimeSpan(8, 0, 0),
-            new TimeSpan(16, 0, 0));
-
-        // Offsets
-        public string LondonOffset => GetOffset("London");
-        public string NewYorkOffset => GetOffset("New York");
-        public string SydneyOffset => GetOffset("Sydney");
-        public string TokyoOffset => GetOffset("Tokyo");
+        // define each exchange
+        private readonly MarketInfo[] _markets = new[]
+        {
+            new MarketInfo("London",   "GMT Standard Time",
+                           TimeSpan.FromHours(8), TimeSpan.FromHours(16).Add(TimeSpan.FromMinutes(30))),
+            new MarketInfo("New York","Eastern Standard Time",
+                           TimeSpan.FromHours(9).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(16)),
+            new MarketInfo("Sydney",  "E. Australia Standard Time",
+                           TimeSpan.FromHours(10), TimeSpan.FromHours(16)),
+            new MarketInfo("Tokyo",   "Tokyo Standard Time",
+                           TimeSpan.FromHours(9), TimeSpan.FromHours(11).Add(TimeSpan.FromMinutes(30)),
+                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(25)))
+        };
 
         // Local times
-        public string LondonLocalTime { get; private set; }
-        public string NewYorkLocalTime { get; private set; }
-        public string SydneyLocalTime { get; private set; }
-        public string TokyoLocalTime { get; private set; }
+        public string LondonLocalTime => ToLocal(_markets[0]).ToString("HH:mm");
+        public string NewYorkLocalTime => ToLocal(_markets[1]).ToString("HH:mm");
+        public string SydneyLocalTime => ToLocal(_markets[2]).ToString("HH:mm");
+        public string TokyoLocalTime => ToLocal(_markets[3]).ToString("HH:mm");
 
-        // New “OPEN” / “CLOSED” status properties
-        public string LondonStatus => IsOpen("London") ? "OPEN" : "CLOSED";
-        public string NewYorkStatus => IsOpen("New York") ? "OPEN" : "CLOSED";
-        public string SydneyStatus => IsOpen("Sydney") ? "OPEN" : "CLOSED";
-        public string TokyoStatus => IsOpen("Tokyo") ? "OPEN" : "CLOSED";
+        // OPEN/CLOSED
+        public string LondonStatus => IsOpen(_markets[0]) ? "OPEN" : "CLOSED";
+        public string NewYorkStatus => IsOpen(_markets[1]) ? "OPEN" : "CLOSED";
+        public string SydneyStatus => IsOpen(_markets[2]) ? "OPEN" : "CLOSED";
+        public string TokyoStatus => IsOpen(_markets[3]) ? "OPEN" : "CLOSED";
 
-        // Percent of the open window that’s elapsed (0.0 = just opened, 1.0 = about to close)
-        public double LondonProgress => ComputeProgress("London");
-        public double NewYorkProgress => ComputeProgress("New York");
-        public double SydneyProgress => ComputeProgress("Sydney");
-        public double TokyoProgress => ComputeProgress("Tokyo");
-        public string TodayDate => DateTime.Now.ToString("d MMM");
+        // + / - display
+        public string LondonDisplay => GetDisplay(_markets[0]);
+        public string NewYorkDisplay => GetDisplay(_markets[1]);
+        public string SydneyDisplay => GetDisplay(_markets[2]);
+        public string TokyoDisplay => GetDisplay(_markets[3]);
+
+        // progress bar
+        public double LondonProgress => ComputeProgress(_markets[0]);
+        public double NewYorkProgress => ComputeProgress(_markets[1]);
+        public double SydneyProgress => ComputeProgress(_markets[2]);
+        public double TokyoProgress => ComputeProgress(_markets[3]);
+
+        // offset only
+        public string LondonOffset => GetOffset(_markets[0]);
+        public string NewYorkOffset => GetOffset(_markets[1]);
+        public string SydneyOffset => GetOffset(_markets[2]);
+        public string TokyoOffset => GetOffset(_markets[3]);
+
+        public string TodayDate => ToLocal(_markets[1]).ToString("d MMM");
 
         public ObservableCollection<EventItem> UpcomingEvents { get; }
             = new ObservableCollection<EventItem>();
 
         private readonly DispatcherTimer _timer;
-
         public MarketCountdownViewModel()
         {
             _timer = new DispatcherTimer(
@@ -69,164 +93,150 @@ namespace MarketCountdownApp
 
         private void Refresh()
         {
-            OnPropertyChanged(nameof(LondonDisplay));
-            OnPropertyChanged(nameof(NewYorkDisplay));
-            OnPropertyChanged(nameof(SydneyDisplay));
-            OnPropertyChanged(nameof(TokyoDisplay));
+            foreach (var m in _markets)
+            {
+                var key = m.Name.Replace(" ", "");        // remove spaces
+                OnPropertyChanged(key + "LocalTime");
+                OnPropertyChanged(key + "Display");
+                OnPropertyChanged(key + "Status");
+                OnPropertyChanged(key + "Progress");
+                OnPropertyChanged(key + "Offset");
+            }
+            OnPropertyChanged(nameof(TodayDate));
 
-            // Update offsets
-            OnPropertyChanged(nameof(LondonOffset));
-            OnPropertyChanged(nameof(NewYorkOffset));
-            OnPropertyChanged(nameof(SydneyOffset));
-            OnPropertyChanged(nameof(TokyoOffset));
-
-            // Update local times
-            LondonLocalTime = ConvertTime("GMT Standard Time");
-            NewYorkLocalTime = ConvertTime("Eastern Standard Time");
-            SydneyLocalTime = ConvertTime("AUS Eastern Standard Time");
-            TokyoLocalTime = ConvertTime("Tokyo Standard Time");
-            OnPropertyChanged(nameof(LondonLocalTime));
-            OnPropertyChanged(nameof(NewYorkLocalTime));
-            OnPropertyChanged(nameof(SydneyLocalTime));
-            OnPropertyChanged(nameof(TokyoLocalTime));
-
-            OnPropertyChanged(nameof(LondonStatus));
-            OnPropertyChanged(nameof(NewYorkStatus));
-            OnPropertyChanged(nameof(SydneyStatus));
-            OnPropertyChanged(nameof(TokyoStatus));
-
-            OnPropertyChanged(nameof(LondonProgress));
-            OnPropertyChanged(nameof(NewYorkProgress));
-            OnPropertyChanged(nameof(SydneyProgress));
-            OnPropertyChanged(nameof(TokyoProgress));
-
-            // Refresh “up next” list
             UpcomingEvents.Clear();
             foreach (var ev in Scraper.ForexFactoryScraper.GetUpcoming(5))
                 UpcomingEvents.Add(ev);
         }
 
-        private string ConvertTime(string windowsTimeZoneId)
+        private DateTime ToLocal(MarketInfo m)
         {
-            try
-            {
-                var tz = TimeZoneInfo.FindSystemTimeZoneById(windowsTimeZoneId);
-                var dt = TimeZoneInfo.ConvertTime(DateTime.UtcNow, tz);
-                return dt.ToString("HH:mm");
-            }
-            catch
-            {
-                return "--:--";
-            }
+            var tz = TimeZoneInfo.FindSystemTimeZoneById(m.TimeZoneId);
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
 
-        private string GetOffset(string market)
+        private bool IsOpen(MarketInfo m)
         {
-            var nowUtc = DateTime.UtcNow;
-            // placeholder: next open at 08:00 UTC
-            var next = new DateTime(nowUtc.Year, nowUtc.Month, nowUtc.Day, 8, 0, 0, DateTimeKind.Utc);
-            if (nowUtc >= next) next = next.AddDays(1);
-            var span = next - nowUtc;
-            return $"{(int)span.TotalHours:00}:{span.Minutes:00}";
+            var local = ToLocal(m);
+            var t = local.TimeOfDay;
+            var d = local.DayOfWeek;
+            if (d == DayOfWeek.Saturday || d == DayOfWeek.Sunday)
+                return false;
+
+            // first session
+            if (t >= m.Open1 && t < m.Close1)
+                return true;
+            // second session (if any)
+            if (m.Open2.HasValue && m.Close2.HasValue &&
+               t >= m.Open2.Value && t < m.Close2.Value)
+                return true;
+
+            return false;
         }
 
-        private bool IsOpen(string market)
+        private double ComputeProgress(MarketInfo m)
         {
-            // TODO: your real market-hours logic
-            // Example: open daily 08:00–22:00 local
-            var nowUtc = DateTime.UtcNow;
-            TimeZoneInfo tz;
-            switch (market)
+            var local = ToLocal(m);
+            var t = local.TimeOfDay;
+            if (!IsOpen(m))
+                return 0.0;
+
+            TimeSpan start, length;
+            if (m.Name == "Tokyo")
             {
-                case "London":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-                    break;
-                case "New York":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                    break;
-                case "Sydney":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
-                    break;
-                case "Tokyo":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
-                    break;
-                default:
-                    tz = TimeZoneInfo.Utc;
-                    break;
-            }
-            var local = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
-            return local >= TimeSpan.FromHours(8) && local < TimeSpan.FromHours(22);
-        }
-
-        private double ComputeProgress(string market)
-        {
-            // 1) Pick the right time zone for this market
-            TimeZoneInfo tz;
-            switch (market)
-            {
-                case "London":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-                    break;
-                case "New York":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                    break;
-                case "Sydney":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
-                    break;
-                case "Tokyo":
-                    tz = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
-                    break;
-                default:
-                    tz = TimeZoneInfo.Utc;
-                    break;
-            }
-
-            // 2) Convert now to that local time
-            DateTime nowUtc = DateTime.UtcNow;
-            TimeSpan localTime = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
-
-            // 3) Define your market open/close window
-            TimeSpan openTime = TimeSpan.FromHours(8);   // e.g. 08:00
-            TimeSpan closeTime = TimeSpan.FromHours(16);  // e.g. 16:00
-
-            // 4) Compute a 0.0–1.0 ratio
-            if (localTime < openTime) return 0.0;  // not opened yet
-            if (localTime >= closeTime) return 1.0;  // already closed
-            return (localTime - openTime).TotalMinutes
-                   / (closeTime - openTime).TotalMinutes;
-        }
-
-        private string GetDisplay(string market, string tzId, TimeSpan open, TimeSpan close)
-        {
-            var nowUtc = DateTime.UtcNow;
-            var tz = TimeZoneInfo.FindSystemTimeZoneById(tzId);
-            var local = TimeZoneInfo.ConvertTime(nowUtc, tz).TimeOfDay;
-
-            bool isOpenToday = local >= open && local < close;
-            TimeSpan span;
-            string sign;
-            if (isOpenToday)
-            {
-                // time since open
-                span = local - open;
-                sign = "+";
+                if (t < m.Close1)
+                {
+                    start = m.Open1;
+                    length = m.Close1 - m.Open1;
+                }
+                else
+                {
+                    start = m.Open2.Value;
+                    length = m.Close2.Value - m.Open2.Value;
+                }
             }
             else
             {
-                // time until next open
-                TimeSpan nextOpen = local < open
-                    ? open
-                    : open.Add(TimeSpan.FromDays(1));
-                span = nextOpen - local;
-                sign = "-";
+                start = m.Open1;
+                length = m.Close1 - m.Open1;
             }
-            return $"{sign}{(int)span.TotalHours:00}:{span.Minutes:00}";
+
+            return (t - start).TotalMinutes / length.TotalMinutes;
         }
 
+        private string GetDisplay(MarketInfo m)
+        {
+            // ?? SPECIAL?CASE LONDON TO USE 08:00?UTC ????????????????????????????????
+            if (m.Name == "London")
+            {
+                DateTime nowUtc = DateTime.UtcNow;
+                DateTime todayOpen = nowUtc.Date.AddHours(7);            // 08:00?UTC today
+                DateTime nextOpenUtc = nowUtc < todayOpen
+                    ? todayOpen
+                    : todayOpen.AddDays(1);         // or tomorrow 08:00?UTC
+
+                TimeSpan span = nextOpenUtc - nowUtc;
+                return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
+            }
+
+            // ??????? SYDNEY: UTC?only countdown to 22:00 UTC ?????????
+            if (m.Name == "Sydney")
+            {
+                DateTime nowUtc = DateTime.UtcNow;
+                DateTime todayOpen = nowUtc.Date.AddHours(22);          // 22:00 UTC
+                DateTime nextOpenUtc = nowUtc.Date.AddDays(nowUtc.TimeOfDay < TimeSpan.Zero ? 0 : 1);
+                TimeSpan span = nextOpenUtc - nowUtc;
+                return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
+            }
+
+            var local = ToLocal(m);
+            var t = local.TimeOfDay;
+            bool open = IsOpen(m);
+
+            if (open)
+            {
+                // time since current session start
+                TimeSpan since;
+                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
+                    since = TimeSpan.Zero;
+                else if (t < m.Close1)
+                    since = t - m.Open1;
+                else
+                    since = t - m.Open2.Value;
+
+                return $"+{(int)since.TotalHours:00}:{since.Minutes:00}";
+            }
+            else
+            {
+                // compute next open local
+                DateTime nextDate;
+                var d = local.DayOfWeek;
+                if (d == DayOfWeek.Saturday) nextDate = local.Date.AddDays(2);
+                else if (d == DayOfWeek.Sunday) nextDate = local.Date.AddDays(1);
+                else nextDate = local.Date;
+
+                TimeSpan nextOpen = m.Open1;
+                // if Tokyo lunch break, and we're between sessions:
+                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
+                    nextOpen = m.Open2.Value;
+                else if (t >= m.Close1 && m.Name != "Tokyo")
+                    nextDate = nextDate.AddDays(1);
+
+                DateTime next = nextDate.Date.Add(nextOpen);
+                if (m.Name != "Tokyo" && d != DayOfWeek.Saturday && d != DayOfWeek.Sunday && t >= m.Close1)
+                    next = local.Date.AddDays(d == DayOfWeek.Friday ? 3 : 1).Add(nextOpen);
+
+                var span = next - local;
+                return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
+            }
+        }
+
+        private string GetOffset(MarketInfo m)
+            => GetDisplay(m).Substring(1);
 
         public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged(string n) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+        private void OnPropertyChanged(string n)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 
     public class EventItem
