@@ -199,12 +199,14 @@
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
                                 <!-- default: right‑pointing chevron -->
-                                <Setter Property="Content" Value=""/>
+                                <Setter Property="Content" Value=""/>
+                                <!-- U+E823 -->
                                 <!-- U+E7CD “ChevronRight” -->
                                 <Style.Triggers>
                                     <!-- when checked: down‑pointing chevron -->
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter Property="Content" Value=""/>
+                                        <Setter Property="Content" Value=""/>
+                                        <!-- U+E121 -->
                                         <!-- U+E70D “ChevronDown” -->
                                     </Trigger>
                                 </Style.Triggers>
