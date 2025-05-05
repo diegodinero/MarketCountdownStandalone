@@ -54,10 +54,15 @@ namespace MarketCountdownApp
 
         private void OnExpandClick(object sender, MouseButtonEventArgs e)
         {
-            
+            // restore the Window background
+            RootWindow.Background = (Brush)FindResource("WindowBackgroundBrush");
+
+            // restore the panel background
+            MainBorder.Background = (Brush)FindResource("PanelBackgroundBrush");
 
             MainContent.Visibility = Visibility.Visible;
             UpNextContent.Visibility = Visibility.Visible;
+
             ExpandIcon.Visibility = Visibility.Collapsed;
             CollapseIcon.Visibility = Visibility.Visible;
 
@@ -67,17 +72,21 @@ namespace MarketCountdownApp
 
         private void OnCollapseClick(object sender, MouseButtonEventArgs e)
         {
-            // make the background transparent again
-            MainBorder.Background = Brushes.Transparent;
-
+            // hide everything
             MainContent.Visibility = Visibility.Collapsed;
             UpNextContent.Visibility = Visibility.Collapsed;
+
             ExpandIcon.Visibility = Visibility.Visible;
             CollapseIcon.Visibility = Visibility.Collapsed;
 
             SettingsGear.Visibility = Visibility.Collapsed;
             DatePill.Visibility = Visibility.Collapsed;
+
+            // make both your Window _and_ your MainBorder fully transparent
+            RootWindow.Background = Brushes.Transparent;
+            MainBorder.Background = Brushes.Transparent;
         }
+
 
         private void ApplyFilter()
         {
