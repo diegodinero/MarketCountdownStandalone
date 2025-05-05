@@ -705,7 +705,7 @@
                                     <!-- 2) Currency tag (no extra Margin) -->
                                     <Border Grid.Column="1"
                   Style="{StaticResource CurrencyTagStyle}"
-                  Background="{DynamicResource AccentBrush}"
+                  
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Currency}"

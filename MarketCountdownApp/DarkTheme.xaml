@@ -35,4 +35,9 @@
     <SolidColorBrush x:Key="TagJPY" Color="#8E8B8A"/>
     <!-- you can reference these in your CurrencyTagStyle triggers -->
 
+    <!-- DarkTheme.xaml -->
+    <SolidColorBrush x:Key="CurrencyTagDefaultBrush" Color="#444"/>
+    <!-- or whatever dark‑mode default -->
+
+
 </ResourceDictionary>

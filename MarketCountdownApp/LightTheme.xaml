@@ -26,4 +26,8 @@
     <SolidColorBrush x:Key="HeaderLineBrush"        Color="#222222"/>
     <SolidColorBrush x:Key="HeaderTextBrush"        Color="#222222"/>
 
+    <!-- LightTheme.xaml -->
+    <SolidColorBrush x:Key="CurrencyTagDefaultBrush" Color="LightGray"/>
+
+
 </ResourceDictionary>
