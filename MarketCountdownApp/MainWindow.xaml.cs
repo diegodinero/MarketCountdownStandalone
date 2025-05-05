@@ -90,20 +90,45 @@ namespace MarketCountdownApp
 
         private void DatePillButton_Click(object sender, RoutedEventArgs e)
         {
-            // pull the grouped CollectionView from your ListView
-            var view = CollectionViewSource
-                    .GetDefaultView(EventsListView.ItemsSource)
-                as CollectionView;
+            // get the CollectionView for the grouped items
+            var view = CollectionViewSource.GetDefaultView(EventsListView.ItemsSource) as CollectionView;
             if (view?.Groups == null) return;
 
-            var todayName = DateTime.Now.DayOfWeek.ToString();
-
-            // needs System.Linq
+            // find the "today" group
+            string todayName = DateTime.Now.DayOfWeek.ToString();
             var todayGroup = view.Groups
-                .OfType<CollectionViewGroup>()
-                .FirstOrDefault(g => g.Name.ToString() == todayName);
-            if (todayGroup?.ItemCount > 0)
-                EventsListView.ScrollIntoView(todayGroup.Items[0]);
+                                  .OfType<CollectionViewGroup>()
+                                  .FirstOrDefault(g => g.Name.ToString() == todayName);
+            if (todayGroup == null) return;
+
+            // parse each ForexEvent.Time back to a DateTime on today’s date in EST
+            var estZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime utcNow = DateTime.UtcNow;
+            DateTime estNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, estZone);
+
+            // find the first item whose scheduled time is still in the future
+            object nextItem = todayGroup.Items
+                .Cast<ForexEvent>()
+                .FirstOrDefault(ev => {
+                    // ev.Date is date-only, ev.Time is "HH:mm"
+                    if (TimeSpan.TryParse(ev.Time, out var ts))
+                    {
+                        var dt = ev.Date.Date + ts;
+                        // treat dt as EST
+                        dt = DateTime.SpecifyKind(dt, DateTimeKind.Unspecified);
+                        dt = TimeZoneInfo.ConvertTimeToUtc(dt, estZone);
+                        var dtEst = TimeZoneInfo.ConvertTimeFromUtc(dt, estZone);
+                        return dtEst >= estNow;
+                    }
+                    return false;
+                });
+
+            // if none remain, fall back to first item in the group
+            if (nextItem == null && todayGroup.Items.Count > 0)
+                nextItem = todayGroup.Items[0];
+
+            if (nextItem != null)
+                EventsListView.ScrollIntoView(nextItem);
         }
 
 
