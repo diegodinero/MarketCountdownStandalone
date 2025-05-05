@@ -1,13 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Light‑mode brushes -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#B0B0B0"/>
+    <!-- overall window background (was white) -->
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White"/>
+
+    <!-- grey behind cards (was #B0B0B0 originally) -->
     <SolidColorBrush x:Key="PanelBackgroundBrush"  Color="#B0B0B0"/>
+
+    <!-- each card background -->
     <SolidColorBrush x:Key="CardBackgroundBrush"   Color="White"/>
+
+    <!-- main text -->
     <SolidColorBrush x:Key="PrimaryTextBrush"       Color="#222222"/>
     <SolidColorBrush x:Key="SecondaryTextBrush"     Color="Gray"/>
-    <SolidColorBrush x:Key="AccentBrush"            Color="#3498DB"/>
+
+    <!-- accent (you had red/blue arcs) -->
+    <SolidColorBrush x:Key="AccentBrush"            Color="#FF4D4D"/>
+
+    <!-- divider lines -->
     <SolidColorBrush x:Key="BorderBrush"            Color="#CCCCCC"/>
+
+    <!-- UP NEXT header line & text -->
+    <SolidColorBrush x:Key="HeaderLineBrush"        Color="#222222"/>
+    <SolidColorBrush x:Key="HeaderTextBrush"        Color="#222222"/>
 
 </ResourceDictionary>

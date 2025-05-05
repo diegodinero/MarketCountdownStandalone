@@ -583,42 +583,69 @@
             <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
 
-          <!-- Header -->
-          <Grid Grid.Row="0" Margin="160,0,160,8">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition Width="Auto"/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Height="1" Fill="{DynamicResource CardBackgroundBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <TextBlock Grid.Column="1"
-                       Text="UP NEXT"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
-                       VerticalAlignment="Center"/>
-                        <Rectangle Grid.Column="2" Height="1" Fill="{DynamicResource CardBackgroundBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-          </Grid>
+            <!-- Header -->
+            <Grid Grid.Row="0" Margin="160,0,160,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0" Height="1"
+                           Fill="{DynamicResource HeaderLineBrush}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,0"/>
+                <TextBlock Grid.Column="1"
+                           Text="UP NEXT"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource HeaderTextBrush}"
+                           VerticalAlignment="Center"/>
+                <Rectangle Grid.Column="2" Height="1"
+                           Fill="{DynamicResource HeaderLineBrush}"
+                           VerticalAlignment="Center"
+                           Margin="5,0,0,0"/>
+            </Grid>
 
-          <!-- Aligned, scrollable list -->
-          <ListView
-              x:Name="EventsListView"
-              Grid.Row="1"
-              ItemsSource="{Binding Source={StaticResource EventsByDay}}"
-              ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <!-- Aligned, scrollable list -->
+            <!-- Dark‑themed ListView -->
+            <ListView
+                x:Name="EventsListView"
+                Grid.Row="1"
+                ItemsSource="{Binding Source={StaticResource EventsByDay}}"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderThickness="0"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                Foreground="{DynamicResource PrimaryTextBrush}">
 
-              <!-- Show group headers -->
+                        <!-- Show group headers -->
               <ListView.GroupStyle>
                   <GroupStyle ContainerStyle="{StaticResource DayGroupHeader}"/>
               </ListView.GroupStyle>
                         <!-- Remove the default padding so our grid fills edge‑to‑edge -->
-            <ListView.ItemContainerStyle>
-              <Style TargetType="ListViewItem">
-                <Setter Property="Padding" Value="0"/>
-              </Style>
-            </ListView.ItemContainerStyle>
+                        <!-- each item container gets dark background & white text -->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="Padding" Value="4,8"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-            <ListView.ItemTemplate>
+                        <ListView.ItemTemplate>
               <DataTemplate>
                 <Grid Margin="0,4">
                   <Grid.ColumnDefinitions>
@@ -644,6 +671,7 @@
                   <!-- 2) Currency tag (no extra Margin) -->
                   <Border Grid.Column="1"
                           Style="{StaticResource CurrencyTagStyle}"
+                          Background="{DynamicResource AccentBrush}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
                     <TextBlock Text="{Binding Currency}"
