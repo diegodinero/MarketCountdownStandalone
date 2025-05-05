@@ -17,36 +17,70 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Icons\Collapse.png" />
+    <None Remove="Icons\Expand.png" />
+    <None Remove="Icons\London.png" />
+    <None Remove="Icons\London_White.png" />
     <None Remove="Icons\MarketCountdownVS.ico" />
+    <None Remove="Icons\New_York.png" />
+    <None Remove="Icons\New_York_White.png" />
+    <None Remove="Icons\README.txt" />
+    <None Remove="Icons\Settings.png" />
+    <None Remove="Icons\Settings_White.png" />
+    <None Remove="Icons\Sydney.png" />
+    <None Remove="Icons\Sydney_White.png" />
+    <None Remove="Icons\Tokyo.png" />
+    <None Remove="Icons\Tokyo_White.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icons\Collapse.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MarketCountdownVS.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Icons\Collapse.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Expand.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\London.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\New_York.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Sydney.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Icons\Tokyo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <!-- ensure HttpClient is available -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\MarketCountdownVS.ico" />
+    <Resource Include="Icons\London.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Icons\Expand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Icons\London_White.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\MarketCountdownVS.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\New_York.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\New_York_White.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Settings.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Settings_White.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Sydney.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Sydney_White.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Tokyo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Tokyo_White.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 </Project>

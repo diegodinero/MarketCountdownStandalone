@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- black icons in light -->
+    <SolidColorBrush x:Key="IconFillBrush" Color="Black"/>
     <!-- overall window background (was white) -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White"/>
 
