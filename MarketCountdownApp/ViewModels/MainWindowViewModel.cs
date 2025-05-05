@@ -39,12 +39,55 @@ namespace MarketCountdownApp
 
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";
         private readonly DispatcherTimer _timer;
+        // 1) The very next event that has not yet passed:
+        public ForexEvent? NextEvent =>UpcomingEvents.FirstOrDefault(e => e.Occurrence > DateTime.Now);
+
+        // 2) The text line that shows currency/title:
+        public string NextEventText =>
+            NextEvent != null
+                ? $"{NextEvent.Currency} — {NextEvent.Title}"
+                : "No upcoming event";
+
+        // 3) The live countdown string:
+        public string NextEventCountdown
+        {
+            get
+            {
+                if (NextEvent == null)
+                    return "";
+
+                // use the Occurrence we already stored on the event
+                var dt = NextEvent.Occurrence;
+
+                // here is the missing declaration
+                var span = dt - DateTime.Now;
+
+                if (span <= TimeSpan.Zero)
+                    return "00:00:00";
+
+                // now span.TotalHours, span.Minutes, span.Seconds are in scope
+                return $"{(int)span.TotalHours:D2}:{span.Minutes:D2}:{span.Seconds:D2}";
+            }
+        }
+
+
+        private DispatcherTimer _countdownTimer;
 
         public MainWindowViewModel()
         {
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(5) };
             _timer.Tick += async (_, __) => await FetchEventsAsync();
             _timer.Start();
+            _countdownTimer = new DispatcherTimer(TimeSpan.FromSeconds(1),
+                DispatcherPriority.Normal,
+                (_, __) =>
+                {
+                    OnPropertyChanged(nameof(NextEvent));
+                    OnPropertyChanged(nameof(NextEventText));
+                    OnPropertyChanged(nameof(NextEventCountdown));
+                },
+                Dispatcher.CurrentDispatcher);
+            _countdownTimer.Start();
 
             _ = FetchEventsAsync();
         }

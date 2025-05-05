@@ -27,6 +27,7 @@
         <local:ImpactToBrushConverter x:Key="ImpactToBrushConverter"/>
         <local:MainWindowViewModel      x:Key="ViewModel"/>
         <local:IconSourceConverter x:Key="IconSourceConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
         <!-- ↑↓ insert the new CityIconStyle RIGHT HERE ↓↑ -->
         <Style x:Key="CityIconStyle" TargetType="Image">
@@ -186,13 +187,67 @@
                         Margin="4"
                         Cursor="Hand"
                         MouseLeftButtonUp="OnExpandClick"/>
+                    <!-- 2) little toggle‐button for the “next event” panel -->
+                    <ToggleButton x:Name="NextEventToggle"
+                                  Width="24" Height="24"
+                                  Margin="8,0,4,0"
+                                  FontFamily="Segoe MDL2 Assets"
+                                  FontSize="16"
+                                  Cursor="Hand"
+                                  IsChecked="False"
+                                  ToolTip="Show next event">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <!-- default: right‑pointing chevron -->
+                                <Setter Property="Content" Value=""/>
+                                <!-- U+E7CD “ChevronRight” -->
+                                <Style.Triggers>
+                                    <!-- when checked: down‑pointing chevron -->
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content" Value=""/>
+                                        <!-- U+E70D “ChevronDown” -->
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <!-- 3) the panel that shows NextEvent; sits to the right of the toggle -->
+                    <StackPanel x:Name="NextEventPanel"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="4,0,0,0"
+                                Visibility="{Binding IsChecked, ElementName=NextEventToggle, Converter={StaticResource BoolToVis}}">
 
+                        <!-- 1) Currency pill: just reuse your CurrencyTagStyle -->
+                        <Border Style="{StaticResource CurrencyTagStyle}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                            <TextBlock Text="{Binding NextEvent.Currency}"
+                                       FontSize="12"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource CardBackgroundBrush}"
+                                       Margin="4,0"/>
+                        </Border>
 
+                        <!-- countdown timer -->
+                        <TextBlock Text="{Binding NextEventCountdown}"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Margin="8,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
 
-
+                        <!-- event title in the impact color -->
+                        <TextBlock Text="{Binding NextEvent.Title}"
+                                   FontSize="13"
+                                   FontWeight="Normal"
+                                   Margin="8,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{Binding NextEvent.Impact, Converter={StaticResource ImpactToBrushConverter}}"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
-
+            
             <!-- MARKET TILES -->
             <UniformGrid x:Name="MainContent"
                    Visibility="Collapsed"
@@ -220,7 +275,7 @@
                                Margin="10,0,0,0"
                                VerticalAlignment="Center"/>
 
-                               <!-- Labels -->
+                        <!-- Labels -->
                         <StackPanel Grid.Column="1"
                         VerticalAlignment="Center">
                             <TextBlock Text="London"
