@@ -35,6 +35,18 @@ namespace MarketCountdownApp
             }
         }
 
+        private bool _showNextEventToggle = true;
+        public bool ShowNextEventToggle
+        {
+            get => _showNextEventToggle;
+            set
+            {
+                if (_showNextEventToggle == value) return;
+                _showNextEventToggle = value;
+                OnPropertyChanged(nameof(ShowNextEventToggle));
+            }
+        }
+
         public string TodayDate => DateTime.Now.ToString("d MMM");
 
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";

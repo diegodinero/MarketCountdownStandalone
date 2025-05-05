@@ -195,6 +195,7 @@
                                   FontSize="16"
                                   Cursor="Hand"
                                   IsChecked="False"
+                                  Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
@@ -836,7 +837,8 @@
                         <StackPanel Margin="0,0,0,12">
                             <CheckBox Content="Dark Mode"
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
-                            <TextBlock Text="{Binding IsDarkMode}" Margin="8,0,0,0"/>
+                            <CheckBox Content="Show next‑event expander"
+                                      IsChecked="{Binding ShowNextEventToggle, Mode=TwoWay}" />
                             <!-- example setting -->
                             <CheckBox Content="Show seconds in clock"
                           IsChecked="{Binding ShowSeconds, Mode=TwoWay}"/>
