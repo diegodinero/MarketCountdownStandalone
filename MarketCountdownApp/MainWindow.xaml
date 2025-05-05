@@ -817,27 +817,33 @@
             </Grid>
 
             <!-- DATE PILL -->
-            <Border x:Name="DatePill"
-              Grid.Row="3"
-              Background="{DynamicResource CardBackgroundBrush}"
-              CornerRadius="8"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Center"
-              Visibility="Collapsed"
-              Margin="12"
-              Padding="6,2">
-                <TextBlock Text="{Binding TodayDate}"
-                   FontSize="12"
-                   Foreground="{DynamicResource PrimaryTextBrush}"/>
-                <Border.Effect>
-                    <DropShadowEffect Color="#000000"
-                            BlurRadius="4"
-                            Opacity="0.2"
-                            Direction="270"
-                            ShadowDepth="1"/>
-                </Border.Effect>
-            </Border>
-
+            <Button
+                x:Name="DatePillButton"
+                Grid.Row="3"
+                Click="DatePillButton_Click"
+                Background="{DynamicResource CardBackgroundBrush}"
+                Padding="6,2"
+                Margin="12"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                BorderThickness="0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <TextBlock
+                    Text="{Binding TodayDate}"
+                    FontSize="12"
+                    Foreground="{DynamicResource PrimaryTextBrush}"/>
+            </Button>
         </Grid>
     </Border>
 </Window>

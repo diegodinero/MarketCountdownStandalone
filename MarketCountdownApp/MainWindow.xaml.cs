@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarketCountdownApp
 {
@@ -67,7 +68,7 @@ namespace MarketCountdownApp
             CollapseIcon.Visibility = Visibility.Visible;
 
             SettingsGear.Visibility = Visibility.Visible;
-            DatePill.Visibility = Visibility.Visible;
+            DatePillButton.Visibility = Visibility.Visible;
         }
 
         private void OnCollapseClick(object sender, MouseButtonEventArgs e)
@@ -80,11 +81,29 @@ namespace MarketCountdownApp
             CollapseIcon.Visibility = Visibility.Collapsed;
 
             SettingsGear.Visibility = Visibility.Collapsed;
-            DatePill.Visibility = Visibility.Collapsed;
+            DatePillButton.Visibility = Visibility.Collapsed;
 
             // make both your Window _and_ your MainBorder fully transparent
             RootWindow.Background = Brushes.Transparent;
             MainBorder.Background = Brushes.Transparent;
+        }
+
+        private void DatePillButton_Click(object sender, RoutedEventArgs e)
+        {
+            // pull the grouped CollectionView from your ListView
+            var view = CollectionViewSource
+                    .GetDefaultView(EventsListView.ItemsSource)
+                as CollectionView;
+            if (view?.Groups == null) return;
+
+            var todayName = DateTime.Now.DayOfWeek.ToString();
+
+            // needs System.Linq
+            var todayGroup = view.Groups
+                .OfType<CollectionViewGroup>()
+                .FirstOrDefault(g => g.Name.ToString() == todayName);
+            if (todayGroup?.ItemCount > 0)
+                EventsListView.ScrollIntoView(todayGroup.Items[0]);
         }
 
 
