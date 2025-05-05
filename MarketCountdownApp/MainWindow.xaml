@@ -676,6 +676,14 @@
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
+                                <!-- ↓↓↓ Add your triggers here ↓↓↓ -->
+                                <Style.Triggers>
+                                    <!-- grey‐out entire row when IsPast == true -->
+                                    <DataTrigger Binding="{Binding IsPast}" Value="True">
+                                        <Setter Property="Opacity" Value="0.4"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <!-- ↑↑↑ End new triggers ↑↑↑ -->
                             </Style>
                         </ListView.ItemContainerStyle>
 

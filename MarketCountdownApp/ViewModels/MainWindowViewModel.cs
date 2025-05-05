@@ -89,6 +89,7 @@ namespace MarketCountdownApp
                                      Impact = x.Element("impact")!.Value.Trim(),
                                      Forecast = x.Element("forecast")?.Value.Trim(),
                                      Previous = x.Element("previous")?.Value.Trim(),
+                                     Occurrence = estDt,
                                  };
                              })
                              .OrderBy(e => e.Date)
@@ -120,5 +121,7 @@ namespace MarketCountdownApp
         public string Impact { get; set; } = "";
         public string? Forecast { get; set; }
         public string? Previous { get; set; }
+        public DateTime Occurrence { get; set; }
+        public bool IsPast => Occurrence < DateTime.Now;
     }
 }
