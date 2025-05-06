@@ -229,7 +229,7 @@
                             <TextBlock Text="{Binding NextEvent.Currency}"
                                        FontSize="12"
                                        FontWeight="Bold"
-                                       Foreground="{DynamicResource CardBackgroundBrush}"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
                                        Margin="4,0"/>
                         </Border>
 
