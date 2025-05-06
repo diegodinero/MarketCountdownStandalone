@@ -7,7 +7,7 @@
     Title="Market Countdown"
     WindowStyle="None"
     ResizeMode="NoResize"
-    Width="605"
+    Width="600"
     Height="530"
     Background="{DynamicResource WindowBackgroundBrush}"
     AllowsTransparency="True"
