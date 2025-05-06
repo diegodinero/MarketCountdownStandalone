@@ -223,11 +223,19 @@ namespace MarketCountdownApp
                     nextDate = nextDate.AddDays(1);
 
                 DateTime next = nextDate.Date.Add(nextOpen);
-                if (m.Name != "Tokyo" && d != DayOfWeek.Saturday && d != DayOfWeek.Sunday && t >= m.Close1)
-                    next = local.Date.AddDays(d == DayOfWeek.Friday ? 3 : 1).Add(nextOpen);
+
+                // ? INSERT THESE TWO LINES ???
+                if (next <= local)
+                    next = next.AddDays(1);
+                // ??? INSERT THESE TWO LINES
 
                 var span = next - local;
-                return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
+
+                // take absolute values so we only ever print one “?”
+                var hours = Math.Abs((int)span.TotalHours);
+                var mins = Math.Abs(span.Minutes);
+
+                return $"-{hours:00}:{mins:00}";
             }
         }
 
