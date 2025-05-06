@@ -14,6 +14,8 @@ namespace MarketCountdownApp
     // ← implement INotifyPropertyChanged
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+
+        private static readonly string[] ImpactOrder = { "High", "Medium", "Low", "Holiday" };
         public MarketCountdownViewModel MarketVM { get; } = new MarketCountdownViewModel();
 
         public ObservableCollection<ForexEvent> UpcomingEvents { get; }
@@ -52,7 +54,27 @@ namespace MarketCountdownApp
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";
         private readonly DispatcherTimer _timer;
         // 1) The very next event that has not yet passed:
-        public ForexEvent? NextEvent =>UpcomingEvents.FirstOrDefault(e => e.Occurrence > DateTime.Now);
+        public ForexEvent? NextEvent
+        {
+            get
+            {
+                var now = DateTime.Now;
+                var future = UpcomingEvents.Where(e => e.Occurrence >= now).ToList();
+                if (!future.Any())
+                    return null;
+
+                var nextTime = future.Min(e => e.Occurrence);
+
+                return future
+                    .Where(e => e.Occurrence == nextTime)
+                    .OrderBy(e =>
+                    {
+                        var idx = Array.IndexOf(ImpactOrder, e.Impact);
+                        return idx < 0 ? ImpactOrder.Length : idx;
+                    })
+                    .First();
+            }
+        }
 
         // 2) The text line that shows currency/title:
         public string NextEventText =>
@@ -97,6 +119,7 @@ namespace MarketCountdownApp
                     OnPropertyChanged(nameof(NextEvent));
                     OnPropertyChanged(nameof(NextEventText));
                     OnPropertyChanged(nameof(NextEventCountdown));
+                    OnPropertyChanged(nameof(TodayDate));
                 },
                 Dispatcher.CurrentDispatcher);
             _countdownTimer.Start();
