@@ -177,7 +177,7 @@ namespace MarketCountdownApp
             {
                 case "high": return Brushes.Red;
                 case "medium": return Brushes.Orange;
-                case "low": return Brushes.Green;
+                case "low": return Brushes.Yellow;
                 case "holiday": return Brushes.Blue;
                 default: return Brushes.LightGray;
             }
