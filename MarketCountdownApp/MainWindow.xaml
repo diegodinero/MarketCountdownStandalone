@@ -223,6 +223,7 @@
 
                         <!-- 1) Currency pill: just reuse your CurrencyTagStyle -->
                         <Border Style="{StaticResource CurrencyTagStyle}"
+                                DataContext="{Binding NextEvent}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                             <TextBlock Text="{Binding NextEvent.Currency}"
@@ -848,15 +849,15 @@
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
                             <UniformGrid Columns="2" Margin="0,0,0,12">
-                                <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="True"/>
-                                <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="True"/>
-                                <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="True"/>
-                                <CheckBox x:Name="CNYCheck" Content="CNY" IsChecked="True"/>
-                                <CheckBox x:Name="EURCheck" Content="EUR" IsChecked="True"/>
-                                <CheckBox x:Name="GBPCheck" Content="GBP" IsChecked="True"/>
-                                <CheckBox x:Name="JPYCheck" Content="JPY" IsChecked="True"/>
-                                <CheckBox x:Name="NZDCheck" Content="NZD" IsChecked="True"/>
-                                <CheckBox x:Name="USDCheck" Content="USD" IsChecked="True"/>
+                                <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="{Binding ShowAUD,Mode=TwoWay}"/>
+                                <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="{Binding ShowCAD,Mode=TwoWay}"/>
+                                <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="{Binding ShowCHF,Mode=TwoWay}"/>
+                                <CheckBox x:Name="CNYCheck" Content="CNY" IsChecked="{Binding ShowCNY,Mode=TwoWay}"/>
+                                <CheckBox x:Name="EURCheck" Content="EUR" IsChecked="{Binding ShowEUR,Mode=TwoWay}"/>
+                                <CheckBox x:Name="GBPCheck" Content="GBP" IsChecked="{Binding ShowGBP,Mode=TwoWay}"/>
+                                <CheckBox x:Name="JPYCheck" Content="JPY" IsChecked="{Binding ShowJPY,Mode=TwoWay}"/>
+                                <CheckBox x:Name="NZDCheck" Content="NZD" IsChecked="{Binding ShowNZD,Mode=TwoWay}"/>
+                                <CheckBox x:Name="USDCheck" Content="USD" IsChecked="{Binding ShowUSD,Mode=TwoWay}"/>
                             </UniformGrid>
                             <!-- Impact‑level filter -->
                             <TextBlock Text="Show News Impact" FontWeight="SemiBold" Margin="0,8,0,4"/>

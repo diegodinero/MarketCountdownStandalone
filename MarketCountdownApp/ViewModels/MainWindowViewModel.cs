@@ -21,6 +21,132 @@ namespace MarketCountdownApp
         public ObservableCollection<ForexEvent> UpcomingEvents { get; }
             = new ObservableCollection<ForexEvent>();
 
+        // THESE BACKING FIELDS:
+        private bool _showUSD = true;
+        private bool _showEUR = true;
+        private bool _showGBP = true;
+        private bool _showCAD = true;
+        private bool _showCHF = true;
+        private bool _showAUD = true;
+        private bool _showCNY = true;
+        private bool _showNZD = true;
+        private bool _showJPY = true;
+
+        // AND THESE PROPERTIES:
+        public bool ShowUSD
+        {
+            get => _showUSD;
+            set
+            {
+                if (_showUSD == value) return;
+                _showUSD = value;
+                OnPropertyChanged(nameof(ShowUSD));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowEUR
+        {
+            get => _showEUR;
+            set
+            {
+                if (_showEUR == value) return;
+                _showEUR = value;
+                OnPropertyChanged(nameof(ShowEUR));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowGBP
+        {
+            get => _showGBP;
+            set
+            {
+                if (_showGBP == value) return;
+                _showGBP = value;
+                OnPropertyChanged(nameof(ShowGBP));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowCAD
+        {
+            get => _showCAD;
+            set
+            {
+                if (_showCAD == value) return;
+                _showCAD = value;
+                OnPropertyChanged(nameof(ShowCAD));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowCHF
+        {
+            get => _showCHF;
+            set
+            {
+                if (_showCHF == value) return;
+                _showCHF = value;
+                OnPropertyChanged(nameof(ShowCHF));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowAUD
+        {
+            get => _showAUD;
+            set
+            {
+                if (_showAUD == value) return;
+                _showAUD = value;
+                OnPropertyChanged(nameof(ShowAUD));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowCNY
+        {
+            get => _showCNY;
+            set
+            {
+                if (_showCNY == value) return;
+                _showCNY = value;
+                OnPropertyChanged(nameof(ShowCNY));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowNZD
+        {
+            get => _showNZD;
+            set
+            {
+                if (_showNZD == value) return;
+                _showNZD = value;
+                OnPropertyChanged(nameof(ShowNZD));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowJPY
+        {
+            get => _showJPY;
+            set
+            {
+                if (_showJPY == value) return;
+                _showJPY = value;
+                OnPropertyChanged(nameof(ShowJPY));
+                RefreshNextEvent();
+            }
+        }
+
+        private bool IsCurrencyVisible(string c) => c switch
+        {
+            "USD" => ShowUSD,
+            "EUR" => ShowEUR,
+            "GBP" => ShowGBP,
+            "CAD" => ShowCAD,
+            "CHF" => ShowCHF,
+            "AUD" => ShowAUD,
+            "CNY" => ShowCNY,
+            "NZD" => ShowNZD,
+            "JPY" => ShowJPY,
+            _ => true
+        };
+
         private bool isDarkMode;
         public bool IsDarkMode
         {
@@ -59,15 +185,14 @@ namespace MarketCountdownApp
             get
             {
                 var now = DateTime.Now;
-                var future = UpcomingEvents.Where(e => e.Occurrence >= now).ToList();
+                var future = UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency)).ToList();
+
                 if (!future.Any())
                     return null;
 
                 var nextTime = future.Min(e => e.Occurrence);
 
-                return future
-                    .Where(e => e.Occurrence == nextTime)
-                    .OrderBy(e =>
+                return future.Where(e => e.Occurrence == nextTime).OrderBy(e =>
                     {
                         var idx = Array.IndexOf(ImpactOrder, e.Impact);
                         return idx < 0 ? ImpactOrder.Length : idx;
@@ -125,6 +250,16 @@ namespace MarketCountdownApp
             _countdownTimer.Start();
 
             _ = FetchEventsAsync();
+        }
+
+        /// <summary>
+        /// Re‑compute the “NextEvent” and its text/countdown by raising PropertyChanged
+        /// </summary>
+        private void RefreshNextEvent()
+        {
+            OnPropertyChanged(nameof(NextEvent));
+            OnPropertyChanged(nameof(NextEventText));
+            OnPropertyChanged(nameof(NextEventCountdown));
         }
 
         private async Task FetchEventsAsync()
