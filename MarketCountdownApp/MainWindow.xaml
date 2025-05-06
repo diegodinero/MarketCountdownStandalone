@@ -7,7 +7,7 @@
     Title="Market Countdown"
     WindowStyle="None"
     ResizeMode="NoResize"
-    Width="600"
+    Width="605"
     Height="530"
     Background="{DynamicResource WindowBackgroundBrush}"
     AllowsTransparency="True"
@@ -226,7 +226,7 @@
                                 DataContext="{Binding NextEvent}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                            <TextBlock Text="{Binding NextEvent.Currency}"
+                            <TextBlock Text="{Binding Currency}"
                                        FontSize="12"
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource PrimaryTextBrush}"
@@ -476,7 +476,7 @@
                         Tag="Sydney"
                         Width="75" Height="75"
                         HorizontalAlignment="Center"
-                        Margin="10,0,0,0"
+                        Margin="0,0,0,0"
                         VerticalAlignment="Center"/>
                         <StackPanel Grid.Column="1"
                      VerticalAlignment="Center"
