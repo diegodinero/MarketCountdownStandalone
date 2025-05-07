@@ -166,17 +166,28 @@ namespace MarketCountdownApp
 
         private string GetDisplay(MarketInfo m)
         {
+            var local = ToLocal(m);
+            var t = local.TimeOfDay;
+            bool open = IsOpen(m);
             // ?? SPECIAL?CASE LONDON TO USE 08:00?UTC ????????????????????????????????
             if (m.Name == "London")
             {
-                DateTime nowUtc = DateTime.UtcNow;
-                DateTime todayOpen = nowUtc.Date.AddHours(7);            // 08:00?UTC today
-                DateTime nextOpenUtc = nowUtc < todayOpen
-                    ? todayOpen
-                    : todayOpen.AddDays(1);         // or tomorrow 08:00?UTC
-
-                TimeSpan span = nextOpenUtc - nowUtc;
-                return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
+                // compute today’s 08:00 local London
+                DateTime todayOpenLocal = local.Date.Add(m.Open1);
+                if (open && t < m.Close1)    // market is open now
+                {
+                    TimeSpan sinceOpen = local - todayOpenLocal;
+                    return $"+{(int)sinceOpen.TotalHours:00}:{sinceOpen.Minutes:00}";
+                }
+                else
+                {
+                    // next open is either today at 08:00 (if before open) or tomorrow
+                    DateTime nextOpenLocal = local < todayOpenLocal
+                        ? todayOpenLocal
+                        : todayOpenLocal.AddDays(1);
+                    TimeSpan untilOpen = nextOpenLocal - local;
+                    return $"-{(int)untilOpen.TotalHours:00}:{untilOpen.Minutes:00}";
+                }
             }
 
             // ??????? SYDNEY: UTC?only countdown to 22:00 UTC ?????????
@@ -189,9 +200,7 @@ namespace MarketCountdownApp
                 return $"-{(int)span.TotalHours:00}:{span.Minutes:00}";
             }
 
-            var local = ToLocal(m);
-            var t = local.TimeOfDay;
-            bool open = IsOpen(m);
+            
 
             if (open)
             {
