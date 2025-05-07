@@ -136,33 +136,64 @@ namespace MarketCountdownApp
 
         private double ComputeProgress(MarketInfo m)
         {
-            var local = ToLocal(m);
-            var t = local.TimeOfDay;
-            if (!IsOpen(m))
-                return 0.0;
+            var nowLocal = ToLocal(m);
+            var t = nowLocal.TimeOfDay;
+            DateTime today = nowLocal.Date;
+            DateTime open1 = today.Add(m.Open1);
+            DateTime close1 = today.Add(m.Close1);
+            DateTime open2 = m.Open2.HasValue ? today.Add(m.Open2.Value) : DateTime.MinValue;
+            DateTime close2 = m.Close2.HasValue ? today.Add(m.Close2.Value) : DateTime.MinValue;
 
-            TimeSpan start, length;
-            if (m.Name == "Tokyo")
+            // Helper to clamp 0–1
+            double Clamp01(double v) => Math.Max(0.0, Math.Min(1.0, v));
+
+            // If market is open and not in Tokyo lunch gap
+            if (IsOpen(m) && !(m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2.Value))
             {
-                if (t < m.Close1)
+                DateTime sessionStart, sessionEnd;
+                if (t < m.Close1 || !m.Open2.HasValue)
                 {
-                    start = m.Open1;
-                    length = m.Close1 - m.Open1;
+                    sessionStart = open1;
+                    sessionEnd = close1;
                 }
                 else
                 {
-                    start = m.Open2.Value;
-                    length = m.Close2.Value - m.Open2.Value;
+                    sessionStart = open2;
+                    sessionEnd = close2;
                 }
+
+                double totalMins = (sessionEnd - sessionStart).TotalMinutes;
+                double elapsed = (nowLocal - sessionStart).TotalMinutes;
+                return Clamp01(elapsed / totalMins);
+            }
+
+            // CLOSED or Tokyo lunch gap: march dot toward next open
+            DateTime lastClose, nextOpen;
+            if (nowLocal < open1)
+            {
+                lastClose = today.AddDays(-1).Add(m.Close1);
+                nextOpen = open1;
+            }
+            else if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
+            {
+                // Tokyo lunch
+                lastClose = close1;
+                nextOpen = open2;
             }
             else
             {
-                start = m.Open1;
-                length = m.Close1 - m.Open1;
+                lastClose = m.Close2.HasValue ? close2 : close1;
+                nextOpen = open1.AddDays((nowLocal < open1) ? 0 : 1);
+                if (nowLocal.DayOfWeek == DayOfWeek.Saturday) nextOpen = open1.AddDays(2);
+                if (nowLocal.DayOfWeek == DayOfWeek.Sunday) nextOpen = open1.AddDays(1);
             }
 
-            return (t - start).TotalMinutes / length.TotalMinutes;
+            double downtimeMins = (nextOpen - lastClose).TotalMinutes;
+            double sinceClose = (nowLocal - lastClose).TotalMinutes;
+            return Clamp01(sinceClose / downtimeMins);
         }
+
+
 
         private string GetDisplay(MarketInfo m)
         {
