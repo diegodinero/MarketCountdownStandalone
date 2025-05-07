@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MarketCountdownApp"
     xmlns:settings="clr-namespace:MarketCountdownApp.Properties;assembly=MarketCountdownApp"
+    xmlns:prop="clr-namespace:MarketCountdownApp.Properties"
     Title="Market Countdown"
     WindowStyle="None"
     ResizeMode="NoResize"
@@ -854,16 +855,16 @@
                           Margin="0,8,0,0"/>
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
-                            <UniformGrid Columns="2" Margin="0,0,0,12" DataContext="{x:Static settings:Settings.Default}">
-                                <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="{Binding ShowAUD,Mode=TwoWay}"/>
-                                <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="{Binding ShowCAD,Mode=TwoWay}"/>
-                                <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="{Binding ShowCHF,Mode=TwoWay}"/>
-                                <CheckBox x:Name="CNYCheck" Content="CNY" IsChecked="{Binding ShowCNY,Mode=TwoWay}"/>
-                                <CheckBox x:Name="EURCheck" Content="EUR" IsChecked="{Binding ShowEUR,Mode=TwoWay}"/>
-                                <CheckBox x:Name="GBPCheck" Content="GBP" IsChecked="{Binding ShowGBP,Mode=TwoWay}"/>
-                                <CheckBox x:Name="JPYCheck" Content="JPY" IsChecked="{Binding ShowJPY,Mode=TwoWay}"/>
-                                <CheckBox x:Name="NZDCheck" Content="NZD" IsChecked="{Binding ShowNZD,Mode=TwoWay}"/>
-                                <CheckBox x:Name="USDCheck" Content="USD" IsChecked="{Binding ShowUSD,Mode=TwoWay}"/>
+                            <UniformGrid Columns="2" Margin="0,0,0,12" DataContext="{x:Static prop:Settings.Default}">
+                                <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="{Binding ShowAUD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="{Binding ShowCAD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="{Binding ShowCHF,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="CNYCheck" Content="CNY" IsChecked="{Binding ShowCNY,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="EURCheck" Content="EUR" IsChecked="{Binding ShowEUR,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="GBPCheck" Content="GBP" IsChecked="{Binding ShowGBP,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="JPYCheck" Content="JPY" IsChecked="{Binding ShowJPY,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="NZDCheck" Content="NZD" IsChecked="{Binding ShowNZD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox x:Name="USDCheck" Content="USD" IsChecked="{Binding ShowUSD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </UniformGrid>
                             <!-- Impact‑level filter -->
                             <TextBlock Text="Show News Impact" FontWeight="SemiBold" Margin="0,8,0,4"/>

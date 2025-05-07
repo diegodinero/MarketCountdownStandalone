@@ -31,7 +31,7 @@ namespace MarketCountdownApp
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            AppSettings.Default.Save();
+            MarketCountdownApp.Properties.Settings.Default.Save();
         }
     }
 }
