@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using AppSettings = MarketCountdownApp.Properties.Settings;
 
 namespace MarketCountdownApp
 {
@@ -25,6 +26,12 @@ namespace MarketCountdownApp
             var md = Resources.MergedDictionaries;
             md.Clear();
             md.Add(isDark ? dark : light);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            AppSettings.Default.Save();
         }
     }
 }
