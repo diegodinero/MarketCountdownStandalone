@@ -256,7 +256,7 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-            
+
             <!-- MARKET TILES -->
             <UniformGrid x:Name="MainContent"
                    Visibility="Collapsed"
@@ -310,11 +310,21 @@
                   Width="60" Height="60"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
-                            <Path   Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                      StrokeThickness="6"
-                      Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Path
+                                Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"
+                                Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}">
+                                <Path.Effect>
+                                    <DropShadowEffect
+                                        ShadowDepth="2"
+                                        BlurRadius="15"
+                                        Opacity="1.0"
+                                        Color="{Binding Stroke.(SolidColorBrush.Color),
+              RelativeSource={RelativeSource Self}}"/>
+                                </Path.Effect>
+                            </Path>
                             <TextBlock Text="{Binding LondonStatus}"
                          FontSize="10"
                          FontWeight="Bold"
@@ -411,12 +421,21 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Path
+                                Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"
+                                Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}">
+                                <Path.Effect>
+                                    <DropShadowEffect
+                                        ShadowDepth="2"
+                                        BlurRadius="15"
+                                        Opacity="1.0"
+                                        Color="{Binding Stroke.(SolidColorBrush.Color),
+RelativeSource={RelativeSource Self}}"/>
+                                </Path.Effect>
+                            </Path>
                             <TextBlock Text="{Binding NewYorkStatus}"
           FontSize="10"
           FontWeight="Bold"
@@ -510,12 +529,21 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Path
+                                Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"
+                                Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}">
+                                <Path.Effect>
+                                    <DropShadowEffect
+                                        ShadowDepth="2"
+                                        BlurRadius="15"
+                                        Opacity="1.0"
+                                        Color="{Binding Stroke.(SolidColorBrush.Color),
+RelativeSource={RelativeSource Self}}"/>
+                                </Path.Effect>
+                            </Path>
                             <TextBlock Text="{Binding SydneyStatus}"
           FontSize="10"
           FontWeight="Bold"
@@ -609,12 +637,21 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Path
+                                Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"
+                                Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}">
+                                <Path.Effect>
+                                    <DropShadowEffect
+                                        ShadowDepth="2"
+                                        BlurRadius="15"
+                                        Opacity="1.0"
+                                        Color="{Binding Stroke.(SolidColorBrush.Color),
+RelativeSource={RelativeSource Self}}"/>
+                                </Path.Effect>
+                            </Path>
                             <TextBlock Text="{Binding TokyoStatus}"
           FontSize="10"
           FontWeight="Bold"
