@@ -2,28 +2,33 @@
     x:Class="MarketCountdownApp.CircularProgressBar_UC"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Width="60" Height="60">
+    Width="84" Height="84"
+    ClipToBounds="False">
 
     <Grid>
         <!-- background ring -->
         <Ellipse
+            Width="60"
+            Height="60"
             Stroke="LightGray"
             StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
-        <!-- progress arc with glow -->
+        <!-- progress arc with blurred shadow -->
         <Path
             x:Name="PART_Path"
+            Width="60" Height="60"
             Stroke="{Binding Stroke, RelativeSource={RelativeSource AncestorType=UserControl}}"
             StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=UserControl}}"
             StrokeStartLineCap="Round"
-            StrokeEndLineCap="Round">
+            StrokeEndLineCap="Round"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
             <Path.Effect>
                 <DropShadowEffect
+                    Color="{Binding Stroke.(SolidColorBrush.Color),RelativeSource={RelativeSource Self}}"
                     BlurRadius="12"
                     ShadowDepth="0"
-                    Opacity="0.8"
-                    Color="{Binding Stroke.(SolidColorBrush.Color), 
-              RelativeSource={RelativeSource AncestorType=Path}}"/>
+                    Opacity="0.8"/>
             </Path.Effect>
         </Path>
     </Grid>

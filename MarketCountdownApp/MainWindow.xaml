@@ -304,15 +304,18 @@
                        VerticalAlignment="Top"/>
 
                         <!-- Status dial -->
-                        <Grid Grid.Column="3" Width="60" Height="60" VerticalAlignment="Center" 
-                              HorizontalAlignment="Center"
-                              Margin="-20,0,6,0">
+                        <Grid Grid.Column="3"
+                              VerticalAlignment="Center"
+                              
+                              ClipToBounds="True"
+                              Margin="-20,0,8,0">
                             <local:CircularProgressBar_UC
                                 Width="60" Height="60"
                                 Minimum="0" Maximum="1"
                                 Value="{Binding LondonProgress}"
                                 Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                                StrokeThickness="6"/>
+                                StrokeThickness="6"
+                                ClipToBounds="False"/>
                             <TextBlock Text="{Binding LondonStatus}"
                                        FontSize="10" FontWeight="Bold"
                                        Foreground="{DynamicResource PrimaryTextBrush}"
