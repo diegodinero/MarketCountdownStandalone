@@ -207,6 +207,10 @@ namespace MarketCountdownApp
         }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 68345e8aca7943b6e7954bcdf84b25dd1883ce00
         private string GetDisplay(MarketInfo m)
         {
             var local = ToLocal(m);

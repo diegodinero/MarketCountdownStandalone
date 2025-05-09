@@ -4,8 +4,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MarketCountdownApp"
-    xmlns:settings="clr-namespace:MarketCountdownApp.Properties;assembly=MarketCountdownApp"
-    xmlns:prop="clr-namespace:MarketCountdownApp.Properties"
     Title="Market Countdown"
     WindowStyle="None"
     ResizeMode="NoResize"
@@ -25,8 +23,7 @@
     <Window.Resources>
         <!-- Converters & ViewModel -->
         <local:StatusToBrushConverter x:Key="StatusToBrushConverter"/>
-        <local:ProgressToArcConverter x:Key="ProgressToArcConverter"/>
-        <local:ImpactToBrushConverter x:Key="ImpactToBrushConverter"/>
+                <local:ImpactToBrushConverter x:Key="ImpactToBrushConverter"/>
         <local:MainWindowViewModel      x:Key="ViewModel"/>
         <local:IconSourceConverter x:Key="IconSourceConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
@@ -267,13 +264,14 @@
                 <!-- London Tile -->
                 <Border Background="{DynamicResource CardBackgroundBrush}"
                 CornerRadius="12"
-                Margin="4">
+                Margin="4"
+                Padding="8">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Icon -->
@@ -302,11 +300,12 @@
                        Text="{Binding LondonLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
                        HorizontalAlignment="Center"
-                       Margin="12,10,8,0"
+                       Margin="10,0,10,0"
                        VerticalAlignment="Top"/>
 
                         <!-- Status dial -->
                         <Grid Grid.Column="3"
+<<<<<<< HEAD
                   Width="60" Height="60"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
@@ -352,12 +351,24 @@
                             </Canvas>
 
 
+=======
+                              VerticalAlignment="Center"
+                              
+                              ClipToBounds="True"
+                              Margin="-20,0,8,0">
+                            <local:CircularProgressBar_UC
+                                Width="60" Height="60"
+                                Minimum="0" Maximum="1"
+                                Value="{Binding LondonProgress}"
+                                Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"
+                                ClipToBounds="False"/>
+>>>>>>> 68345e8aca7943b6e7954bcdf84b25dd1883ce00
                             <TextBlock Text="{Binding LondonStatus}"
-                         FontSize="10"
-                         FontWeight="Bold"
-                         Foreground="{DynamicResource PrimaryTextBrush}"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
+                                       FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                         <!-- glowing dot -->
                         <Grid Grid.Column="0"
@@ -443,6 +454,7 @@
         HorizontalAlignment="Center"
         Margin="12,10,8,0"
         VerticalAlignment="Top"/>
+<<<<<<< HEAD
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
@@ -488,12 +500,20 @@
                                     StrokeEndLineCap="Round"
                                     StrokeLineJoin="Round"/>
                             </Canvas>
+=======
+                        <Grid Grid.Column="3" Width="60" Height="60" VerticalAlignment="Center">
+                            <local:CircularProgressBar_UC
+                                Width="60" Height="60"
+                                Minimum="0" Maximum="1"
+                                Value="{Binding NewYorkProgress}"
+                                Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
+>>>>>>> 68345e8aca7943b6e7954bcdf84b25dd1883ce00
                             <TextBlock Text="{Binding NewYorkStatus}"
-          FontSize="10"
-          FontWeight="Bold"
-          Foreground="{DynamicResource PrimaryTextBrush}"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"/>
+                                       FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Column="0"
    Width="20" Height="20"
@@ -576,6 +596,7 @@
         HorizontalAlignment="Center"
         Margin="12,10,8,0"
         VerticalAlignment="Top"/>
+<<<<<<< HEAD
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
@@ -621,12 +642,20 @@
                                     StrokeEndLineCap="Round"
                                     StrokeLineJoin="Round"/>
                             </Canvas>
+=======
+                        <Grid Grid.Column="3" Width="60" Height="60" VerticalAlignment="Center">
+                            <local:CircularProgressBar_UC
+                                Width="60" Height="60"
+                                Minimum="0" Maximum="1"
+                                Value="{Binding SydneyProgress}"
+                                Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
+>>>>>>> 68345e8aca7943b6e7954bcdf84b25dd1883ce00
                             <TextBlock Text="{Binding SydneyStatus}"
-          FontSize="10"
-          FontWeight="Bold"
-          Foreground="{DynamicResource PrimaryTextBrush}"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"/>
+                                       FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Column="0"
    Width="20" Height="20"
@@ -709,6 +738,7 @@
         HorizontalAlignment="Center"
         Margin="12,10,8,0"
         VerticalAlignment="Top"/>
+<<<<<<< HEAD
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
@@ -754,12 +784,20 @@
                                     StrokeEndLineCap="Round"
                                     StrokeLineJoin="Round"/>
                             </Canvas>
+=======
+                        <Grid Grid.Column="3" Width="60" Height="60" VerticalAlignment="Center">
+                            <local:CircularProgressBar_UC
+                                Width="60" Height="60"
+                                Minimum="0" Maximum="1"
+                                Value="{Binding TokyoProgress}"
+                                Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                StrokeThickness="6"/>
+>>>>>>> 68345e8aca7943b6e7954bcdf84b25dd1883ce00
                             <TextBlock Text="{Binding TokyoStatus}"
-          FontSize="10"
-          FontWeight="Bold"
-          Foreground="{DynamicResource PrimaryTextBrush}"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"/>
+                                       FontSize="10" FontWeight="Bold"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Column="0"
    Width="20" Height="20"
@@ -994,7 +1032,7 @@
                           Margin="0,8,0,0"/>
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
-                            <UniformGrid Columns="2" Margin="0,0,0,12" DataContext="{x:Static prop:Settings.Default}">
+                            <UniformGrid Columns="2" Margin="0,0,0,12">
                                 <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="{Binding ShowAUD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="{Binding ShowCAD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="{Binding ShowCHF,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
