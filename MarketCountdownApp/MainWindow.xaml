@@ -880,7 +880,7 @@ RelativeSource={RelativeSource Self}}"/>
                        FontWeight="Bold"
                        Margin="0,0,0,12"/>
                         <StackPanel Margin="0,0,0,12">
-                            <CheckBox Content="Dark Mode"
+                            <CheckBox x:Name="DarkModeCheck"  Content="Dark Mode"
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
                             <CheckBox Content="Show next‑event expander"
                                       IsChecked="{Binding ShowNextEventToggle, Mode=TwoWay}" />

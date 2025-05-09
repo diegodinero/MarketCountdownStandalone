@@ -18,6 +18,24 @@ namespace MarketCountdownApp
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+
+            AUDCheck.IsChecked = Properties.Settings.Default.ShowAUD;
+            CADCheck.IsChecked = Properties.Settings.Default.ShowCAD;
+            CHFCheck.IsChecked = Properties.Settings.Default.ShowCHF;
+            CNYCheck.IsChecked = Properties.Settings.Default.ShowCNY;
+            EURCheck.IsChecked = Properties.Settings.Default.ShowEUR;
+            GBPCheck.IsChecked = Properties.Settings.Default.ShowGBP;
+            JPYCheck.IsChecked = Properties.Settings.Default.ShowJPY;
+            NZDCheck.IsChecked = Properties.Settings.Default.ShowNZD;
+            USDCheck.IsChecked = Properties.Settings.Default.ShowUSD;
+            NextEventToggle.IsChecked = Properties.Settings.Default.ShowNextEventToggle;
+            //HighImpactCheck.IsChecked = Properties.Settings.Default.;
+            //MediumImpactCheck.IsChecked = Properties.Settings.Default.;
+            //LowImpactCheck.IsChecked = Properties.Settings.Default.;
+            //HolidayImpactCheck.IsChecked = Properties.Settings.Default.;
+
+            DarkModeCheck.IsChecked = Properties.Settings.Default.IsDarkMode;
+            // … repeat for all of your ShowXXX, IsDarkMode, Use24Hour, etc.
             SetExpanded(false);
             ApplyFilter();
         }
@@ -32,6 +50,23 @@ namespace MarketCountdownApp
         {
             SettingsOverlay.Visibility = Visibility.Collapsed;
             ApplyFilter();
+            Properties.Settings.Default.ShowAUD = AUDCheck.IsChecked == true;
+            Properties.Settings.Default.ShowCAD = CADCheck.IsChecked == true;
+            Properties.Settings.Default.ShowCHF = CHFCheck.IsChecked == true;
+            Properties.Settings.Default.ShowCNY = CNYCheck.IsChecked == true;
+            Properties.Settings.Default.ShowEUR = EURCheck.IsChecked == true;
+            Properties.Settings.Default.ShowGBP = GBPCheck.IsChecked == true;
+            Properties.Settings.Default.ShowJPY = JPYCheck.IsChecked == true;
+            Properties.Settings.Default.ShowNZD = NZDCheck.IsChecked == true;
+            Properties.Settings.Default.ShowUSD = USDCheck.IsChecked == true;
+            
+            Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
+            Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
+            
+            // any others…
+
+            // finally, persist to disk
+            Properties.Settings.Default.Save();
         }
 
         private void OnIconBarClick(object sender, MouseButtonEventArgs e)
