@@ -13,6 +13,14 @@ namespace MarketCountdownApp
             return status == "OPEN"
                 ? new SolidColorBrush(Color.FromRgb(0x40, 0x9E, 0xFF))   // blue
                 : new SolidColorBrush(Color.FromRgb(0xEB, 0x57, 0x57));  // red
+
+            //return status == "OPEN"
+            //    ? new SolidColorBrush(Color.FromArgb(255,254, 242, 0))   // Yellow
+             //   : new SolidColorBrush(Color.FromRgb(0xEB, 0x57, 0x57));  // red
+
+            //return status == "OPEN"
+             //   ? new SolidColorBrush(Color.FromArgb(255, 254, 242, 0))   // Yellow
+             //   : new SolidColorBrush(Color.FromRgb(0x40, 0x9E, 0xFF));  // blue
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
