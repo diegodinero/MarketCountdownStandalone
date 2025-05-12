@@ -4,10 +4,10 @@
     <!-- black icons in light -->
     <SolidColorBrush x:Key="IconFillBrush" Color="Black"/>
     <!-- overall window background (was white) -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="Transparent"/>
 
     <!-- grey behind cards (was #B0B0B0 originally) -->
-    <SolidColorBrush x:Key="PanelBackgroundBrush"  Color="#B0B0B0"/>
+    <SolidColorBrush x:Key="PanelBackgroundBrush"  Color="Transparent"/>
 
     <!-- each card background -->
     <SolidColorBrush x:Key="CardBackgroundBrush"   Color="White"/>

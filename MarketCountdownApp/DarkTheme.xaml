@@ -4,10 +4,10 @@
     <!-- white icons in dark -->
     <SolidColorBrush x:Key="IconFillBrush" Color="White"/>
     <!-- overall window background (very dark charcoal) -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#1B1B1F"/>
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="Transparent"/>
 
     <!-- large panel background (slightly lighter) -->
-    <SolidColorBrush x:Key="PanelBackgroundBrush"  Color="#2C2C31"/>
+    <SolidColorBrush x:Key="PanelBackgroundBrush"  Color="Transparent"/>
 
     <!-- tile & card background (dark slate) -->
     <SolidColorBrush x:Key="CardBackgroundBrush"   Color="#242428"/>
