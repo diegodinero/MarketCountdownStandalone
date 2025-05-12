@@ -994,7 +994,7 @@
                           Margin="0,8,0,0"/>
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
-                            <UniformGrid Columns="2" Margin="0,0,0,12" DataContext="{x:Static prop:Settings.Default}">
+                            <UniformGrid Columns="2" Margin="0,0,0,12">
                                 <CheckBox x:Name="AUDCheck" Content="AUD" IsChecked="{Binding ShowAUD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox x:Name="CADCheck" Content="CAD" IsChecked="{Binding ShowCAD,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox x:Name="CHFCheck" Content="CHF" IsChecked="{Binding ShowCHF,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
