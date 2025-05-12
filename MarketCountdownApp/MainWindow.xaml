@@ -314,7 +314,7 @@
                                      StrokeThickness="6"/>
                             <Canvas>
                                 <!-- 1) Outer, very soft halo -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="18"
@@ -325,10 +325,10 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="20"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 2) Inner, stronger glow -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="14"
@@ -339,7 +339,7 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="10"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 3) Crisp foreground ring -->
                                 <Path
@@ -452,7 +452,7 @@
                                      StrokeThickness="6"/>
                             <Canvas>
                                 <!-- 1) Outer, very soft halo -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="18"
@@ -463,10 +463,10 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="20"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 2) Inner, stronger glow -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="14"
@@ -477,7 +477,7 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="10"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 3) Crisp foreground ring -->
                                 <Path
@@ -585,7 +585,7 @@
                                      StrokeThickness="6"/>
                             <Canvas>
                                 <!-- 1) Outer, very soft halo -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="18"
@@ -596,10 +596,10 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="20"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 2) Inner, stronger glow -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="14"
@@ -610,7 +610,7 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="10"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 3) Crisp foreground ring -->
                                 <Path
@@ -718,7 +718,7 @@
                                      StrokeThickness="6"/>
                             <Canvas>
                                 <!-- 1) Outer, very soft halo -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="18"
@@ -729,10 +729,10 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="20"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 2) Inner, stronger glow -->
-                                <Path
+                                <!--<Path
                                     Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"
                                     Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
                                     StrokeThickness="14"
@@ -743,7 +743,7 @@
                                     <Path.Effect>
                                         <BlurEffect Radius="10"/>
                                     </Path.Effect>
-                                </Path>
+                                </Path>-->
 
                                 <!-- 3) Crisp foreground ring -->
                                 <Path
