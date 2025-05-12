@@ -6,73 +6,72 @@ using System.Windows.Media;
 
 namespace MarketCountdownApp
 {
+    /// <summary>
+    /// Converts a double 0–1 progress value into a circular arc PathGeometry.
+    /// </summary>
     public class ProgressToArcConverter : IValueConverter
     {
-        // value: a double between 0.0 and 1.0
+        // You can tweak these defaults or pass Width/Height via ConverterParameter if needed.
+        private const double DefaultDiameter = 60.0;
+        private const double DefaultStrokeThickness = 6.0;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Safely unwrap the input
-            double progress = 0.0;
-            if (value is double d)
+            // Parse progress fraction
+            double progress = 0;
+            if (value != null)
             {
-                progress = Math.Max(0.0, Math.Min(1.0, d));
+                if (!double.TryParse(value.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out progress))
+                    progress = 0;
             }
+            progress = Math.Max(0, Math.Min(1, progress));
 
-            // No arc for zero progress
-            if (progress <= 0.0)
-                return Geometry.Empty;
+            // Compute geometry
+            double diameter = DefaultDiameter;
+            double thickness = DefaultStrokeThickness;
+            double radius = (diameter - thickness) / 2;
+            double cx = diameter / 2;
+            double cy = diameter / 2;
 
-            // Compute the sweep angle
-            double angle = 360.0 * progress;
+            // Start at 12 o'clock (-90°)
+            double startAngle = -90 * Math.PI / 180;
+            double sweepAngle = 2 * Math.PI * progress;
+            double endAngle = startAngle + sweepAngle;
 
-            // Radius = half of 60px minus half of 6px stroke
-            double radius = 30.0 - 3.0;
-            // Start at top (-90°)
-            double radians = (Math.PI / 180.0) * (angle - 90.0);
+            // Points
+            var startPoint = new Point(
+                cx + radius * Math.Cos(startAngle),
+                cy + radius * Math.Sin(startAngle));
+            var endPoint = new Point(
+                cx + radius * Math.Cos(endAngle),
+                cy + radius * Math.Sin(endAngle));
 
-            // Center of our 60×60 control
-            Point center = new Point(30.0, 30.0);
-            // Starting point (top center)
-            Point start = new Point(center.X, center.Y - radius);
-            // End point on the circle
-            Point end = new Point(
-                center.X + radius * Math.Cos(radians),
-                center.Y + radius * Math.Sin(radians));
+            // Large arc flag
+            bool isLargeArc = sweepAngle > Math.PI;
 
-            bool largeArc = angle > 180.0;
-
-            // Create the arc segment
-            ArcSegment arc = new ArcSegment
+            // Build the PathFigure
+            var figure = new PathFigure
             {
-                Point = end,
-                Size = new Size(radius, radius),
-                RotationAngle = 0,
-                IsLargeArc = largeArc,
-                SweepDirection = SweepDirection.Clockwise,
-                IsStroked = true
-            };
-
-            // Build the path figure
-            PathFigure figure = new PathFigure
-            {
-                StartPoint = start,
+                StartPoint = startPoint,
                 IsClosed = false,
-                Segments = new PathSegmentCollection { arc }
+                Segments = new PathSegmentCollection
+                {
+                    new ArcSegment
+                    {
+                        Point         = endPoint,
+                        Size          = new Size(radius, radius),
+                        SweepDirection= SweepDirection.Clockwise,
+                        IsLargeArc    = isLargeArc
+                    }
+                }
             };
 
-            // Wrap in a geometry
-            PathGeometry geometry = new PathGeometry
-            {
-                Figures = new PathFigureCollection { figure }
-            };
-
+            var geometry = new PathGeometry();
+            geometry.Figures.Add(figure);
             return geometry;
         }
 
-        // Not used in one‐way binding
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotSupportedException();
     }
 }

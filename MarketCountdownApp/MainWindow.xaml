@@ -256,7 +256,7 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-            
+
             <!-- MARKET TILES -->
             <UniformGrid x:Name="MainContent"
                    Visibility="Collapsed"
@@ -310,11 +310,48 @@
                   Width="60" Height="60"
                   Margin="-20,0,0,0"
                   VerticalAlignment="Center">
-                            <Ellipse Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                       StrokeThickness="6"/>
-                            <Path   Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
-                      StrokeThickness="6"
-                      Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Canvas>
+                                <!-- 1) Outer, very soft halo -->
+                                <Path
+                                    Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="18"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.4">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="20"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 2) Inner, stronger glow -->
+                                <Path
+                                    Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="14"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.7">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="10"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 3) Crisp foreground ring -->
+                                <Path
+                                    Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="6"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"/>
+                            </Canvas>
+
+
                             <TextBlock Text="{Binding LondonStatus}"
                          FontSize="10"
                          FontWeight="Bold"
@@ -411,12 +448,46 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Canvas>
+                                <!-- 1) Outer, very soft halo -->
+                                <Path
+                                    Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="18"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.4">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="20"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 2) Inner, stronger glow -->
+                                <Path
+                                    Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="14"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.7">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="10"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 3) Crisp foreground ring -->
+                                <Path
+                                    Data="{Binding NewYorkProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding NewYorkStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="6"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"/>
+                            </Canvas>
                             <TextBlock Text="{Binding NewYorkStatus}"
           FontSize="10"
           FontWeight="Bold"
@@ -510,12 +581,46 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Canvas>
+                                <!-- 1) Outer, very soft halo -->
+                                <Path
+                                    Data="{Binding LondonProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding LondonStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="18"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.4">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="20"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 2) Inner, stronger glow -->
+                                <Path
+                                    Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="14"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.7">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="10"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 3) Crisp foreground ring -->
+                                <Path
+                                    Data="{Binding SydneyProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding SydneyStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="6"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"/>
+                            </Canvas>
                             <TextBlock Text="{Binding SydneyStatus}"
           FontSize="10"
           FontWeight="Bold"
@@ -609,12 +714,46 @@
    HorizontalAlignment="Center"
    Margin="-20,0,0,0"
    VerticalAlignment="Center">
-                            <Ellipse 
-                 Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-                 StrokeThickness="6"/>
-                            <Path   Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
-       StrokeThickness="6"
-       Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"/>
+                            <Ellipse Stroke="LightGray"
+                                     StrokeThickness="6"/>
+                            <Canvas>
+                                <!-- 1) Outer, very soft halo -->
+                                <Path
+                                    Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="18"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.4">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="20"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 2) Inner, stronger glow -->
+                                <Path
+                                    Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="14"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    Opacity="0.7">
+                                    <Path.Effect>
+                                        <BlurEffect Radius="10"/>
+                                    </Path.Effect>
+                                </Path>
+
+                                <!-- 3) Crisp foreground ring -->
+                                <Path
+                                    Data="{Binding TokyoProgress, Converter={StaticResource ProgressToArcConverter}}"
+                                    Stroke="{Binding TokyoStatus, Converter={StaticResource StatusToBrushConverter}}"
+                                    StrokeThickness="6"
+                                    StrokeStartLineCap="Round"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"/>
+                            </Canvas>
                             <TextBlock Text="{Binding TokyoStatus}"
           FontSize="10"
           FontWeight="Bold"
@@ -843,7 +982,7 @@
                        FontWeight="Bold"
                        Margin="0,0,0,12"/>
                         <StackPanel Margin="0,0,0,12">
-                            <CheckBox Content="Dark Mode"
+                            <CheckBox x:Name="DarkModeCheck"  Content="Dark Mode"
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
                             <CheckBox Content="Show next‑event expander"
                                       IsChecked="{Binding ShowNextEventToggle, Mode=TwoWay}" />
