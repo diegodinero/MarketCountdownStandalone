@@ -234,7 +234,7 @@
                             <TextBlock Text="{Binding Currency}"
                                        FontSize="12"
                                        FontWeight="Bold"
-                                       Foreground="{DynamicResource PrimaryTextBrush}"
+                                       Foreground="{DynamicResource CardBackgroundBrush}"
                                        Margin="4,0"/>
                         </Border>
 
