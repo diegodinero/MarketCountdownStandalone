@@ -178,5 +178,17 @@ namespace MarketCountdownApp.Properties {
                 this["Use24Hour"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AnnouncerSoundsEnabled {
+            get {
+                return ((bool)(this["AnnouncerSoundsEnabled"]));
+            }
+            set {
+                this["AnnouncerSoundsEnabled"] = value;
+            }
+        }
     }
 }

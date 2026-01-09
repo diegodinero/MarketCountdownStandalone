@@ -17,7 +17,8 @@ namespace MarketCountdownApp
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            var viewModel = new MainWindowViewModel();
+            DataContext = viewModel;
 
             AUDCheck.IsChecked = Properties.Settings.Default.ShowAUD;
             CADCheck.IsChecked = Properties.Settings.Default.ShowCAD;
@@ -29,13 +30,30 @@ namespace MarketCountdownApp
             NZDCheck.IsChecked = Properties.Settings.Default.ShowNZD;
             USDCheck.IsChecked = Properties.Settings.Default.ShowUSD;
             NextEventToggle.IsChecked = Properties.Settings.Default.ShowNextEventToggle;
+            AnnouncerSoundsCheck.IsChecked = Properties.Settings.Default.AnnouncerSoundsEnabled;
             //HighImpactCheck.IsChecked = Properties.Settings.Default.;
             //MediumImpactCheck.IsChecked = Properties.Settings.Default.;
             //LowImpactCheck.IsChecked = Properties.Settings.Default.;
             //HolidayImpactCheck.IsChecked = Properties.Settings.Default.;
 
             DarkModeCheck.IsChecked = Properties.Settings.Default.IsDarkMode;
-            // … repeat for all of your ShowXXX, IsDarkMode, Use24Hour, etc.
+            
+            // Initialize ViewModel properties from settings
+            viewModel.ShowSeconds = Properties.Settings.Default.ShowSeconds;
+            viewModel.Use24Hour = Properties.Settings.Default.Use24Hour;
+            viewModel.ShowAUD = Properties.Settings.Default.ShowAUD;
+            viewModel.ShowCAD = Properties.Settings.Default.ShowCAD;
+            viewModel.ShowCHF = Properties.Settings.Default.ShowCHF;
+            viewModel.ShowCNY = Properties.Settings.Default.ShowCNY;
+            viewModel.ShowEUR = Properties.Settings.Default.ShowEUR;
+            viewModel.ShowGBP = Properties.Settings.Default.ShowGBP;
+            viewModel.ShowJPY = Properties.Settings.Default.ShowJPY;
+            viewModel.ShowNZD = Properties.Settings.Default.ShowNZD;
+            viewModel.ShowUSD = Properties.Settings.Default.ShowUSD;
+            viewModel.IsDarkMode = Properties.Settings.Default.IsDarkMode;
+            viewModel.ShowNextEventToggle = Properties.Settings.Default.ShowNextEventToggle;
+            viewModel.AnnouncerSoundsEnabled = Properties.Settings.Default.AnnouncerSoundsEnabled;
+            
             SetExpanded(false);
             ApplyFilter();
         }
@@ -62,8 +80,9 @@ namespace MarketCountdownApp
             
             Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
+            Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
             
-            // any others…
+            // any othersï¿½
 
             // finally, persist to disk
             Properties.Settings.Default.Save();
@@ -136,7 +155,7 @@ namespace MarketCountdownApp
                                   .FirstOrDefault(g => g.Name.ToString() == todayName);
             if (todayGroup == null) return;
 
-            // parse each ForexEvent.Time back to a DateTime on today’s date in EST
+            // parse each ForexEvent.Time back to a DateTime on todayï¿½s date in EST
             var estZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime utcNow = DateTime.UtcNow;
             DateTime estNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, estZone);
@@ -201,6 +220,20 @@ namespace MarketCountdownApp
                 };
                 view.Refresh();
             }
+        }
+
+        private void AnnouncerSoundsCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            // Play the raidentorpedo.wav sound when the checkbox is checked
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.PlaySound("raidentorpedo.wav");
+            }
+        }
+
+        private void AnnouncerSoundsCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Do nothing when unchecked (no sound played as per requirements)
         }
     }
 
