@@ -59,5 +59,32 @@ namespace MarketCountdownApp.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream fiveminutesremaining {
+            get {
+                return ResourceManager.GetStream("fiveminutesremaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream raidentorpedo {
+            get {
+                return ResourceManager.GetStream("raidentorpedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream undertaker {
+            get {
+                return ResourceManager.GetStream("undertaker", resourceCulture);
+            }
+        }
     }
 }
