@@ -193,6 +193,12 @@ namespace MarketCountdownApp
         // Track which events have already played sounds at which intervals
         private Dictionary<string, HashSet<int>> _playedSounds = new Dictionary<string, HashSet<int>>();
 
+        // Constants for countdown sound timing (in minutes)
+        private const double FIVE_MINUTE_THRESHOLD = 5.0;
+        private const double FIVE_MINUTE_WINDOW = 4.916; // ~4 minutes 55 seconds
+        private const double TWO_MINUTE_THRESHOLD = 2.0;
+        private const double TWO_MINUTE_WINDOW = 1.916; // ~1 minute 55 seconds
+
         private bool _showSeconds = true;
         public bool ShowSeconds
         {
@@ -332,13 +338,13 @@ namespace MarketCountdownApp
                 }
 
                 // Check for 5 minutes remaining (between 5:00 and 4:55)
-                if (timeUntil.TotalMinutes <= 5 && timeUntil.TotalMinutes > 4.916 && !_playedSounds[eventKey].Contains(5))
+                if (timeUntil.TotalMinutes <= FIVE_MINUTE_THRESHOLD && timeUntil.TotalMinutes > FIVE_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(5))
                 {
                     PlaySound("fiveminutesremaining.wav");
                     _playedSounds[eventKey].Add(5);
                 }
                 // Check for 2 minutes remaining (between 2:00 and 1:55)
-                else if (timeUntil.TotalMinutes <= 2 && timeUntil.TotalMinutes > 1.916 && !_playedSounds[eventKey].Contains(2))
+                else if (timeUntil.TotalMinutes <= TWO_MINUTE_THRESHOLD && timeUntil.TotalMinutes > TWO_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(2))
                 {
                     PlaySound("undertaker.wav");
                     _playedSounds[eventKey].Add(2);
@@ -374,10 +380,8 @@ namespace MarketCountdownApp
                 string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", fileName);
                 if (File.Exists(soundPath))
                 {
-                    using (var player = new SoundPlayer(soundPath))
-                    {
-                        player.Play(); // Play asynchronously
-                    }
+                    var player = new SoundPlayer(soundPath);
+                    player.Play(); // Play asynchronously - player will be garbage collected after sound completes
                 }
             }
             catch
