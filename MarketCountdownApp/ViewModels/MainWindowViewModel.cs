@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using System.Media;
+using System.IO;
+using System.Collections.Generic;
 
 namespace MarketCountdownApp
 {
@@ -175,6 +178,30 @@ namespace MarketCountdownApp
             }
         }
 
+        private bool _announcerSoundsEnabled = true;
+        public bool AnnouncerSoundsEnabled
+        {
+            get => _announcerSoundsEnabled;
+            set
+            {
+                if (_announcerSoundsEnabled == value) return;
+                _announcerSoundsEnabled = value;
+                OnPropertyChanged(nameof(AnnouncerSoundsEnabled));
+            }
+        }
+
+        // Track which events have already played sounds at which intervals
+        private Dictionary<string, HashSet<int>> _playedSounds = new Dictionary<string, HashSet<int>>();
+
+        // Keep a reference to the current sound player to prevent garbage collection during playback
+        private SoundPlayer _currentPlayer;
+
+        // Constants for countdown sound timing (in minutes)
+        private const double FIVE_MINUTE_THRESHOLD = 5.0;
+        private const double FIVE_MINUTE_WINDOW = 4.916; // ~4 minutes 55 seconds
+        private const double TWO_MINUTE_THRESHOLD = 2.0;
+        private const double TWO_MINUTE_WINDOW = 1.916; // ~1 minute 55 seconds
+
         public string TodayDate => DateTime.Now.ToString("d MMM");
 
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";
@@ -245,6 +272,7 @@ namespace MarketCountdownApp
                     OnPropertyChanged(nameof(NextEventText));
                     OnPropertyChanged(nameof(NextEventCountdown));
                     OnPropertyChanged(nameof(TodayDate));
+                    CheckAndPlayAnnouncerSounds();
                 },
                 Dispatcher.CurrentDispatcher);
             _countdownTimer.Start();
@@ -260,6 +288,87 @@ namespace MarketCountdownApp
             OnPropertyChanged(nameof(NextEvent));
             OnPropertyChanged(nameof(NextEventText));
             OnPropertyChanged(nameof(NextEventCountdown));
+        }
+
+        /// <summary>
+        /// Check if we should play announcer sounds for upcoming events
+        /// </summary>
+        private void CheckAndPlayAnnouncerSounds()
+        {
+            if (!AnnouncerSoundsEnabled) return;
+
+            var now = DateTime.Now;
+            
+            // Check all upcoming events that are visible
+            foreach (var evt in UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency)))
+            {
+                // Only play for High or Medium impact events
+                if (evt.Impact != "High" && evt.Impact != "Medium")
+                    continue;
+
+                var timeUntil = evt.Occurrence - now;
+                
+                // Create a unique key for this event
+                string eventKey = $"{evt.Currency}_{evt.Title}_{evt.Occurrence:yyyyMMddHHmm}";
+                
+                if (!_playedSounds.ContainsKey(eventKey))
+                {
+                    _playedSounds[eventKey] = new HashSet<int>();
+                }
+
+                // Check for 5 minutes remaining (between 5:00 and 4:55)
+                if (timeUntil.TotalMinutes <= FIVE_MINUTE_THRESHOLD && timeUntil.TotalMinutes > FIVE_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(5))
+                {
+                    PlaySound("fiveminutesremaining.wav");
+                    _playedSounds[eventKey].Add(5);
+                }
+                // Check for 2 minutes remaining (between 2:00 and 1:55)
+                else if (timeUntil.TotalMinutes <= TWO_MINUTE_THRESHOLD && timeUntil.TotalMinutes > TWO_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(2))
+                {
+                    PlaySound("undertaker.wav");
+                    _playedSounds[eventKey].Add(2);
+                }
+            }
+
+            // Clean up old event keys to prevent memory growth
+            var keysToRemove = _playedSounds.Keys.Where(k =>
+            {
+                // Extract the timestamp from the key
+                var parts = k.Split('_');
+                if (parts.Length >= 3 && DateTime.TryParseExact(parts[parts.Length - 1], "yyyyMMddHHmm", 
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out var eventTime))
+                {
+                    return eventTime < now.AddHours(-1); // Remove events older than 1 hour
+                }
+                return false;
+            }).ToList();
+
+            foreach (var key in keysToRemove)
+            {
+                _playedSounds.Remove(key);
+            }
+        }
+
+        /// <summary>
+        /// Play a sound file from the Resources folder
+        /// </summary>
+        public void PlaySound(string fileName)
+        {
+            try
+            {
+                string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", fileName);
+                if (File.Exists(soundPath))
+                {
+                    // Create a new player and keep a reference to prevent garbage collection
+                    _currentPlayer = new SoundPlayer(soundPath);
+                    _currentPlayer.Play(); // Play asynchronously to avoid blocking UI
+                }
+            }
+            catch (Exception)
+            {
+                // Silently fail if sound can't be played
+                // This prevents the app from crashing if audio system has issues
+            }
         }
 
         private async Task FetchEventsAsync()
