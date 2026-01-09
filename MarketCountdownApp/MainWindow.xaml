@@ -986,12 +986,6 @@
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
                             <CheckBox Content="Show next‑event expander"
                                       IsChecked="{Binding ShowNextEventToggle, Mode=TwoWay}" />
-                            <!-- example setting -->
-                            <CheckBox Content="Show seconds in clock"
-                          IsChecked="{Binding ShowSeconds, Mode=TwoWay}"/>
-                            <CheckBox Content="Use 24‑hour format"
-                          IsChecked="{Binding Use24Hour, Mode=TwoWay}"
-                          Margin="0,8,0,0"/>
                             <CheckBox x:Name="AnnouncerSoundsCheck"
                                       Content="Announcer Sounds"
                                       IsChecked="{Binding AnnouncerSoundsEnabled, Mode=TwoWay}"

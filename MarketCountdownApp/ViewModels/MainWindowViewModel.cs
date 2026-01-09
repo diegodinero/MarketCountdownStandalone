@@ -202,30 +202,6 @@ namespace MarketCountdownApp
         private const double TWO_MINUTE_THRESHOLD = 2.0;
         private const double TWO_MINUTE_WINDOW = 1.916; // ~1 minute 55 seconds
 
-        private bool _showSeconds = true;
-        public bool ShowSeconds
-        {
-            get => _showSeconds;
-            set
-            {
-                if (_showSeconds == value) return;
-                _showSeconds = value;
-                OnPropertyChanged(nameof(ShowSeconds));
-            }
-        }
-
-        private bool _use24Hour = true;
-        public bool Use24Hour
-        {
-            get => _use24Hour;
-            set
-            {
-                if (_use24Hour == value) return;
-                _use24Hour = value;
-                OnPropertyChanged(nameof(Use24Hour));
-            }
-        }
-
         public string TodayDate => DateTime.Now.ToString("d MMM");
 
         private const string XmlFeedUrl = "https://nfs.faireconomy.media/ff_calendar_thisweek.xml";

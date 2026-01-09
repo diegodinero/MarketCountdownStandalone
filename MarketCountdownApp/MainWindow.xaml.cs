@@ -39,8 +39,6 @@ namespace MarketCountdownApp
             DarkModeCheck.IsChecked = Properties.Settings.Default.IsDarkMode;
             
             // Initialize ViewModel properties from settings
-            viewModel.ShowSeconds = Properties.Settings.Default.ShowSeconds;
-            viewModel.Use24Hour = Properties.Settings.Default.Use24Hour;
             viewModel.ShowAUD = Properties.Settings.Default.ShowAUD;
             viewModel.ShowCAD = Properties.Settings.Default.ShowCAD;
             viewModel.ShowCHF = Properties.Settings.Default.ShowCHF;
