@@ -193,6 +193,9 @@ namespace MarketCountdownApp
         // Track which events have already played sounds at which intervals
         private Dictionary<string, HashSet<int>> _playedSounds = new Dictionary<string, HashSet<int>>();
 
+        // Keep a reference to the current sound player to prevent garbage collection during playback
+        private SoundPlayer _currentPlayer;
+
         // Constants for countdown sound timing (in minutes)
         private const double FIVE_MINUTE_THRESHOLD = 5.0;
         private const double FIVE_MINUTE_WINDOW = 4.916; // ~4 minutes 55 seconds
@@ -380,13 +383,15 @@ namespace MarketCountdownApp
                 string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", fileName);
                 if (File.Exists(soundPath))
                 {
-                    var player = new SoundPlayer(soundPath);
-                    player.Play(); // Play asynchronously - player will be garbage collected after sound completes
+                    // Create a new player and keep a reference to prevent garbage collection
+                    _currentPlayer = new SoundPlayer(soundPath);
+                    _currentPlayer.Play(); // Play asynchronously to avoid blocking UI
                 }
             }
-            catch
+            catch (Exception)
             {
                 // Silently fail if sound can't be played
+                // This prevents the app from crashing if audio system has issues
             }
         }
 
