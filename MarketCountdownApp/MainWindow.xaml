@@ -199,7 +199,6 @@
                                   FontFamily="Segoe MDL2 Assets"
                                   FontSize="16"
                                   Cursor="Hand"
-                                  IsChecked="False"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
