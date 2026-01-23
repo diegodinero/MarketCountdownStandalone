@@ -147,7 +147,7 @@ namespace MarketCountdownApp
             "CNY" => ShowCNY,
             "NZD" => ShowNZD,
             "JPY" => ShowJPY,
-            _ => true
+            _ => false
         };
 
         private bool isDarkMode;
