@@ -201,6 +201,8 @@ namespace MarketCountdownApp
         private const double FIVE_MINUTE_WINDOW = 4.916; // ~4 minutes 55 seconds
         private const double TWO_MINUTE_THRESHOLD = 2.0;
         private const double TWO_MINUTE_WINDOW = 1.916; // ~1 minute 55 seconds
+        private const double ZERO_SECOND_THRESHOLD = 5.0; // 5 seconds before event
+        private const double ZERO_SECOND_WINDOW = 0.0; // Play right at event occurrence
 
         public string TodayDate => DateTime.Now.ToString("d MMM");
 
@@ -327,6 +329,12 @@ namespace MarketCountdownApp
                 {
                     PlaySound("undertaker.wav");
                     _playedSounds[eventKey].Add(2);
+                }
+                // Check for event occurrence (when countdown hits 0)
+                else if (timeUntil.TotalSeconds <= ZERO_SECOND_THRESHOLD && timeUntil.TotalSeconds > ZERO_SECOND_WINDOW && !_playedSounds[eventKey].Contains(0))
+                {
+                    PlaySound("rolereveal.wav");
+                    _playedSounds[eventKey].Add(0);
                 }
             }
 
