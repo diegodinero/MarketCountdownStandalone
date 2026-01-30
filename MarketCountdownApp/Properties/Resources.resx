@@ -124,6 +124,9 @@
   <data name="raidentorpedo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raidentorpedo.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="rolereveal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rolereveal.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="undertaker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\undertaker.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
