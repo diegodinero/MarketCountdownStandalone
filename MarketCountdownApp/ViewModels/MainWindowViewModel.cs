@@ -331,7 +331,7 @@ namespace MarketCountdownApp
                     _playedSounds[eventKey].Add(2);
                 }
                 // Check for event occurrence (when countdown hits 0)
-                else if (timeUntil.TotalSeconds <= ZERO_SECOND_THRESHOLD && timeUntil.TotalSeconds > ZERO_SECOND_WINDOW && !_playedSounds[eventKey].Contains(0))
+                else if (timeUntil.TotalSeconds <= 3 && timeUntil.TotalSeconds > 0 && !_playedSounds[eventKey].Contains(0))
                 {
                     PlaySound("rolereveal.wav");
                     _playedSounds[eventKey].Add(0);
