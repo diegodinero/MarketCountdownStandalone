@@ -52,6 +52,12 @@ namespace MarketCountdownApp
             viewModel.ShowNextEventToggle = Properties.Settings.Default.ShowNextEventToggle;
             viewModel.AnnouncerSoundsEnabled = Properties.Settings.Default.AnnouncerSoundsEnabled;
             
+            // Initialize impact filter properties from checkboxes (default to true)
+            viewModel.ShowHigh = HighImpactCheck.IsChecked == true;
+            viewModel.ShowMedium = MediumImpactCheck.IsChecked == true;
+            viewModel.ShowLow = LowImpactCheck.IsChecked == true;
+            viewModel.ShowHoliday = HolidayImpactCheck.IsChecked == true;
+            
             SetExpanded(false);
             ApplyFilter();
         }
@@ -79,6 +85,15 @@ namespace MarketCountdownApp
             Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
+            
+            // Update ViewModel impact filter properties
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.ShowHigh = HighImpactCheck.IsChecked == true;
+                vm.ShowMedium = MediumImpactCheck.IsChecked == true;
+                vm.ShowLow = LowImpactCheck.IsChecked == true;
+                vm.ShowHoliday = HolidayImpactCheck.IsChecked == true;
+            }
             
             // any others�
 

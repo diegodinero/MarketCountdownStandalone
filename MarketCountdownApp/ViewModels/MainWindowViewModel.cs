@@ -150,6 +150,67 @@ namespace MarketCountdownApp
             _ => false
         };
 
+        // Impact filter backing fields
+        private bool _showHigh = true;
+        private bool _showMedium = true;
+        private bool _showLow = true;
+        private bool _showHoliday = true;
+
+        // Impact filter properties
+        public bool ShowHigh
+        {
+            get => _showHigh;
+            set
+            {
+                if (_showHigh == value) return;
+                _showHigh = value;
+                OnPropertyChanged(nameof(ShowHigh));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowMedium
+        {
+            get => _showMedium;
+            set
+            {
+                if (_showMedium == value) return;
+                _showMedium = value;
+                OnPropertyChanged(nameof(ShowMedium));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowLow
+        {
+            get => _showLow;
+            set
+            {
+                if (_showLow == value) return;
+                _showLow = value;
+                OnPropertyChanged(nameof(ShowLow));
+                RefreshNextEvent();
+            }
+        }
+        public bool ShowHoliday
+        {
+            get => _showHoliday;
+            set
+            {
+                if (_showHoliday == value) return;
+                _showHoliday = value;
+                OnPropertyChanged(nameof(ShowHoliday));
+                RefreshNextEvent();
+            }
+        }
+
+        private bool IsImpactVisible(string impact) => impact switch
+        {
+            "High" => ShowHigh,
+            "Medium" => ShowMedium,
+            "Low" => ShowLow,
+            "Holiday" => ShowHoliday,
+            _ => false
+        };
+
         private bool isDarkMode;
         public bool IsDarkMode
         {
@@ -214,7 +275,7 @@ namespace MarketCountdownApp
             get
             {
                 var now = DateTime.Now;
-                var future = UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency)).ToList();
+                var future = UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency) && IsImpactVisible(e.Impact)).ToList();
 
                 if (!future.Any())
                     return null;
