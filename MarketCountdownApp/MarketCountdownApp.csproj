@@ -31,6 +31,7 @@
     <None Remove="Icons\Sydney_White.png" />
     <None Remove="Icons\Tokyo.png" />
     <None Remove="Icons\Tokyo_White.png" />
+    <None Remove="Resources\rolereveal.wav" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\Collapse.png">
@@ -41,6 +42,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\fiveminutesremaining.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\rolereveal.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\undertaker.wav">
