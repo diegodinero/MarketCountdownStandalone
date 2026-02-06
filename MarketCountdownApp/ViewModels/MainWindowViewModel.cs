@@ -319,23 +319,18 @@ namespace MarketCountdownApp
                 _playedSounds[eventKey] = new HashSet<int>();
             }
 
-            // Check for 5 minutes remaining (between 5:00 and 4:55)
-            if (timeUntil.TotalMinutes <= FIVE_MINUTE_THRESHOLD && timeUntil.TotalMinutes > FIVE_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(5))
-            {
-                PlaySound("fiveminutesremaining.wav");
-                _playedSounds[eventKey].Add(5);
-            }
-            // Check for 2 minutes remaining (between 2:00 and 1:55)
-            else if (timeUntil.TotalMinutes <= TWO_MINUTE_THRESHOLD && timeUntil.TotalMinutes > TWO_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(2))
-            {
-                PlaySound("undertaker.wav");
-                _playedSounds[eventKey].Add(2);
-            }
-            // Check for event occurrence (when countdown hits 0)
-            else if (timeUntil.TotalSeconds <= 3 && timeUntil.TotalSeconds > 0 && !_playedSounds[eventKey].Contains(0))
-            {
-                PlaySound("rolereveal.wav");
-                _playedSounds[eventKey].Add(0);
+                // Check for 5 minutes remaining (between 5:00 and 4:55)
+                if (timeUntil.TotalMinutes <= FIVE_MINUTE_THRESHOLD && timeUntil.TotalMinutes > FIVE_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(5))
+                {
+                    PlaySound("fiveminutesremaining.wav");
+                    _playedSounds[eventKey].Add(5);
+                }
+                // Check for 2 minutes remaining (between 2:00 and 1:55)
+                else if (timeUntil.TotalMinutes <= TWO_MINUTE_THRESHOLD && timeUntil.TotalMinutes > TWO_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(2))
+                {
+                    PlaySound("undertaker.wav");
+                    _playedSounds[eventKey].Add(2);
+                }
             }
 
             // Clean up old event keys to prevent memory growth
