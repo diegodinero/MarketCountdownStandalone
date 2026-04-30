@@ -196,23 +196,25 @@
                     <ToggleButton x:Name="NextEventToggle"
                                   Width="24" Height="24"
                                   Margin="8,0,4,0"
-                                  FontFamily="Segoe MDL2 Assets"
-                                  FontSize="16"
                                   Cursor="Hand"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
-                                <!-- default: right‑pointing chevron -->
-                                <Setter Property="Content" Value=""/>
-                                <!-- U+E823 -->
-                                <!-- U+E7CD “ChevronRight” -->
+                                <!-- default (collapsed): Right Eye icon -->
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png" Width="24" Height="24"/>
+                                    </Setter.Value>
+                                </Setter>
                                 <Style.Triggers>
-                                    <!-- when checked: down‑pointing chevron -->
+                                    <!-- when checked (expanded): Left Eye icon -->
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter Property="Content" Value=""/>
-                                        <!-- U+E121 -->
-                                        <!-- U+E70D “ChevronDown” -->
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png" Width="24" Height="24"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
