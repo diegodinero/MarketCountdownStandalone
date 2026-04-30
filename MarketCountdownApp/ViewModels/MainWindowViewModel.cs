@@ -331,7 +331,6 @@ namespace MarketCountdownApp
                     PlaySound("undertaker.wav");
                     _playedSounds[eventKey].Add(2);
                 }
-            }
 
             // Clean up old event keys to prevent memory growth
             var keysToRemove = _playedSounds.Keys.Where(k =>
