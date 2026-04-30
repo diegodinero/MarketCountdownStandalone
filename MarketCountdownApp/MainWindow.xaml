@@ -194,9 +194,10 @@
                         MouseLeftButtonUp="OnExpandClick"/>
                     <!-- 2) little toggle‐button for the “next event” panel -->
                     <ToggleButton x:Name="NextEventToggle"
-                                  Width="64" Height="64"
+                                  Width="48" Height="48"
                                   Margin="8,0,4,0"
                                   Cursor="Hand"
+                                  ClipToBounds="False"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
@@ -207,7 +208,8 @@
                                         <ControlTemplate TargetType="ToggleButton">
                                             <Border Background="Transparent"
                                                     BorderThickness="0"
-                                                    Padding="0">
+                                                    Padding="0"
+                                                    ClipToBounds="False">
                                                 <ContentPresenter HorizontalAlignment="Center"
                                                                   VerticalAlignment="Center"/>
                                             </Border>
