@@ -194,7 +194,7 @@
                         MouseLeftButtonUp="OnExpandClick"/>
                     <!-- 2) little toggle‐button for the “next event” panel -->
                     <ToggleButton x:Name="NextEventToggle"
-                                  Width="48" Height="48"
+                                  Width="64" Height="64"
                                   Margin="8,0,4,0"
                                   Cursor="Hand"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
@@ -218,7 +218,7 @@
                                 <Setter Property="Content">
                                     <Setter.Value>
                                         <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png"
-                                               Width="48" Height="48"
+                                               Width="64" Height="64"
                                                Stretch="Uniform"/>
                                     </Setter.Value>
                                 </Setter>
@@ -228,7 +228,7 @@
                                         <Setter Property="Content">
                                             <Setter.Value>
                                                 <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png"
-                                                       Width="48" Height="48"
+                                                       Width="64" Height="64"
                                                        Stretch="Uniform"/>
                                             </Setter.Value>
                                         </Setter>
