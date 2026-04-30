@@ -194,17 +194,32 @@
                         MouseLeftButtonUp="OnExpandClick"/>
                     <!-- 2) little toggle‐button for the “next event” panel -->
                     <ToggleButton x:Name="NextEventToggle"
-                                  Width="24" Height="24"
+                                  Width="32" Height="32"
                                   Margin="8,0,4,0"
                                   Cursor="Hand"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
+                                <!-- transparent chrome so the button blends with the theme -->
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Padding="0">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                                 <!-- default (collapsed): Right Eye icon -->
                                 <Setter Property="Content">
                                     <Setter.Value>
-                                        <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png" Width="24" Height="24"/>
+                                        <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png"
+                                               Width="32" Height="32"
+                                               Stretch="Uniform"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
@@ -212,7 +227,9 @@
                                     <Trigger Property="IsChecked" Value="True">
                                         <Setter Property="Content">
                                             <Setter.Value>
-                                                <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png" Width="24" Height="24"/>
+                                                <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png"
+                                                       Width="32" Height="32"
+                                                       Stretch="Uniform"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
