@@ -194,25 +194,48 @@
                         MouseLeftButtonUp="OnExpandClick"/>
                     <!-- 2) little toggle‐button for the “next event” panel -->
                     <ToggleButton x:Name="NextEventToggle"
-                                  Width="24" Height="24"
-                                  Margin="8,0,4,0"
-                                  FontFamily="Segoe MDL2 Assets"
-                                  FontSize="16"
+                                  Width="48" Height="48"
+                                  Margin="2,0,4,0"
                                   Cursor="Hand"
+                                  ClipToBounds="False"
                                   Visibility="{Binding ShowNextEventToggle, Converter={StaticResource BoolToVis}}"
                                   ToolTip="Show next event">
                         <ToggleButton.Style>
                             <Style TargetType="ToggleButton">
-                                <!-- default: right‑pointing chevron -->
-                                <Setter Property="Content" Value=""/>
-                                <!-- U+E823 -->
-                                <!-- U+E7CD “ChevronRight” -->
+                                <!-- transparent chrome so the button blends with the theme -->
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Padding="0"
+                                                    ClipToBounds="False">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <!-- default (collapsed): Right Eye icon -->
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png"
+                                               Width="64" Height="64"
+                                               Stretch="Uniform"
+                                               Margin="0,-8,0,0"/>
+                                    </Setter.Value>
+                                </Setter>
                                 <Style.Triggers>
-                                    <!-- when checked: down‑pointing chevron -->
+                                    <!-- when checked (expanded): Left Eye icon -->
                                     <Trigger Property="IsChecked" Value="True">
-                                        <Setter Property="Content" Value=""/>
-                                        <!-- U+E121 -->
-                                        <!-- U+E70D “ChevronDown” -->
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png"
+                                                       Width="64" Height="64"
+                                                       Stretch="Uniform"
+                                                       Margin="0,-8,0,0"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
