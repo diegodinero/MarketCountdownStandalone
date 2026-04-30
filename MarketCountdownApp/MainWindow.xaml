@@ -221,7 +221,8 @@
                                     <Setter.Value>
                                         <Image Source="pack://siteoforigin:,,,/Icons/Right_Eye.png"
                                                Width="64" Height="64"
-                                               Stretch="Uniform"/>
+                                               Stretch="Uniform"
+                                               Margin="0,-8,0,0"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
@@ -231,7 +232,8 @@
                                             <Setter.Value>
                                                 <Image Source="pack://siteoforigin:,,,/Icons/Left_Eye.png"
                                                        Width="64" Height="64"
-                                                       Stretch="Uniform"/>
+                                                       Stretch="Uniform"
+                                                       Margin="0,-8,0,0"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
