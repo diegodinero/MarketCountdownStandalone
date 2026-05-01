@@ -19,6 +19,8 @@
   <ItemGroup>
     <None Remove="Icons\Collapse.png" />
     <None Remove="Icons\Expand.png" />
+    <None Remove="Icons\Left_Eye.png" />
+    <None Remove="Icons\Right_Eye.png" />
     <None Remove="Icons\London.png" />
     <None Remove="Icons\London_White.png" />
     <None Remove="Icons\MarketCountdownVS.ico" />
@@ -118,9 +120,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Icons\Right_Eye.png">
+    <Content Include="Icons\Right_Eye.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Icons\Left_Eye.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Update="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
