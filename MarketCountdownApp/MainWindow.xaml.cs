@@ -76,7 +76,7 @@ namespace MarketCountdownApp
             Properties.Settings.Default.ShowNZD = NZDCheck.IsChecked == true;
             Properties.Settings.Default.ShowUSD = USDCheck.IsChecked == true;
             
-            Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
+            Properties.Settings.Default.ShowNextEventToggle = (DataContext as MainWindowViewModel)?.ShowNextEventToggle == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
             
