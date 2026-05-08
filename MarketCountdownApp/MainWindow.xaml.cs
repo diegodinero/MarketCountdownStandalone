@@ -76,9 +76,27 @@ namespace MarketCountdownApp
             Properties.Settings.Default.ShowNZD = NZDCheck.IsChecked == true;
             Properties.Settings.Default.ShowUSD = USDCheck.IsChecked == true;
             
-            Properties.Settings.Default.ShowNextEventToggle = (DataContext as MainWindowViewModel)?.ShowNextEventToggle == true;
+            Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
+
+            // Apply changes to the ViewModel immediately so announcer/filtering respects new settings
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.ShowAUD = AUDCheck.IsChecked == true;
+                vm.ShowCAD = CADCheck.IsChecked == true;
+                vm.ShowCHF = CHFCheck.IsChecked == true;
+                vm.ShowCNY = CNYCheck.IsChecked == true;
+                vm.ShowEUR = EURCheck.IsChecked == true;
+                vm.ShowGBP = GBPCheck.IsChecked == true;
+                vm.ShowJPY = JPYCheck.IsChecked == true;
+                vm.ShowNZD = NZDCheck.IsChecked == true;
+                vm.ShowUSD = USDCheck.IsChecked == true;
+
+                vm.IsDarkMode = DarkModeCheck.IsChecked == true;
+                vm.ShowNextEventToggle = NextEventToggle.IsChecked == true;
+                vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
+            }
             
             // any others�
 
