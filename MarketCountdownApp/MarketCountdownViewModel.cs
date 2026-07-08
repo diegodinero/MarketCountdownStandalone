@@ -13,7 +13,7 @@ namespace MarketCountdownApp
             public string TimeZoneId { get; }
             public TimeSpan Open1 { get; }    // first open
             public TimeSpan Close1 { get; }    // first close
-            public TimeSpan? Open2 { get; }    // second open (Tokyo lunch)
+            public TimeSpan? Open2 { get; }    // second open (optional lunch break)
             public TimeSpan? Close2 { get; }    // second close
 
             public MarketInfo(
@@ -35,15 +35,15 @@ namespace MarketCountdownApp
         private readonly MarketInfo[] _markets = new[]
         {
             new MarketInfo("London",   "GMT Standard Time",
-                           TimeSpan.FromHours(8), TimeSpan.FromHours(16).Add(TimeSpan.FromMinutes(30))),
+                           TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             new MarketInfo("New York","Eastern Standard Time",
-                           TimeSpan.FromHours(9).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(16)),
-            // after
+                           TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
+            // Asia-Pacific / overnight markets
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
-                TimeSpan.FromHours(9), TimeSpan.FromHours(16)),
+                TimeSpan.FromHours(7), TimeSpan.FromHours(16)),
             new MarketInfo("Tokyo",   "Tokyo Standard Time",
                            TimeSpan.FromHours(9), TimeSpan.FromHours(11).Add(TimeSpan.FromMinutes(30)),
-                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(25)))
+                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)))
         };
 
         // Local times
@@ -112,19 +112,8 @@ namespace MarketCountdownApp
 
         private DateTime ToLocal(MarketInfo m)
         {
-            // 1) look up the TZ
             var tz = TimeZoneInfo.FindSystemTimeZoneById(m.TimeZoneId);
-            // 2) convert
-            var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-
-            // 3) **INSERT DST-CORRECTION HERE**
-            if (m.Name == "Sydney" &&
-                !tz.IsDaylightSavingTime(DateTime.UtcNow))
-            {
-                local = local.AddHours(-1);
-            }
-
-            return local;
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
 
 
@@ -157,11 +146,11 @@ namespace MarketCountdownApp
             DateTime open2 = m.Open2.HasValue ? today.Add(m.Open2.Value) : DateTime.MinValue;
             DateTime close2 = m.Close2.HasValue ? today.Add(m.Close2.Value) : DateTime.MinValue;
 
-            // Helper to clamp 0–1
+            // Helper to clamp 0ï¿½1
             double Clamp01(double v) => Math.Max(0.0, Math.Min(1.0, v));
 
-            // If market is open and not in Tokyo lunch gap
-            if (IsOpen(m) && !(m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2.Value))
+            // If market is open and not in a lunch gap
+            if (IsOpen(m) && !(m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value))
             {
                 DateTime sessionStart, sessionEnd;
                 if (t < m.Close1 || !m.Open2.HasValue)
@@ -180,7 +169,7 @@ namespace MarketCountdownApp
                 return Clamp01(elapsed / totalMins);
             }
 
-            // CLOSED or Tokyo lunch gap: march dot toward next open
+            // CLOSED or between sessions: march dot toward next open
             DateTime lastClose, nextOpen;
             if (nowLocal < open1)
             {
@@ -189,7 +178,7 @@ namespace MarketCountdownApp
             }
             else if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
             {
-                // Tokyo lunch
+                // lunch gap
                 lastClose = close1;
                 nextOpen = open2;
             }
@@ -215,7 +204,7 @@ namespace MarketCountdownApp
             // ?? SPECIAL?CASE LONDON TO USE 08:00?UTC ????????????????????????????????
             if (m.Name == "London")
             {
-                // compute today’s 08:00 local London
+                // compute todayï¿½s 08:00 local London
                 DateTime todayOpenLocal = local.Date.Add(m.Open1);
                 if (open && t < m.Close1)    // market is open now
                 {
@@ -239,12 +228,10 @@ namespace MarketCountdownApp
             {
                 // time since current session start
                 TimeSpan since;
-                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
-                    since = TimeSpan.Zero;
-                else if (t < m.Close1)
-                    since = t - m.Open1;
-                else
+                if (m.Open2.HasValue && t >= m.Open2.Value)
                     since = t - m.Open2.Value;
+                else
+                    since = t - m.Open1;
 
                 return $"+{(int)since.TotalHours:00}:{since.Minutes:00}";
             }
@@ -258,10 +245,12 @@ namespace MarketCountdownApp
                 else nextDate = local.Date;
 
                 TimeSpan nextOpen = m.Open1;
-                // if Tokyo lunch break, and we're between sessions:
-                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
+                // if between sessions (lunch gap):
+                if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
+                {
                     nextOpen = m.Open2.Value;
-                else if (t >= m.Close1 && m.Name != "Tokyo")
+                }
+                else if (t >= m.Close1)
                     nextDate = nextDate.AddDays(1);
 
                 DateTime next = nextDate.Date.Add(nextOpen);
@@ -273,7 +262,7 @@ namespace MarketCountdownApp
 
                 var span = next - local;
 
-                // take absolute values so we only ever print one “?”
+                // take absolute values so we only ever print one ï¿½?ï¿½
                 var hours = Math.Abs((int)span.TotalHours);
                 var mins = Math.Abs(span.Minutes);
 
@@ -296,4 +285,3 @@ namespace MarketCountdownApp
         public string Description { get; set; }
     }
 }
-
