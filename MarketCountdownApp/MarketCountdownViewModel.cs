@@ -111,19 +111,8 @@ namespace MarketCountdownApp
 
         private DateTime ToLocal(MarketInfo m)
         {
-            // 1) look up the TZ
             var tz = TimeZoneInfo.FindSystemTimeZoneById(m.TimeZoneId);
-            // 2) convert
-            var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-
-            // 3) **INSERT DST-CORRECTION HERE**
-            if (m.Name == "Sydney" &&
-                !tz.IsDaylightSavingTime(DateTime.UtcNow))
-            {
-                local = local.AddHours(-1);
-            }
-
-            return local;
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
 
 
