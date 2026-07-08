@@ -13,7 +13,7 @@ namespace MarketCountdownApp
             public string TimeZoneId { get; }
             public TimeSpan Open1 { get; }    // first open
             public TimeSpan Close1 { get; }    // first close
-            public TimeSpan? Open2 { get; }    // second open (Tokyo lunch)
+            public TimeSpan? Open2 { get; }    // second open (optional lunch break)
             public TimeSpan? Close2 { get; }    // second close
 
             public MarketInfo(
@@ -35,15 +35,14 @@ namespace MarketCountdownApp
         private readonly MarketInfo[] _markets = new[]
         {
             new MarketInfo("London",   "GMT Standard Time",
-                           TimeSpan.FromHours(8), TimeSpan.FromHours(16).Add(TimeSpan.FromMinutes(30))),
+                           TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             new MarketInfo("New York","Eastern Standard Time",
                            TimeSpan.FromHours(9).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(16)),
             // after
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
-                TimeSpan.FromHours(10), TimeSpan.FromHours(16)),
+                TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             new MarketInfo("Tokyo",   "Tokyo Standard Time",
-                           TimeSpan.FromHours(9), TimeSpan.FromHours(11).Add(TimeSpan.FromMinutes(30)),
-                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)))
+                           TimeSpan.FromHours(10), TimeSpan.FromHours(19))
         };
 
         // Local times
@@ -160,8 +159,8 @@ namespace MarketCountdownApp
             // Helper to clamp 0�1
             double Clamp01(double v) => Math.Max(0.0, Math.Min(1.0, v));
 
-            // If market is open and not in Tokyo lunch gap
-            if (IsOpen(m) && !(m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2.Value))
+            // If market is open
+            if (IsOpen(m))
             {
                 DateTime sessionStart, sessionEnd;
                 if (t < m.Close1 || !m.Open2.HasValue)
@@ -180,7 +179,7 @@ namespace MarketCountdownApp
                 return Clamp01(elapsed / totalMins);
             }
 
-            // CLOSED or Tokyo lunch gap: march dot toward next open
+            // CLOSED or between sessions: march dot toward next open
             DateTime lastClose, nextOpen;
             if (nowLocal < open1)
             {
@@ -189,7 +188,7 @@ namespace MarketCountdownApp
             }
             else if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
             {
-                // Tokyo lunch
+                // lunch gap
                 lastClose = close1;
                 nextOpen = open2;
             }
@@ -239,12 +238,10 @@ namespace MarketCountdownApp
             {
                 // time since current session start
                 TimeSpan since;
-                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
-                    since = TimeSpan.Zero;
-                else if (t < m.Close1)
-                    since = t - m.Open1;
-                else
+                if (m.Open2.HasValue && t >= m.Open2.Value)
                     since = t - m.Open2.Value;
+                else
+                    since = t - m.Open1;
 
                 return $"+{(int)since.TotalHours:00}:{since.Minutes:00}";
             }
@@ -258,10 +255,10 @@ namespace MarketCountdownApp
                 else nextDate = local.Date;
 
                 TimeSpan nextOpen = m.Open1;
-                // if Tokyo lunch break, and we're between sessions:
-                if (m.Name == "Tokyo" && t >= m.Close1 && t < m.Open2)
+                // if between sessions (lunch gap):
+                if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
                     nextOpen = m.Open2.Value;
-                else if (t >= m.Close1 && m.Name != "Tokyo")
+                else if (t >= m.Close1)
                     nextDate = nextDate.AddDays(1);
 
                 DateTime next = nextDate.Date.Add(nextOpen);
