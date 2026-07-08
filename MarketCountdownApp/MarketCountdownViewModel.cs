@@ -37,7 +37,7 @@ namespace MarketCountdownApp
             new MarketInfo("London",   "GMT Standard Time",
                            TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             new MarketInfo("New York","Eastern Standard Time",
-                           TimeSpan.FromHours(9).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(16)),
+                           TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             // Asia-Pacific / overnight markets
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
                 TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
