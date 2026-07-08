@@ -42,7 +42,7 @@ namespace MarketCountdownApp
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
                 TimeSpan.FromHours(7), TimeSpan.FromHours(16)),
             new MarketInfo("Tokyo",   "Tokyo Standard Time",
-                           TimeSpan.FromHours(10), TimeSpan.FromHours(19))
+                           TimeSpan.FromHours(9), TimeSpan.FromHours(18))
         };
 
         // Local times
