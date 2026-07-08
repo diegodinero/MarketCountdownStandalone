@@ -159,8 +159,8 @@ namespace MarketCountdownApp
             // Helper to clamp 0�1
             double Clamp01(double v) => Math.Max(0.0, Math.Min(1.0, v));
 
-            // If market is open
-            if (IsOpen(m))
+            // If market is open and not in a lunch gap
+            if (IsOpen(m) && !(m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value))
             {
                 DateTime sessionStart, sessionEnd;
                 if (t < m.Close1 || !m.Open2.HasValue)
@@ -238,7 +238,7 @@ namespace MarketCountdownApp
             {
                 // time since current session start
                 TimeSpan since;
-                if (m.Open2.HasValue && t >= m.Close1)
+                if (m.Open2.HasValue && t >= m.Open2.Value)
                     since = t - m.Open2.Value;
                 else
                     since = t - m.Open1;
