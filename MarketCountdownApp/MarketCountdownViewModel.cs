@@ -40,10 +40,10 @@ namespace MarketCountdownApp
                            TimeSpan.FromHours(9).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(16)),
             // after
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
-                TimeSpan.FromHours(9), TimeSpan.FromHours(16)),
+                TimeSpan.FromHours(10), TimeSpan.FromHours(16)),
             new MarketInfo("Tokyo",   "Tokyo Standard Time",
                            TimeSpan.FromHours(9), TimeSpan.FromHours(11).Add(TimeSpan.FromMinutes(30)),
-                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(25)))
+                           TimeSpan.FromHours(12).Add(TimeSpan.FromMinutes(30)), TimeSpan.FromHours(15).Add(TimeSpan.FromMinutes(30)))
         };
 
         // Local times
@@ -157,7 +157,7 @@ namespace MarketCountdownApp
             DateTime open2 = m.Open2.HasValue ? today.Add(m.Open2.Value) : DateTime.MinValue;
             DateTime close2 = m.Close2.HasValue ? today.Add(m.Close2.Value) : DateTime.MinValue;
 
-            // Helper to clamp 0–1
+            // Helper to clamp 0ï¿½1
             double Clamp01(double v) => Math.Max(0.0, Math.Min(1.0, v));
 
             // If market is open and not in Tokyo lunch gap
@@ -215,7 +215,7 @@ namespace MarketCountdownApp
             // ?? SPECIAL?CASE LONDON TO USE 08:00?UTC ????????????????????????????????
             if (m.Name == "London")
             {
-                // compute today’s 08:00 local London
+                // compute todayï¿½s 08:00 local London
                 DateTime todayOpenLocal = local.Date.Add(m.Open1);
                 if (open && t < m.Close1)    // market is open now
                 {
@@ -273,7 +273,7 @@ namespace MarketCountdownApp
 
                 var span = next - local;
 
-                // take absolute values so we only ever print one “?”
+                // take absolute values so we only ever print one ï¿½?ï¿½
                 var hours = Math.Abs((int)span.TotalHours);
                 var mins = Math.Abs(span.Minutes);
 
