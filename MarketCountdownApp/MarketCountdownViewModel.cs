@@ -257,7 +257,9 @@ namespace MarketCountdownApp
                 TimeSpan nextOpen = m.Open1;
                 // if between sessions (lunch gap):
                 if (m.Open2.HasValue && t >= m.Close1 && t < m.Open2.Value)
+                {
                     nextOpen = m.Open2.Value;
+                }
                 else if (t >= m.Close1)
                     nextDate = nextDate.AddDays(1);
 
