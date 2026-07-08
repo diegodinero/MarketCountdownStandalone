@@ -40,7 +40,7 @@ namespace MarketCountdownApp
                            TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
             // Asia-Pacific / overnight markets
             new MarketInfo("Sydney", "AUS Eastern Standard Time",
-                TimeSpan.FromHours(8), TimeSpan.FromHours(17)),
+                TimeSpan.FromHours(7), TimeSpan.FromHours(16)),
             new MarketInfo("Tokyo",   "Tokyo Standard Time",
                            TimeSpan.FromHours(10), TimeSpan.FromHours(19))
         };
@@ -284,4 +284,3 @@ namespace MarketCountdownApp
         public string Description { get; set; }
     }
 }
-
