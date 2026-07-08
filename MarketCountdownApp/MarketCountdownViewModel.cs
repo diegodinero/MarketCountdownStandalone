@@ -238,7 +238,7 @@ namespace MarketCountdownApp
             {
                 // time since current session start
                 TimeSpan since;
-                if (m.Open2.HasValue && t >= m.Open2.Value)
+                if (m.Open2.HasValue && t >= m.Close1)
                     since = t - m.Open2.Value;
                 else
                     since = t - m.Open1;
