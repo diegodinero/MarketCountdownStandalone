@@ -67,6 +67,12 @@ namespace MarketCountdownApp
         public string SydneyLocalTime => FormatMarketTime(ToLocal(_markets[2]));
         public string TokyoLocalTime => FormatMarketTime(ToLocal(_markets[3]));
 
+        // Market hours (static open/close schedule)
+        public string LondonHours => FormatHours(_markets[0]);
+        public string NewYorkHours => FormatHours(_markets[1]);
+        public string SydneyHours => FormatHours(_markets[2]);
+        public string TokyoHours => FormatHours(_markets[3]);
+
         // OPEN/CLOSED
         public string LondonStatus => IsOpen(_markets[0]) ? "OPEN" : "CLOSED";
         public string NewYorkStatus => IsOpen(_markets[1]) ? "OPEN" : "CLOSED";
@@ -129,6 +135,17 @@ namespace MarketCountdownApp
         {
             var tz = TimeZoneInfo.FindSystemTimeZoneById(m.TimeZoneId);
             return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+        }
+
+        private static string FormatTs(TimeSpan t)
+            => $"{(int)t.TotalHours:D2}:{t.Minutes:D2}";
+
+        private static string FormatHours(MarketInfo m)
+        {
+            var s = $"{FormatTs(m.Open1)}\u2013{FormatTs(m.Close1)}";
+            if (m.Open2.HasValue && m.Close2.HasValue)
+                s += $"\n{FormatTs(m.Open2.Value)}\u2013{FormatTs(m.Close2.Value)}";
+            return s;
         }
 
         private string FormatMarketTime(DateTime value)
