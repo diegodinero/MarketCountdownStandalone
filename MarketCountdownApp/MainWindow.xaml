@@ -294,7 +294,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="72"/>
                             <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
@@ -323,14 +323,14 @@
                         <TextBlock Grid.Column="2"
                        Text="{Binding LondonLocalTime}"
                        Style="{StaticResource LocalTimeStyle}"
-                       HorizontalAlignment="Center"
-                       Margin="12,10,8,0"
+                       HorizontalAlignment="Right"
+                       Margin="0,10,6,0"
                        VerticalAlignment="Top"/>
 
                         <!-- Status dial -->
                         <Grid Grid.Column="3"
                   Width="60" Height="60"
-                  Margin="-20,0,0,0"
+                  Margin="-8,0,0,0"
                   VerticalAlignment="Center">
                             <Ellipse Stroke="LightGray"
                                      StrokeThickness="6"/>
@@ -434,7 +434,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="72"/>
                             <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
                         <Image Style="{StaticResource CityIconStyle}"
@@ -462,13 +462,13 @@
                         <TextBlock Grid.Column="2"
         Text="{Binding NewYorkLocalTime}"
         Style="{StaticResource LocalTimeStyle}"
-        HorizontalAlignment="Center"
-        Margin="12,10,8,0"
+        HorizontalAlignment="Right"
+        Margin="0,10,6,0"
         VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
-   Margin="-20,0,0,0"
+   Margin="-8,0,0,0"
    VerticalAlignment="Center">
                             <Ellipse Stroke="LightGray"
                                      StrokeThickness="6"/>
@@ -567,7 +567,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="72"/>
                             <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
                         <Image Style="{StaticResource CityIconStyle}"
@@ -595,13 +595,13 @@
                         <TextBlock Grid.Column="2"
         Text="{Binding SydneyLocalTime}"
         Style="{StaticResource LocalTimeStyle}"
-        HorizontalAlignment="Center"
-        Margin="12,10,8,0"
+        HorizontalAlignment="Right"
+        Margin="0,10,6,0"
         VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
-   Margin="-20,0,0,0"
+   Margin="-8,0,0,0"
    VerticalAlignment="Center">
                             <Ellipse Stroke="LightGray"
                                      StrokeThickness="6"/>
@@ -700,7 +700,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="72"/>
                             <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
                         <Image Style="{StaticResource CityIconStyle}"
@@ -728,13 +728,13 @@
                         <TextBlock Grid.Column="2"
         Text="{Binding TokyoLocalTime}"
         Style="{StaticResource LocalTimeStyle}"
-        HorizontalAlignment="Center"
-        Margin="12,10,8,0"
+        HorizontalAlignment="Right"
+        Margin="0,10,6,0"
         VerticalAlignment="Top"/>
                         <Grid Grid.Column="3"
    Width="60" Height="60"
    HorizontalAlignment="Center"
-   Margin="-20,0,0,0"
+   Margin="-8,0,0,0"
    VerticalAlignment="Center">
                             <Ellipse Stroke="LightGray"
                                      StrokeThickness="6"/>
