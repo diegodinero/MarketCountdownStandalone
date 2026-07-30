@@ -29,7 +29,7 @@ namespace MarketCountdownApp
             JPYCheck.IsChecked = Properties.Settings.Default.ShowJPY;
             NZDCheck.IsChecked = Properties.Settings.Default.ShowNZD;
             USDCheck.IsChecked = Properties.Settings.Default.ShowUSD;
-            NextEventToggle.IsChecked = Properties.Settings.Default.ShowNextEventToggle;
+            ShowNextEventCheck.IsChecked = Properties.Settings.Default.ShowNextEventToggle;
             AnnouncerSoundsCheck.IsChecked = Properties.Settings.Default.AnnouncerSoundsEnabled;
             //HighImpactCheck.IsChecked = Properties.Settings.Default.;
             //MediumImpactCheck.IsChecked = Properties.Settings.Default.;
@@ -76,7 +76,7 @@ namespace MarketCountdownApp
             Properties.Settings.Default.ShowNZD = NZDCheck.IsChecked == true;
             Properties.Settings.Default.ShowUSD = USDCheck.IsChecked == true;
             
-            Properties.Settings.Default.ShowNextEventToggle = NextEventToggle.IsChecked == true;
+            Properties.Settings.Default.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
 
@@ -94,7 +94,7 @@ namespace MarketCountdownApp
                 vm.ShowUSD = USDCheck.IsChecked == true;
 
                 vm.IsDarkMode = DarkModeCheck.IsChecked == true;
-                vm.ShowNextEventToggle = NextEventToggle.IsChecked == true;
+                vm.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
                 vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
             }
             

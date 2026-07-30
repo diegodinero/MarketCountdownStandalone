@@ -1006,7 +1006,7 @@
                         <StackPanel Margin="0,0,0,12">
                             <CheckBox x:Name="DarkModeCheck"  Content="Dark Mode"
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
-                            <CheckBox Content="Show next‑event expander"
+                            <CheckBox x:Name="ShowNextEventCheck" Content="Show next‑event expander"
                                       IsChecked="{Binding ShowNextEventToggle, Mode=TwoWay}" />
                             <CheckBox x:Name="AnnouncerSoundsCheck"
                                       Content="Announcer Sounds"
