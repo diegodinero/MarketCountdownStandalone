@@ -190,6 +190,21 @@ namespace MarketCountdownApp
             }
         }
 
+        private bool _use24Hour = true;
+        public bool Use24Hour
+        {
+            get => _use24Hour;
+            set
+            {
+                if (_use24Hour == value) return;
+                _use24Hour = value;
+                MarketVM.Use24Hour = value;
+                RefreshEventTimeStrings();
+                OnPropertyChanged(nameof(Use24Hour));
+                RefreshNextEvent();
+            }
+        }
+
         // Track which events have already played sounds at which intervals
         private Dictionary<string, HashSet<int>> _playedSounds = new Dictionary<string, HashSet<int>>();
 
@@ -263,6 +278,7 @@ namespace MarketCountdownApp
 
         public MainWindowViewModel()
         {
+            MarketVM.Use24Hour = _use24Hour;
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(5) };
             _timer.Tick += async (_, __) => await FetchEventsAsync();
             _timer.Start();
@@ -280,6 +296,24 @@ namespace MarketCountdownApp
             _countdownTimer.Start();
 
             _ = FetchEventsAsync();
+        }
+
+        private string FormatEventTime(DateTime value)
+            => Use24Hour ? value.ToString("HH:mm") : value.ToString("hh:mm tt");
+
+        private void RefreshEventTimeStrings()
+        {
+            if (UpcomingEvents.Count == 0)
+                return;
+
+            var snapshot = UpcomingEvents.ToList();
+            UpcomingEvents.Clear();
+
+            foreach (var ev in snapshot)
+            {
+                ev.Time = FormatEventTime(ev.Occurrence);
+                UpcomingEvents.Add(ev);
+            }
         }
 
         /// <summary>
@@ -414,7 +448,7 @@ namespace MarketCountdownApp
                                  return new ForexEvent
                                  {
                                      Date = date,
-                                     Time = estDt.ToString("HH:mm"),
+                                     Time = FormatEventTime(estDt),
                                      Currency = x.Element("country")!.Value.Trim(),
                                      Title = x.Element("title")!.Value.Trim(),
                                      Impact = x.Element("impact")!.Value.Trim(),
@@ -423,8 +457,7 @@ namespace MarketCountdownApp
                                      Occurrence = estDt,
                                  };
                              })
-                             .OrderBy(e => e.Date)
-                             .ThenBy(e => e.Time)
+                             .OrderBy(e => e.Occurrence)
                              .ToList();
 
                 UpcomingEvents.Clear();
