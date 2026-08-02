@@ -313,11 +313,6 @@
                          FontSize="14"
                          Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding LondonHours}"
-                         FontSize="10"
-                         Foreground="Gray"
-                         HorizontalAlignment="Center"
-                         TextAlignment="Center"/>
                             <TextBlock Text="{Binding LondonDisplay}"
                          FontSize="32"
                          FontWeight="Bold"
@@ -456,11 +451,6 @@
                         FontSize="14"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding NewYorkHours}"
-                        FontSize="10"
-                        Foreground="Gray"
-                        HorizontalAlignment="Center"
-                        TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding NewYorkDisplay}"
                         FontSize="32"
@@ -594,11 +584,6 @@
                         FontSize="14"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding SydneyHours}"
-                        FontSize="10"
-                        Foreground="Gray"
-                        HorizontalAlignment="Center"
-                        TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding SydneyDisplay}"
                         FontSize="32"
@@ -732,11 +717,6 @@
                         FontSize="14"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"/>
-                            <TextBlock Text="{Binding TokyoHours}"
-                        FontSize="10"
-                        Foreground="Gray"
-                        HorizontalAlignment="Center"
-                        TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding TokyoDisplay}"
                         FontSize="32"
