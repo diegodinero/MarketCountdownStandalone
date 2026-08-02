@@ -1015,7 +1015,7 @@
                        FontSize="18"
                        FontWeight="Bold"
                        Margin="0,0,0,12"/>
-                        <StackPanel Margin="0,0,0,12">
+                        <StackPanel Margin="0,0,0,8">
                             <CheckBox x:Name="DarkModeCheck"  Content="Dark Mode"
                           IsChecked="{Binding IsDarkMode, Mode=TwoWay}"/>
                             <CheckBox x:Name="ShowNextEventCheck" Content="Show next‑event expander"
@@ -1023,13 +1023,13 @@
                             <CheckBox x:Name="AnnouncerSoundsCheck"
                                       Content="Announcer Sounds"
                                       IsChecked="{Binding AnnouncerSoundsEnabled, Mode=TwoWay}"
-                                      Margin="0,8,0,0"
+                                      Margin="0,4,0,0"
                                       Checked="AnnouncerSoundsCheck_Checked"
                                       Unchecked="AnnouncerSoundsCheck_Unchecked"/>
                             <CheckBox x:Name="Use24HourCheck"
                                       Content="24-hour clock (Zulu)"
                                       IsChecked="{Binding Use24Hour, Mode=TwoWay}"
-                                      Margin="0,8,0,0"/>
+                                      Margin="0,4,0,0"/>
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
                             <UniformGrid Columns="2" Margin="0,0,0,12">
@@ -1055,6 +1055,7 @@
                         <Button Content="Close"
                     Width="80"
                     HorizontalAlignment="Right"
+                    Margin="0,-4,0,0"
                     Click="CloseSettings_Click"/>
                     </StackPanel>
                 </Border>
