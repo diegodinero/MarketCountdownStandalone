@@ -7,6 +7,21 @@ namespace MarketCountdownApp
 {
     public class MarketCountdownViewModel : INotifyPropertyChanged
     {
+        private bool _use24Hour = true;
+        public bool Use24Hour
+        {
+            get => _use24Hour;
+            set
+            {
+                if (_use24Hour == value) return;
+                _use24Hour = value;
+                OnPropertyChanged(nameof(LondonLocalTime));
+                OnPropertyChanged(nameof(NewYorkLocalTime));
+                OnPropertyChanged(nameof(SydneyLocalTime));
+                OnPropertyChanged(nameof(TokyoLocalTime));
+            }
+        }
+
         private class MarketInfo
         {
             public string Name { get; }
@@ -47,10 +62,16 @@ namespace MarketCountdownApp
         };
 
         // Local times
-        public string LondonLocalTime => ToLocal(_markets[0]).ToString("HH:mm");
-        public string NewYorkLocalTime => ToLocal(_markets[1]).ToString("HH:mm");
-        public string SydneyLocalTime => ToLocal(_markets[2]).ToString("HH:mm");
-        public string TokyoLocalTime => ToLocal(_markets[3]).ToString("HH:mm");
+        public string LondonLocalTime => FormatMarketTime(ToLocal(_markets[0]));
+        public string NewYorkLocalTime => FormatMarketTime(ToLocal(_markets[1]));
+        public string SydneyLocalTime => FormatMarketTime(ToLocal(_markets[2]));
+        public string TokyoLocalTime => FormatMarketTime(ToLocal(_markets[3]));
+
+        // Market hours (static open/close schedule)
+        public string LondonHours => FormatHours(_markets[0]);
+        public string NewYorkHours => FormatHours(_markets[1]);
+        public string SydneyHours => FormatHours(_markets[2]);
+        public string TokyoHours => FormatHours(_markets[3]);
 
         // OPEN/CLOSED
         public string LondonStatus => IsOpen(_markets[0]) ? "OPEN" : "CLOSED";
@@ -115,6 +136,20 @@ namespace MarketCountdownApp
             var tz = TimeZoneInfo.FindSystemTimeZoneById(m.TimeZoneId);
             return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
         }
+
+        private static string FormatTs(TimeSpan t)
+            => $"{(int)t.TotalHours:D2}:{t.Minutes:D2}";
+
+        private static string FormatHours(MarketInfo m)
+        {
+            var s = $"{FormatTs(m.Open1)}\u2013{FormatTs(m.Close1)}";
+            if (m.Open2.HasValue && m.Close2.HasValue)
+                s += $"\n{FormatTs(m.Open2.Value)}\u2013{FormatTs(m.Close2.Value)}";
+            return s;
+        }
+
+        private string FormatMarketTime(DateTime value)
+            => Use24Hour ? value.ToString("HH:mm") : value.ToString("hh:mm tt");
 
 
         private bool IsOpen(MarketInfo m)

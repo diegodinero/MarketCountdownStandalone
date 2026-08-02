@@ -31,6 +31,7 @@ namespace MarketCountdownApp
             USDCheck.IsChecked = Properties.Settings.Default.ShowUSD;
             ShowNextEventCheck.IsChecked = Properties.Settings.Default.ShowNextEventToggle;
             AnnouncerSoundsCheck.IsChecked = Properties.Settings.Default.AnnouncerSoundsEnabled;
+            Use24HourCheck.IsChecked = Properties.Settings.Default.Use24Hour;
             //HighImpactCheck.IsChecked = Properties.Settings.Default.;
             //MediumImpactCheck.IsChecked = Properties.Settings.Default.;
             //LowImpactCheck.IsChecked = Properties.Settings.Default.;
@@ -51,6 +52,7 @@ namespace MarketCountdownApp
             viewModel.IsDarkMode = Properties.Settings.Default.IsDarkMode;
             viewModel.ShowNextEventToggle = Properties.Settings.Default.ShowNextEventToggle;
             viewModel.AnnouncerSoundsEnabled = Properties.Settings.Default.AnnouncerSoundsEnabled;
+            viewModel.Use24Hour = Properties.Settings.Default.Use24Hour;
             
             SetExpanded(false);
             ApplyFilter();
@@ -79,6 +81,7 @@ namespace MarketCountdownApp
             Properties.Settings.Default.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
+            Properties.Settings.Default.Use24Hour = Use24HourCheck.IsChecked == true;
 
             // Apply changes to the ViewModel immediately so announcer/filtering respects new settings
             if (DataContext is MainWindowViewModel vm)
@@ -96,6 +99,7 @@ namespace MarketCountdownApp
                 vm.IsDarkMode = DarkModeCheck.IsChecked == true;
                 vm.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
                 vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
+                vm.Use24Hour = Use24HourCheck.IsChecked == true;
             }
             
             // any others�
@@ -171,7 +175,7 @@ namespace MarketCountdownApp
                                   .FirstOrDefault(g => g.Name.ToString() == todayName);
             if (todayGroup == null) return;
 
-            // parse each ForexEvent.Time back to a DateTime on today�s date in EST
+            // use ForexEvent.Occurrence for comparisons
             var estZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             DateTime utcNow = DateTime.UtcNow;
             DateTime estNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, estZone);
@@ -180,17 +184,7 @@ namespace MarketCountdownApp
             object nextItem = todayGroup.Items
                 .Cast<ForexEvent>()
                 .FirstOrDefault(ev => {
-                    // ev.Date is date-only, ev.Time is "HH:mm"
-                    if (TimeSpan.TryParse(ev.Time, out var ts))
-                    {
-                        var dt = ev.Date.Date + ts;
-                        // treat dt as EST
-                        dt = DateTime.SpecifyKind(dt, DateTimeKind.Unspecified);
-                        dt = TimeZoneInfo.ConvertTimeToUtc(dt, estZone);
-                        var dtEst = TimeZoneInfo.ConvertTimeFromUtc(dt, estZone);
-                        return dtEst >= estNow;
-                    }
-                    return false;
+                    return ev.Occurrence >= estNow;
                 });
 
             // if none remain, fall back to first item in the group
