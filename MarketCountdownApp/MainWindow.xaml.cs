@@ -54,6 +54,12 @@ namespace MarketCountdownApp
             viewModel.AnnouncerSoundsEnabled = Properties.Settings.Default.AnnouncerSoundsEnabled;
             viewModel.Use24Hour = Properties.Settings.Default.Use24Hour;
             
+            // Initialize impact filter properties from checkboxes (default to true)
+            viewModel.ShowHigh = HighImpactCheck.IsChecked == true;
+            viewModel.ShowMedium = MediumImpactCheck.IsChecked == true;
+            viewModel.ShowLow = LowImpactCheck.IsChecked == true;
+            viewModel.ShowHoliday = HolidayImpactCheck.IsChecked == true;
+            
             SetExpanded(false);
             ApplyFilter();
         }
@@ -100,6 +106,15 @@ namespace MarketCountdownApp
                 vm.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
                 vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
                 vm.Use24Hour = Use24HourCheck.IsChecked == true;
+            }
+            
+            // Update ViewModel impact filter properties
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.ShowHigh = HighImpactCheck.IsChecked == true;
+                vm.ShowMedium = MediumImpactCheck.IsChecked == true;
+                vm.ShowLow = LowImpactCheck.IsChecked == true;
+                vm.ShowHoliday = HolidayImpactCheck.IsChecked == true;
             }
             
             // any others�
