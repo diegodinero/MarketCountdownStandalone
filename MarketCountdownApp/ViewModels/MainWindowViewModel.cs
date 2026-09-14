@@ -335,10 +335,13 @@ namespace MarketCountdownApp
 
             var now = DateTime.Now;
             var evt = NextEvent;
-            
+
             // Only announce for the next event that will be displayed
             if (evt == null) return;
-            
+
+            // Only announce if the currency is still visible
+            if (!IsCurrencyVisible(evt.Currency)) return;
+
             // Only play for High or Medium impact events
             if (evt.Impact != "High" && evt.Impact != "Medium")
                 return;
