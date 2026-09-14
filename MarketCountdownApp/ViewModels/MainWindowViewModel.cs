@@ -327,6 +327,33 @@ namespace MarketCountdownApp
         }
 
         /// <summary>
+        /// Clear any pending announcer sounds for currencies that are no longer visible.
+        /// This prevents sounds from playing after a currency has been unchecked.
+        /// </summary>
+        public void ClearPlayedSoundsForHiddenCurrencies()
+        {
+            var keysToRemove = _playedSounds.Keys
+                .Where(k =>
+                {
+                    // Extract currency from key format: "CURRENCY_Title_yyyyMMddHHmm"
+                    var parts = k.Split('_');
+                    if (parts.Length > 0)
+                    {
+                        var currency = parts[0];
+                        // If this currency is no longer visible, remove it from played sounds
+                        return !IsCurrencyVisible(currency);
+                    }
+                    return false;
+                })
+                .ToList();
+
+            foreach (var key in keysToRemove)
+            {
+                _playedSounds.Remove(key);
+            }
+        }
+
+        /// <summary>
         /// Check if we should play announcer sounds for the next event
         /// </summary>
         private void CheckAndPlayAnnouncerSounds()

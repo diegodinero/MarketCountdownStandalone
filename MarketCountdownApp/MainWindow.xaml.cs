@@ -100,6 +100,9 @@ namespace MarketCountdownApp
                 vm.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
                 vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
                 vm.Use24Hour = Use24HourCheck.IsChecked == true;
+
+                // Clear any pending sounds for currencies that are now hidden
+                vm.ClearPlayedSoundsForHiddenCurrencies();
             }
             
             // any others�
