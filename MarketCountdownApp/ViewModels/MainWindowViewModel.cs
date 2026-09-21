@@ -45,6 +45,7 @@ namespace MarketCountdownApp
                 _showUSD = value;
                 OnPropertyChanged(nameof(ShowUSD));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowEUR
@@ -56,6 +57,7 @@ namespace MarketCountdownApp
                 _showEUR = value;
                 OnPropertyChanged(nameof(ShowEUR));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowGBP
@@ -67,6 +69,7 @@ namespace MarketCountdownApp
                 _showGBP = value;
                 OnPropertyChanged(nameof(ShowGBP));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowCAD
@@ -78,6 +81,7 @@ namespace MarketCountdownApp
                 _showCAD = value;
                 OnPropertyChanged(nameof(ShowCAD));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowCHF
@@ -89,6 +93,7 @@ namespace MarketCountdownApp
                 _showCHF = value;
                 OnPropertyChanged(nameof(ShowCHF));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowAUD
@@ -100,6 +105,7 @@ namespace MarketCountdownApp
                 _showAUD = value;
                 OnPropertyChanged(nameof(ShowAUD));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowCNY
@@ -111,6 +117,7 @@ namespace MarketCountdownApp
                 _showCNY = value;
                 OnPropertyChanged(nameof(ShowCNY));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowNZD
@@ -122,6 +129,7 @@ namespace MarketCountdownApp
                 _showNZD = value;
                 OnPropertyChanged(nameof(ShowNZD));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
         public bool ShowJPY
@@ -133,6 +141,7 @@ namespace MarketCountdownApp
                 _showJPY = value;
                 OnPropertyChanged(nameof(ShowJPY));
                 RefreshNextEvent();
+                ClearPlayedSoundsForHiddenCurrencies();
             }
         }
 
