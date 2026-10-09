@@ -9,8 +9,8 @@
     Title="Market Countdown"
     WindowStyle="None"
     ResizeMode="NoResize"
-    Width="600"
-    Height="530"
+    Width="550"
+    Height="480"
     Background="{DynamicResource WindowBackgroundBrush}"
     AllowsTransparency="True"
     MouseLeftButtonDown="DragBar_MouseLeftButtonDown">
@@ -128,7 +128,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <!-- Icon bar -->
-                <RowDefinition Height="240"/>
+                <RowDefinition Height="200"/>
                 <!-- Tiles -->
                 <RowDefinition Height="*"/>
                 <!-- Up Next -->
@@ -142,34 +142,34 @@
               HorizontalAlignment="Center"
               Background="{DynamicResource CardBackgroundBrush}"
               CornerRadius="16"
-              Padding="4"
-              Margin="4">
+              Padding="2"
+              Margin="2">
                 <StackPanel Orientation="Horizontal">
                     <!-- London -->
                     <Image Style="{StaticResource CityIconStyle}"
                            Tag="London"
-                           Width="32" Height="32"
-                           Margin="4"
+                           Width="28" Height="28"
+                           Margin="2"
                            Cursor="Hand"
                            MouseLeftButtonUp="OnIconBarClick"/>
                     <Image Style="{StaticResource CityIconStyle}"
                            Tag="New_York"
-                           Width="32" Height="32"
-                           Margin="4"
+                           Width="28" Height="28"
+                           Margin="2"
                            Cursor="Hand"
                            MouseLeftButtonUp="OnIconBarClick"/>
 
                     <Image Style="{StaticResource CityIconStyle}"
                            Tag="Sydney"
-                           Width="32" Height="32"
-                           Margin="4"
+                           Width="28" Height="28"
+                           Margin="2"
                            Cursor="Hand"
                            MouseLeftButtonUp="OnIconBarClick"/>
 
                     <Image Style="{StaticResource CityIconStyle}"
                            Tag="Tokyo"
-                           Width="32" Height="32"
-                           Margin="4"
+                           Width="28" Height="28"
+                           Margin="2"
                            Cursor="Hand"
                            MouseLeftButtonUp="OnIconBarClick"/>
 
@@ -281,15 +281,15 @@
 
             <!-- MARKET TILES -->
             <UniformGrid x:Name="MainContent"
-                   Visibility="Collapsed"
-                   Grid.Row="1"
-                   Rows="2" Columns="2"
-                   Margin="8"
+                    Visibility="Collapsed"
+                    Grid.Row="1"
+                    Rows="2" Columns="2"
+                    Margin="6"
                    DataContext="{Binding MarketVM}">
                 <!-- London Tile -->
                 <Border Background="{DynamicResource CardBackgroundBrush}"
                 CornerRadius="12"
-                Margin="4">
+                Margin="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -311,12 +311,12 @@
                         Grid.ColumnSpan="2"
                         VerticalAlignment="Center">
                             <TextBlock Text="London"
-                         FontSize="14"
+                          FontSize="12"
                          Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
                          TextAlignment="Center"/>
                             <TextBlock Text="{Binding LondonDisplay}"
-                         FontSize="32"
+                         FontSize="28"
                          FontWeight="Bold"
                          Foreground="{DynamicResource PrimaryTextBrush}"
                          HorizontalAlignment="Center"
@@ -432,7 +432,9 @@
                 <!-- Repeat the above 3 more times for New York, Sydney, Tokyo,
              swapping out the ImageBrush.Source and bindings accordingly -->
                 <!-- ... -->
-                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="12"
+                Margin="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -458,7 +460,7 @@
                         TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding NewYorkDisplay}"
-                        FontSize="32"
+                        FontSize="28"
                         FontWeight="Bold"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
@@ -568,7 +570,9 @@
                 </Border>
 
                 <!-- Sydney -->
-                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="12"
+                Margin="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -588,13 +592,13 @@
                      HorizontalAlignment="Stretch">
                             <!-- City name, centered -->
                             <TextBlock Text="Sydney"
-                        FontSize="14"
+                        FontSize="12"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
                         TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding SydneyDisplay}"
-                        FontSize="32"
+                        FontSize="28"
                         FontWeight="Bold"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
@@ -704,7 +708,9 @@
                 </Border>
 
                 <!-- Tokyo -->
-                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="12"
+                Margin="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -724,13 +730,13 @@
                      HorizontalAlignment="Stretch">
                             <!-- City name, centered -->
                             <TextBlock Text="Tokyo"
-                        FontSize="14"
+                        FontSize="12"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
                         TextAlignment="Center"/>
                             <!-- Big offset display, bold, larger, centered -->
                             <TextBlock Text="{Binding TokyoDisplay}"
-                        FontSize="32"
+                        FontSize="28"
                         FontWeight="Bold"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
