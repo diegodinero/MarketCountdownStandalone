@@ -190,5 +190,17 @@ namespace MarketCountdownApp.Properties {
                 this["AnnouncerSoundsEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsLaptopMode {
+            get {
+                return ((bool)(this["IsLaptopMode"]));
+            }
+            set {
+                this["IsLaptopMode"] = value;
+            }
+        }
     }
 }
