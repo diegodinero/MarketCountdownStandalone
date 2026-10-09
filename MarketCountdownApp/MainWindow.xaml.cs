@@ -38,6 +38,7 @@ namespace MarketCountdownApp
             //HolidayImpactCheck.IsChecked = Properties.Settings.Default.;
 
             DarkModeCheck.IsChecked = Properties.Settings.Default.IsDarkMode;
+            LaptopModeCheck.IsChecked = Properties.Settings.Default.IsLaptopMode;
             
             // Initialize ViewModel properties from settings
             viewModel.ShowAUD = Properties.Settings.Default.ShowAUD;
@@ -56,6 +57,12 @@ namespace MarketCountdownApp
             
             SetExpanded(false);
             ApplyFilter();
+            
+            // Apply laptop mode if enabled
+            if (Properties.Settings.Default.IsLaptopMode)
+            {
+                ApplyLaptopMode();
+            }
         }
 
         private void OpenSettings_Click(object sender, MouseButtonEventArgs e)
@@ -82,6 +89,7 @@ namespace MarketCountdownApp
             Properties.Settings.Default.IsDarkMode = DarkModeCheck.IsChecked == true;
             Properties.Settings.Default.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
             Properties.Settings.Default.Use24Hour = Use24HourCheck.IsChecked == true;
+            Properties.Settings.Default.IsLaptopMode = LaptopModeCheck.IsChecked == true;
 
             // Apply changes to the ViewModel immediately so announcer/filtering respects new settings
             if (DataContext is MainWindowViewModel vm)
@@ -106,9 +114,19 @@ namespace MarketCountdownApp
             }
             
             // any others�
-
+            
             // finally, persist to disk
             Properties.Settings.Default.Save();
+            
+            // Apply laptop mode changes
+            if (LaptopModeCheck.IsChecked == true)
+            {
+                ApplyLaptopMode();
+            }
+            else
+            {
+                ApplyDesktopMode();
+            }
         }
 
         private void OnIconBarClick(object sender, MouseButtonEventArgs e)
@@ -247,6 +265,61 @@ namespace MarketCountdownApp
         private void AnnouncerSoundsCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             // Do nothing when unchecked (no sound played as per requirements)
+        }
+        
+        private void ApplyLaptopMode()
+        {
+            // Apply compact layout for laptop mode
+            this.Width = 550;
+            this.Height = 480;
+            
+            // Reduce tile section height
+            var tileRowDef = RootGrid.RowDefinitions[1];
+            tileRowDef.Height = new GridLength(200);
+            
+            // Reduce DragBar padding and margins
+            DragBar.Padding = new Thickness(2);
+            DragBar.Margin = new Thickness(2);
+            
+            // Reduce icon sizes and margins
+            foreach (var child in DragBar.Child is StackPanel sp ? sp.Children.OfType<Image>() : new List<Image>())
+            {
+                child.Width = 28;
+                child.Height = 28;
+                child.Margin = new Thickness(2);
+            }
+            
+            // Reduce main content margins
+            MainContent.Margin = new Thickness(6);
+            
+            // Reduce font sizes in tiles - this would require iterating through all tiles
+            // For now, we'll just adjust the overall window size and let it reflow
+        }
+        
+        private void ApplyDesktopMode()
+        {
+            // Apply full layout for desktop mode
+            this.Width = 600;
+            this.Height = 530;
+            
+            // Restore tile section height
+            var tileRowDef = RootGrid.RowDefinitions[1];
+            tileRowDef.Height = new GridLength(240);
+            
+            // Restore DragBar padding and margins
+            DragBar.Padding = new Thickness(4);
+            DragBar.Margin = new Thickness(4);
+            
+            // Restore icon sizes and margins
+            foreach (var child in DragBar.Child is StackPanel sp ? sp.Children.OfType<Image>() : new List<Image>())
+            {
+                child.Width = 32;
+                child.Height = 32;
+                child.Margin = new Thickness(4);
+            }
+            
+            // Restore main content margins
+            MainContent.Margin = new Thickness(8);
         }
     }
 

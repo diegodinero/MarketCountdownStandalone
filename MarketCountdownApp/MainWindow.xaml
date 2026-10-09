@@ -281,15 +281,13 @@
 
             <!-- MARKET TILES -->
             <UniformGrid x:Name="MainContent"
-                   Visibility="Collapsed"
-                   Grid.Row="1"
-                   Rows="2" Columns="2"
-                   Margin="8"
+                    Visibility="Collapsed"
+                    Grid.Row="1"
+                    Rows="2" Columns="2"
+                    Margin="8"
                    DataContext="{Binding MarketVM}">
                 <!-- London Tile -->
-                <Border Background="{DynamicResource CardBackgroundBrush}"
-                CornerRadius="12"
-                Margin="4">
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Margin="4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
@@ -724,7 +722,7 @@
                      HorizontalAlignment="Stretch">
                             <!-- City name, centered -->
                             <TextBlock Text="Tokyo"
-                        FontSize="14"
+                        FontSize="12"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                         HorizontalAlignment="Center"
                         TextAlignment="Center"/>
@@ -1029,6 +1027,10 @@
                             <CheckBox x:Name="Use24HourCheck"
                                       Content="24-hour clock (Zulu)"
                                       IsChecked="{Binding Use24Hour, Mode=TwoWay}"
+                                      Margin="0,4,0,0"/>
+                            <CheckBox x:Name="LaptopModeCheck"
+                                      Content="Compact Mode (Laptop)"
+                                      IsChecked="False"
                                       Margin="0,4,0,0"/>
                             <!-- add your own toggles/sliders here -->
                             <TextBlock Text="Show Currency Pairs" FontWeight="SemiBold" Margin="0,8,0,4"/>
