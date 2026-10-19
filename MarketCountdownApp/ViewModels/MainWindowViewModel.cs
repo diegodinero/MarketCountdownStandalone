@@ -397,9 +397,10 @@ namespace MarketCountdownApp
             if (timeUntil.TotalMinutes <= FIVE_MINUTE_THRESHOLD && timeUntil.TotalMinutes > FIVE_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(5))
             {
                 // Verify currency is still visible before playing (double-check for race conditions)
+                // Do a final 5-second check before playing to ensure the user hasn't unchecked the currency
                 if (IsCurrencyVisible(evt.Currency))
                 {
-                    PlaySound("fiveminutesremaining.wav");
+                    PlaySoundWithPreCheck("fiveminutesremaining.wav", evt.Currency, 5);
                     _playedSounds[eventKey].Add(5);
                 }
             }
@@ -407,9 +408,10 @@ namespace MarketCountdownApp
             else if (timeUntil.TotalMinutes <= TWO_MINUTE_THRESHOLD && timeUntil.TotalMinutes > TWO_MINUTE_WINDOW && !_playedSounds[eventKey].Contains(2))
             {
                 // Verify currency is still visible before playing (double-check for race conditions)
+                // Do a final 5-second check before playing to ensure the user hasn't unchecked the currency
                 if (IsCurrencyVisible(evt.Currency))
                 {
-                    PlaySound("undertaker.wav");
+                    PlaySoundWithPreCheck("undertaker.wav", evt.Currency, 2);
                     _playedSounds[eventKey].Add(2);
                 }
             }
@@ -417,9 +419,10 @@ namespace MarketCountdownApp
             else if (timeUntil.TotalSeconds <= 3 && timeUntil.TotalSeconds > 0 && !_playedSounds[eventKey].Contains(0))
             {
                 // Verify currency is still visible before playing (double-check for race conditions)
+                // Do a final 5-second check before playing to ensure the user hasn't unchecked the currency
                 if (IsCurrencyVisible(evt.Currency))
                 {
-                    PlaySound("rolereveal.wav");
+                    PlaySoundWithPreCheck("rolereveal.wav", evt.Currency, 0);
                     _playedSounds[eventKey].Add(0);
                 }
             }
@@ -441,6 +444,24 @@ namespace MarketCountdownApp
             {
                 _playedSounds.Remove(key);
             }
+        }
+
+        /// <summary>
+        /// Play a sound file with a 5-second pre-play validation check.
+        /// This ensures that if the user unchecks a currency within 5 seconds,
+        /// the sound will not be played.
+        /// </summary>
+        private void PlaySoundWithPreCheck(string fileName, string currency, int soundType)
+        {
+            // Schedule the sound to be played 5 seconds later with a currency visibility check
+            Task.Delay(5000).ContinueWith(_ =>
+            {
+                // Verify the currency is still visible before playing
+                if (IsCurrencyVisible(currency))
+                {
+                    PlaySound(fileName);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         /// <summary>
