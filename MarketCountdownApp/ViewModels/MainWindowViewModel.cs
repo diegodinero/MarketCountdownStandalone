@@ -159,6 +159,70 @@ namespace MarketCountdownApp
             _ => false
         };
 
+        // Impact level filter backing fields
+        private bool _showHighImpact = true;
+        private bool _showMediumImpact = true;
+        private bool _showLowImpact = true;
+        private bool _showHolidayImpact = true;
+
+        // Impact level filter properties
+        public bool ShowHighImpact
+        {
+            get => _showHighImpact;
+            set
+            {
+                if (_showHighImpact == value) return;
+                _showHighImpact = value;
+                OnPropertyChanged(nameof(ShowHighImpact));
+                RefreshNextEvent();
+            }
+        }
+
+        public bool ShowMediumImpact
+        {
+            get => _showMediumImpact;
+            set
+            {
+                if (_showMediumImpact == value) return;
+                _showMediumImpact = value;
+                OnPropertyChanged(nameof(ShowMediumImpact));
+                RefreshNextEvent();
+            }
+        }
+
+        public bool ShowLowImpact
+        {
+            get => _showLowImpact;
+            set
+            {
+                if (_showLowImpact == value) return;
+                _showLowImpact = value;
+                OnPropertyChanged(nameof(ShowLowImpact));
+                RefreshNextEvent();
+            }
+        }
+
+        public bool ShowHolidayImpact
+        {
+            get => _showHolidayImpact;
+            set
+            {
+                if (_showHolidayImpact == value) return;
+                _showHolidayImpact = value;
+                OnPropertyChanged(nameof(ShowHolidayImpact));
+                RefreshNextEvent();
+            }
+        }
+
+        private bool IsImpactVisible(string impact) => impact switch
+        {
+            "High" => ShowHighImpact,
+            "Medium" => ShowMediumImpact,
+            "Low" => ShowLowImpact,
+            "Holiday" => ShowHolidayImpact,
+            _ => false
+        };
+
         private bool isDarkMode;
         public bool IsDarkMode
         {
@@ -238,7 +302,7 @@ namespace MarketCountdownApp
             get
             {
                 var now = DateTime.Now;
-                var future = UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency)).ToList();
+                var future = UpcomingEvents.Where(e => e.Occurrence >= now && IsCurrencyVisible(e.Currency) && IsImpactVisible(e.Impact)).ToList();
 
                 if (!future.Any())
                     return null;

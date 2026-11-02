@@ -104,6 +104,11 @@ namespace MarketCountdownApp
                 vm.ShowNZD = NZDCheck.IsChecked == true;
                 vm.ShowUSD = USDCheck.IsChecked == true;
 
+                vm.ShowHighImpact = HighImpactCheck.IsChecked == true;
+                vm.ShowMediumImpact = MediumImpactCheck.IsChecked == true;
+                vm.ShowLowImpact = LowImpactCheck.IsChecked == true;
+                vm.ShowHolidayImpact = HolidayImpactCheck.IsChecked == true;
+
                 vm.IsDarkMode = DarkModeCheck.IsChecked == true;
                 vm.ShowNextEventToggle = ShowNextEventCheck.IsChecked == true;
                 vm.AnnouncerSoundsEnabled = AnnouncerSoundsCheck.IsChecked == true;
